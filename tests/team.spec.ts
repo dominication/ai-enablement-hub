@@ -9,6 +9,9 @@ async function noOverflow(page: Page) {
 async function toExperiment(page: Page) {
   await page.goto(workshop);
   await page.getByRole('button', { name: 'Gemeinsam fokussieren', exact: true }).click();
+  await expect(page.getByRole('radio', { checked: true })).toHaveCount(0);
+  await expect(page.getByRole('button', { name: 'Aufgabe gemeinsam untersuchen', exact: true })).toBeDisabled();
+  await page.getByRole('radio', { name: `Unser Fokus: ${service}`, exact: true }).check();
   await page.getByRole('button', { name: 'Aufgabe gemeinsam untersuchen', exact: true }).click();
   await page.getByRole('button', { name: 'Voraussetzungen klären', exact: true }).click();
   await page.getByRole('button', { name: 'Experiment gestalten', exact: true }).click();
@@ -84,7 +87,7 @@ test('full team canvas: custom contribution, mapping, criteria, adaptation and t
   await expect(page.getByRole('heading', { level: 1 })).toHaveText('Experiment vorbereitet');
   await expect(page.getByText(/Es wurde kein realer Versuch gestartet/)).toBeVisible();
   await page.getByRole('button', { name: 'Demo-Retrospektive ansehen', exact: true }).click();
-  await expect(page.locator('.tl-retro-findings')).toContainText('zusätzliche Arbeit');
+  await expect(page.locator('.tl-retro-findings')).toContainText('zusätzliche Kontrollarbeit');
   await expect(page.getByRole('button', { name: 'Learning teilen', exact: true })).toBeDisabled();
   await page.getByRole('radio', { name: /^Anpassen und erneut testen/ }).check();
   await page.getByLabel('Was verändern wir beim nächsten Versuch?', { exact: true }).fill('Prüfung gemeinsam im Team durchführen.');
@@ -119,6 +122,9 @@ test('full team canvas: custom contribution, mapping, criteria, adaptation and t
   await page.getByRole('button', { name: 'Neues Team Experiment starten', exact: true }).click();
   await expect(page.locator('.tl-activity-card')).toHaveCount(6);
   await expect(page.getByRole('checkbox', { checked: true })).toHaveCount(2);
+  await page.getByRole('button', { name: 'Gemeinsam fokussieren', exact: true }).click();
+  await expect(page.getByRole('radio', { checked: true })).toHaveCount(0);
+  await expect(page.getByRole('button', { name: 'Aufgabe gemeinsam untersuchen', exact: true })).toBeDisabled();
 });
 
 test('stopping is an equal valid outcome and preview excludes stale continuation text', async ({ page }) => {
@@ -185,4 +191,102 @@ test('search returns Team Lab only for relevant intent', async ({ page }) => {
     await expect(page.locator('.use-case-card')).toHaveCount(0);
     await expect(page.getByRole('heading', { name: 'Noch kein passender Use Case dabei.' })).toBeVisible();
   }
+});
+
+const preparedTitles = [service, 'Wiederkehrende Kundenanfragen sortieren', 'Meetings dokumentieren', 'Prozessinformationen aktuell halten', 'Schwierige Kundenfälle beurteilen', 'Übergaben zwischen Teams koordinieren'];
+for (const title of [...preparedTitles, 'Eigene Prüfaufgabe']) {
+  test(`explicit focus and neutral retrospective with all outcomes: ${title}`, async ({ page }) => {
+    await page.goto(workshop);
+    await expect(page.getByText('Mitarbeitergespräche vorbereiten', { exact: true })).toHaveCount(0);
+    if (title === preparedTitles[5]) {
+      const card = page.locator('.tl-activity-card').filter({ hasText: title });
+      await expect(card).toContainText('Informationen, offene Punkte und Verantwortlichkeiten bei Übergaben zwischen Teams zusammenführen.');
+      await expect(card).toContainText('Prozessverantwortung');
+    }
+    if (title === 'Eigene Prüfaufgabe') {
+      await page.getByRole('button', { name: 'Eigene Demo-Aufgabe ergänzen' }).click();
+      await page.getByLabel('Aufgabe', { exact: true }).fill(title);
+      await page.getByLabel('Wo entsteht Reibung?', { exact: true }).fill('Informationen fehlen.');
+      await page.getByRole('button', { name: 'Beitrag übernehmen', exact: true }).click();
+    } else {
+      await page.getByRole('checkbox', { name: `Untersuchen: ${title}`, exact: true }).check();
+    }
+    await page.getByRole('button', { name: 'Gemeinsam fokussieren', exact: true }).click();
+    await expect(page.getByRole('radio', { checked: true })).toHaveCount(0);
+    await expect(page.getByRole('button', { name: 'Aufgabe gemeinsam untersuchen', exact: true })).toBeDisabled();
+    if (title === preparedTitles[5]) {
+      const card = page.locator('.tl-focus-card').filter({ has: page.getByRole('heading', { name: title, exact: true }) });
+      const values = await card.getByRole('combobox').evaluateAll((items) => items.map((item) => (item as HTMLSelectElement).value));
+      expect(values).toEqual(['ja', 'hoch', 'teilweise', 'hoch']);
+    }
+    const focus = page.getByRole('radio', { name: `Unser Fokus: ${title}`, exact: true });
+    await focus.focus(); await page.keyboard.press('Space');
+    await expect(focus).toBeChecked();
+    await page.getByRole('button', { name: 'Aufgabe gemeinsam untersuchen', exact: true }).click();
+    await expect(page.locator('.tl-focus-strip')).toContainText(title);
+    await expect(page.locator('.tl-mapping-board article')).toHaveCount(title === service ? 7 : 6);
+    await page.getByRole('button', { name: 'Voraussetzungen klären', exact: true }).click();
+    await page.getByRole('button', { name: 'Experiment gestalten', exact: true }).click();
+    if (title !== service) await expect(page.getByLabel('Unsere Hypothese', { exact: true })).not.toHaveValue(/Statusquellen/);
+    await page.getByRole('button', { name: 'Experiment vorbereiten', exact: true }).click();
+    await page.getByRole('button', { name: 'Experiment starten', exact: true }).click();
+    await page.getByRole('button', { name: 'Demo-Retrospektive ansehen', exact: true }).click();
+    await expect(page.getByText(/Kein Experiment wurde tatsächlich durchgeführt/)).toBeVisible();
+    const findings = page.locator('.tl-retro-findings');
+    await expect(findings).not.toContainText(/Statusinformationen|Statusquellen|nach zwei Wochen|Entwurf/);
+    await expect(findings).toContainText('zusätzliche Kontrollarbeit');
+    await expect(findings).toContainText('wiederkehrende Themen wurden leichter sichtbar');
+    await expect(page.getByLabel('Was haben wir über unsere Arbeit gelernt?', { exact: true })).not.toHaveValue(/Status/);
+    await noOverflow(page);
+    for (const outcome of ['Weiterführen', 'Anpassen und erneut testen', 'Stoppen']) {
+      await page.getByRole('radio', { name: new RegExp(`^${outcome}`) }).check();
+      await page.getByRole('button', { name: 'Learning teilen', exact: true }).click();
+      const preview = page.getByRole('article', { name: 'Team-Learning' });
+      await expect(preview).toContainText(title);
+      await expect(preview).toContainText(outcome);
+      await noOverflow(page);
+      await page.getByRole('button', { name: 'Zurück zur Retrospektive', exact: true }).click();
+    }
+  });
+}
+
+test('switching focus resets dependent edits and removing focus requires a fresh choice', async ({ page }) => {
+  await toExperiment(page);
+  await page.getByLabel('Unsere Hypothese', { exact: true }).fill('Alte Hypothese');
+  await page.getByLabel('Zeitraum', { exact: true }).selectOption('4 Wochen');
+  await page.getByRole('checkbox', { name: 'Zusammenarbeit wird klarer', exact: true }).check();
+  await page.getByRole('button', { name: /Mensch & AI/ }).click();
+  await page.getByLabel('Zuordnung: Informationen aus Quellen sammeln', { exact: true }).selectOption('human');
+  await page.getByRole('button', { name: 'Voraussetzungen klären', exact: true }).click();
+  await page.getByRole('button', { name: 'Experiment gestalten', exact: true }).click();
+  await expect(page.getByLabel('Unsere Hypothese', { exact: true })).toHaveValue('Alte Hypothese');
+  await page.getByRole('button', { name: 'Experiment vorbereiten', exact: true }).click();
+  await page.getByRole('button', { name: 'Experiment starten', exact: true }).click();
+  await page.getByRole('button', { name: 'Demo-Retrospektive ansehen', exact: true }).click();
+  await page.getByRole('radio', { name: /^Weiterführen/ }).check();
+  await page.getByLabel('Was muss dauerhaft geklärt bleiben?', { exact: true }).fill('Alter Folgeschritt');
+  await page.getByLabel('Was haben wir über unsere Arbeit gelernt?', { exact: true }).fill('Alte Reflexion');
+  await page.getByRole('button', { name: 'Fokus', exact: true }).click();
+  await page.getByRole('radio', { name: 'Unser Fokus: Schwierige Kundenfälle beurteilen', exact: true }).check();
+  await page.getByRole('button', { name: 'Aufgabe gemeinsam untersuchen', exact: true }).click();
+  await expect(page.getByLabel('Zuordnung: Informationen zur Aufgabe sammeln', { exact: true })).toHaveValue('ai');
+  await expect(page.locator('.tl-mapping-board')).not.toContainText('Finalen Status freigeben');
+  await page.getByRole('button', { name: 'Voraussetzungen klären', exact: true }).click();
+  await page.getByRole('button', { name: 'Experiment gestalten', exact: true }).click();
+  await expect(page.getByLabel('Unsere Hypothese', { exact: true })).not.toHaveValue(/Alte Hypothese|Statusquellen/);
+  await expect(page.getByLabel('Zeitraum', { exact: true })).toHaveValue('3 Wochen');
+  await expect(page.getByRole('checkbox', { name: 'Zusammenarbeit wird klarer', exact: true })).not.toBeChecked();
+  await page.getByRole('button', { name: 'Experiment vorbereiten', exact: true }).click();
+  await page.getByRole('button', { name: 'Experiment starten', exact: true }).click();
+  await page.getByRole('button', { name: 'Demo-Retrospektive ansehen', exact: true }).click();
+  await expect(page.getByRole('radio', { checked: true })).toHaveCount(0);
+  await expect(page.getByLabel('Was haben wir über unsere Arbeit gelernt?', { exact: true })).not.toHaveValue('Alte Reflexion');
+  await page.getByRole('radio', { name: /^Weiterführen/ }).check();
+  await expect(page.getByLabel('Was muss dauerhaft geklärt bleiben?', { exact: true })).not.toHaveValue('Alter Folgeschritt');
+  await page.getByRole('button', { name: 'Arbeit', exact: true }).click();
+  const checkbox = page.getByRole('checkbox', { name: 'Untersuchen: Schwierige Kundenfälle beurteilen', exact: true });
+  await checkbox.uncheck(); await checkbox.check();
+  await page.getByRole('button', { name: 'Gemeinsam fokussieren', exact: true }).click();
+  await expect(page.getByRole('radio', { checked: true })).toHaveCount(0);
+  await expect(page.getByRole('button', { name: 'Aufgabe gemeinsam untersuchen', exact: true })).toBeDisabled();
 });

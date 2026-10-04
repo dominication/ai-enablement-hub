@@ -35,33 +35,45 @@ export function TeamWorkshop() {
   const [stage, setStage] = useState<Stage>('work');
   const [custom, setCustom] = useState<Activity | null>(null);
   const [selected, setSelected] = useState(['status', 'cases']);
-  const [focus, setFocus] = useState('status');
+  const [focus, setFocus] = useState('');
   const [discussions, setDiscussions] = useState<Record<string, Discussion>>({});
-  const [assignments, setAssignments] = useState<Record<string, Assignment>>(() => initialAssignments(teamActivities[0]));
+  const [assignments, setAssignments] = useState<Record<string, Assignment>>({});
   const [needs, setNeeds] = useState([teamRequirements[0], teamRequirements[1], teamRequirements[3]]);
-  const [experiment, setExperiment] = useState(() => newExperiment(teamActivities[0]));
+  const [experiment, setExperiment] = useState<Experiment | null>(null);
   const [outcome, setOutcome] = useState<Outcome | ''>('');
   const [nextSteps, setNextSteps] = useState({ ...defaultNextSteps });
-  const [reflection, setReflection] = useState<TeamReflection>({ ...defaultReflection });
+  const [reflection, setReflection] = useState<TeamReflection>({ work: '', ai: '', others: '' });
   const [notice, setNotice] = useState('');
   const heading = useRef<HTMLHeadingElement>(null);
   const activities = custom ? [...teamActivities, custom] : teamActivities;
-  const activity = activities.find((item) => item.id === focus) ?? teamActivities[0];
+  const activity = activities.find((item) => item.id === focus);
   const info = stageInfo[stage];
-  const validExperiment = !!experiment.hypothesis.trim() && !!experiment.effects.length && !!experiment.sideEffects.length;
+  const validExperiment = !!experiment && !!experiment.hypothesis.trim() && !!experiment.effects.length && !!experiment.sideEffects.length;
 
   useEffect(() => { heading.current?.focus({ preventScroll: true }); window.scrollTo(0, 0); }, [stage]);
-  function go(next: Stage) { setStage(next); setNotice(''); }
+  function go(next: Stage) {
+    if (next !== 'work' && next !== 'focus' && (!activity || !experiment || !selected.includes(focus))) return;
+    setStage(next); setNotice('');
+  }
+  function clearFocus() {
+    setFocus(''); setAssignments({}); setExperiment(null); setOutcome('');
+    setNextSteps({ ...defaultNextSteps }); setReflection({ work: '', ai: '', others: '' });
+  }
+  function toggleActivity(id: string) {
+    setSelected((values) => toggle(values, id));
+    if (id === focus) clearFocus();
+  }
   function chooseFocus(id: string) {
     if (id === focus) return;
-    const item = activities.find((entry) => entry.id === id)!;
+    const item = activities.find((entry) => entry.id === id);
+    if (!item || !selected.includes(id)) return;
     setFocus(id); setAssignments(initialAssignments(item)); setExperiment(newExperiment(item)); setOutcome(''); setNextSteps({ ...defaultNextSteps });
-    setReflection(id === 'status' ? { ...defaultReflection } : { ...defaultReflection, work: 'Im vorbereiteten Beispiel liessen sich Informationen strukturieren. Die tatsächlichen Auswirkungen auf unsere gewählte Aufgabe müssten wir erst untersuchen.' });
+    setReflection({ ...defaultReflection });
   }
   function updateCustom(item: Activity) { setCustom(item); setSelected((values) => values.includes('custom') ? values : [...values, 'custom']); setNotice('Der lokale Demo-Beitrag wurde übernommen. Er ist nur in dieser Sitzung sichtbar.'); }
   function restart() {
-    setCustom(null); setSelected(['status', 'cases']); setFocus('status'); setDiscussions({}); setAssignments(initialAssignments(teamActivities[0]));
-    setNeeds([teamRequirements[0], teamRequirements[1], teamRequirements[3]]); setExperiment(newExperiment(teamActivities[0])); setOutcome(''); setNextSteps({ ...defaultNextSteps }); setReflection({ ...defaultReflection }); go('work');
+    setCustom(null); setSelected(['status', 'cases']); clearFocus(); setDiscussions({});
+    setNeeds([teamRequirements[0], teamRequirements[1], teamRequirements[3]]); go('work');
   }
   return <div className="page-container tl-workshop">
     <Link className="back-link" href="/team-lab">← Zum Team Lab</Link><header className="tl-workshop-top"><div><p className="eyebrow">TEAM LAB · GEMEINSAM ARBEIT GESTALTEN</p><p className="tl-team-name">{demoTeam.name}</p></div><span>45 Minuten Teamgespräch</span></header>
@@ -69,16 +81,16 @@ export function TeamWorkshop() {
     <nav className="tl-nav" aria-label="Workshop-Phasen">{groups.map((group, index) => <button key={group.title} disabled={index > info.group} aria-current={info.group === index ? 'step' : undefined} onClick={() => go(group.stage)}><span aria-hidden="true">0{index + 1}</span>{group.title}</button>)}</nav>
     <header className="tl-stage-heading"><h1 ref={heading} tabIndex={-1}>{info.title}</h1><p>{info.intro}</p></header>
     {notice && <p className="tl-insight" role="status">{notice}</p>}
-    {stage !== 'work' && stage !== 'focus' && stage !== 'complete' && <p className="tl-focus-strip"><strong>Euer Fokus:</strong> {activity.title}</p>}
-    {stage === 'work' && <><ActivityBoard activities={activities} selected={selected} custom={custom} onToggle={(id) => setSelected((values) => toggle(values, id))} onCustom={updateCustom} /><p className="tl-small">Die Beiträge sind vorbereitete Perspektiven, keine Stimmen oder Live-Abstimmung. Wählt auch Tätigkeiten aus, bei denen ihr euch noch nicht einig seid.</p><div className="tl-actions"><span>{selected.length ? `${selected.length} Tätigkeiten für das Gespräch ausgewählt` : 'Wählt mindestens eine Tätigkeit aus.'}</span><button className="tl-button tl-primary" disabled={!selected.length} onClick={() => go('focus')}>Gemeinsam fokussieren<Icon name="arrow" /></button></div></>}
+    {activity && stage !== 'work' && stage !== 'focus' && stage !== 'complete' && <p className="tl-focus-strip"><strong>Euer Fokus:</strong> {activity.title}</p>}
+    {stage === 'work' && <><ActivityBoard activities={activities} selected={selected} custom={custom} onToggle={toggleActivity} onCustom={updateCustom} /><p className="tl-small">Die Beiträge sind vorbereitete Perspektiven, keine Stimmen oder Live-Abstimmung. Wählt auch Tätigkeiten aus, bei denen ihr euch noch nicht einig seid.</p><div className="tl-actions"><span>{selected.length ? `${selected.length} Tätigkeiten für das Gespräch ausgewählt` : 'Wählt mindestens eine Tätigkeit aus.'}</span><button className="tl-button tl-primary" disabled={!selected.length} onClick={() => go('focus')}>Gemeinsam fokussieren<Icon name="arrow" /></button></div></>}
     {stage === 'focus' && <><FocusBoard activities={activities.filter((item) => selected.includes(item.id))} discussions={discussions} focus={focus} onDiscuss={(id, value) => setDiscussions((current) => ({ ...current, [id]: value }))} onFocus={chooseFocus} /><p className="tl-small">Eine andere Fokusaufgabe setzt Aufgabenaufteilung, Hypothese und Retrospektive auf passende Demo-Vorschläge zurück. Für andere Tätigkeiten wird eine allgemeine, anpassbare Strukturierungshypothese verwendet.</p><div className="tl-actions"><button className="tl-button tl-secondary" onClick={() => go('work')}>Zurück zur Arbeit</button><button className="tl-button tl-primary" disabled={!selected.includes(focus)} onClick={() => go('mapping')}>Aufgabe gemeinsam untersuchen<Icon name="arrow" /></button></div></>}
-    {stage === 'mapping' && <><ResponsibilityBoard activity={activity} assignments={assignments} onChange={(id, value) => { setAssignments((current) => ({ ...current, [id]: value })); setNotice('Zuordnung aktualisiert. Die Verantwortung für Entscheidungen bleibt beim Team.'); }} /><div className="tl-actions"><button className="tl-button tl-secondary" onClick={() => go('focus')}>Fokus prüfen</button><button className="tl-button tl-primary" onClick={() => go('needs')}>Voraussetzungen klären<Icon name="arrow" /></button></div></>}
-    {stage === 'needs' && <><div className="tl-needs-layout"><ChoiceList title="Was braucht unser Team?" options={teamRequirements} selected={needs} onChange={setNeeds} /><aside className="tl-leadership"><h2>Rolle der Teamleitung</h2><ul>{leadershipRole.map((item) => <li key={item}>{item}</li>)}</ul><p className="tl-small">Das Experiment gehört dem ganzen Team. Alle Perspektiven dürfen eingebracht werden.</p></aside></div>{needs.includes(teamRequirements[5]) && <p className="tl-insight">Ein Experiment braucht Raum zum Lernen. Neue Arbeitsweisen können zunächst auch zusätzlichen Aufwand erzeugen.</p>}<div className="tl-actions"><button className="tl-button tl-secondary" onClick={() => go('mapping')}>Aufteilung prüfen</button><button className="tl-button tl-primary" onClick={() => go('experiment')}>Experiment gestalten<Icon name="arrow" /></button></div></>}
-    {stage === 'experiment' && <><ExperimentEditor activity={activity} value={experiment} onChange={setExperiment} />{!validExperiment && <p className="tl-insight">Formuliert eine Hypothese und wählt mindestens eine gewünschte Wirkung sowie eine mögliche Nebenwirkung.</p>}<div className="tl-actions"><button className="tl-button tl-secondary" onClick={() => go('needs')}>Voraussetzungen prüfen</button><button className="tl-button tl-primary" disabled={!validExperiment} onClick={() => go('summary')}>Experiment vorbereiten<Icon name="arrow" /></button></div></>}
-    {stage === 'summary' && <><ExperimentSummary activity={activity} assignments={assignments} needs={needs} value={experiment} /><div className="tl-actions"><button className="tl-button tl-secondary" onClick={() => go('experiment')}>Experiment bearbeiten</button><button className="tl-button tl-primary" onClick={() => go('prepared')}>Experiment starten<Icon name="arrow" /></button></div></>}
-    {stage === 'prepared' && <><p className="tl-insight">Es wurde kein realer Versuch gestartet und kein Zeitraum ist vergangen. Die nächste Ansicht enthält bewusst vorbereitete, gemischte Beobachtungen.</p><div className="tl-actions"><button className="tl-button tl-secondary" onClick={() => go('experiment')}>Experiment bearbeiten</button><button className="tl-button tl-primary" onClick={() => go('retro')}>Demo-Retrospektive ansehen<Icon name="arrow" /></button></div></>}
-    {stage === 'retro' && <><TeamRetrospective activity={activity} outcome={outcome} nextSteps={nextSteps} reflection={reflection} onOutcome={setOutcome} onNextStep={(value) => { if (outcome) setNextSteps((current) => ({ ...current, [outcome]: value })); }} onReflection={setReflection} />{!outcome && <p className="tl-small">Trefft eine gemeinsame Entscheidung: Alle drei Ergebnisse sind legitim.</p>}<div className="tl-actions"><button className="tl-button tl-secondary" onClick={() => go('summary')}>Experiment ansehen</button><button className="tl-button tl-primary" disabled={!outcome} onClick={() => go('preview')}>Learning teilen<Icon name="arrow" /></button></div></>}
-    {stage === 'preview' && outcome && <><TeamLearningPreview activityTitle={activity.title} outcome={outcome} nextStep={nextSteps[outcome]} reflection={reflection} /><div className="tl-actions"><button className="tl-button tl-secondary" onClick={() => go('retro')}>Zurück zur Retrospektive</button><button className="tl-button tl-primary" onClick={() => go('complete')}>Vorschau bestätigen<Icon name="arrow" /></button></div></>}
+    {stage === 'mapping' && activity && experiment && <><ResponsibilityBoard activity={activity} assignments={assignments} onChange={(id, value) => { setAssignments((current) => ({ ...current, [id]: value })); setNotice('Zuordnung aktualisiert. Die Verantwortung für Entscheidungen bleibt beim Team.'); }} /><div className="tl-actions"><button className="tl-button tl-secondary" onClick={() => go('focus')}>Fokus prüfen</button><button className="tl-button tl-primary" onClick={() => go('needs')}>Voraussetzungen klären<Icon name="arrow" /></button></div></>}
+    {stage === 'needs' && activity && experiment && <><div className="tl-needs-layout"><ChoiceList title="Was braucht unser Team?" options={teamRequirements} selected={needs} onChange={setNeeds} /><aside className="tl-leadership"><h2>Rolle der Teamleitung</h2><ul>{leadershipRole.map((item) => <li key={item}>{item}</li>)}</ul><p className="tl-small">Das Experiment gehört dem ganzen Team. Alle Perspektiven dürfen eingebracht werden.</p></aside></div>{needs.includes(teamRequirements[5]) && <p className="tl-insight">Ein Experiment braucht Raum zum Lernen. Neue Arbeitsweisen können zunächst auch zusätzlichen Aufwand erzeugen.</p>}<div className="tl-actions"><button className="tl-button tl-secondary" onClick={() => go('mapping')}>Aufteilung prüfen</button><button className="tl-button tl-primary" onClick={() => go('experiment')}>Experiment gestalten<Icon name="arrow" /></button></div></>}
+    {stage === 'experiment' && activity && experiment && <><ExperimentEditor activity={activity} value={experiment} onChange={setExperiment} />{!validExperiment && <p className="tl-insight">Formuliert eine Hypothese und wählt mindestens eine gewünschte Wirkung sowie eine mögliche Nebenwirkung.</p>}<div className="tl-actions"><button className="tl-button tl-secondary" onClick={() => go('needs')}>Voraussetzungen prüfen</button><button className="tl-button tl-primary" disabled={!validExperiment} onClick={() => go('summary')}>Experiment vorbereiten<Icon name="arrow" /></button></div></>}
+    {stage === 'summary' && activity && experiment && <><ExperimentSummary activity={activity} assignments={assignments} needs={needs} value={experiment} /><div className="tl-actions"><button className="tl-button tl-secondary" onClick={() => go('experiment')}>Experiment bearbeiten</button><button className="tl-button tl-primary" onClick={() => go('prepared')}>Experiment starten<Icon name="arrow" /></button></div></>}
+    {stage === 'prepared' && activity && experiment && <><p className="tl-insight">Es wurde kein realer Versuch gestartet und kein Zeitraum ist vergangen. Die nächste Ansicht enthält bewusst vorbereitete, gemischte Beobachtungen.</p><div className="tl-actions"><button className="tl-button tl-secondary" onClick={() => go('experiment')}>Experiment bearbeiten</button><button className="tl-button tl-primary" onClick={() => go('retro')}>Demo-Retrospektive ansehen<Icon name="arrow" /></button></div></>}
+    {stage === 'retro' && activity && experiment && <><TeamRetrospective outcome={outcome} nextSteps={nextSteps} reflection={reflection} onOutcome={setOutcome} onNextStep={(value) => { if (outcome) setNextSteps((current) => ({ ...current, [outcome]: value })); }} onReflection={setReflection} />{!outcome && <p className="tl-small">Trefft eine gemeinsame Entscheidung: Alle drei Ergebnisse sind legitim.</p>}<div className="tl-actions"><button className="tl-button tl-secondary" onClick={() => go('summary')}>Experiment ansehen</button><button className="tl-button tl-primary" disabled={!outcome} onClick={() => go('preview')}>Learning teilen<Icon name="arrow" /></button></div></>}
+    {stage === 'preview' && activity && experiment && outcome && <><TeamLearningPreview activityTitle={activity.title} outcome={outcome} nextStep={nextSteps[outcome]} reflection={reflection} /><div className="tl-actions"><button className="tl-button tl-secondary" onClick={() => go('retro')}>Zurück zur Retrospektive</button><button className="tl-button tl-primary" onClick={() => go('complete')}>Vorschau bestätigen<Icon name="arrow" /></button></div></>}
     {stage === 'complete' && <><p className="tl-insight">Weiterführen, Anpassen oder Stoppen: Jede bewusste Entscheidung trägt zum gemeinsamen Lernen bei.</p><div className="tl-completion-actions"><button className="tl-button tl-primary" onClick={restart}>Neues Team Experiment starten</button><Link className="tl-button tl-secondary" href="/community">Zur Community</Link><Link className="tl-text-button" href="/use-cases">Zurück zu den Use Cases</Link></div></>}
     <p className="tl-session-note">Fiktive Demo · Nur aktueller Browserzustand · Beim Neuladen oder Verlassen gehen eure Eingaben verloren. Keine Veröffentlichung.</p>
   </div>;

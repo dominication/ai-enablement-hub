@@ -42,7 +42,7 @@ export const teamActivities: Activity[] = [
   { id: 'meetings', title: 'Meetings dokumentieren', description: 'Entscheidungen und offene Punkte nach jedem Meeting aufbereiten.', role: 'Fachvertretung', discussion: { ...baseDiscussion }, subtasks: genericTasks, hypothesis: genericHypothesis },
   { id: 'processes', title: 'Prozessinformationen aktuell halten', description: 'Änderungen aus verschiedenen Teams zusammenführen.', role: 'Prozessverantwortung', discussion: { ...baseDiscussion, information: 'teilweise' }, subtasks: genericTasks, hypothesis: genericHypothesis },
   { id: 'cases', title: 'Schwierige Kundenfälle beurteilen', description: 'Kontext verstehen und angemessen reagieren.', role: 'Service Specialist', discussion: { ...baseDiscussion, information: 'teilweise', judgement: 'sehr hoch' }, subtasks: genericTasks, hypothesis: genericHypothesis },
-  { id: 'people', title: 'Mitarbeitergespräche vorbereiten', description: 'Beobachtungen und Themen strukturieren.', role: 'Teamleitung', discussion: { ...baseDiscussion, recurring: 'gelegentlich', information: 'teilweise', judgement: 'sehr hoch' }, subtasks: genericTasks, hypothesis: genericHypothesis },
+  { id: 'handovers', title: 'Übergaben zwischen Teams koordinieren', description: 'Informationen, offene Punkte und Verantwortlichkeiten bei Übergaben zwischen Teams zusammenführen.', role: 'Prozessverantwortung', discussion: { ...baseDiscussion, information: 'teilweise', judgement: 'hoch' }, subtasks: genericTasks, hypothesis: genericHypothesis },
 ];
 export function customActivity(title: string, description: string): Activity {
   return { id: 'custom', title, description, role: 'Lokaler Demo-Beitrag', discussion: { recurring: 'noch offen', effort: 'noch offen', information: 'noch offen', judgement: 'noch offen' }, subtasks: genericTasks, hypothesis: genericHypothesis };
@@ -60,11 +60,11 @@ export const agreement = ['AI-Ergebnisse werden geprüft', 'Entscheidungen bleib
 export const leadershipRole = ['Zeit und Raum für den Versuch schaffen', 'Erwartungen klären', 'unterschiedliche Perspektiven zulassen', 'nicht nur Geschwindigkeit bewerten', 'Reflexion ermöglichen'];
 export const reviewQuestions = ['Was wurde besser – und für wen?', 'Welche zusätzliche Arbeit oder neuen Risiken sind entstanden?', 'Wo war menschliche Einordnung entscheidend?', 'Führen wir weiter, passen wir an oder stoppen wir?'];
 export const retrospectiveFindings = [
-  { title: 'Was wurde besser?', text: 'Das Zusammenführen der Statusinformationen war einfacher. Wiederkehrende Themen wurden zuverlässig gebündelt.' },
-  { title: 'Was wurde schwieriger?', text: 'Das Team kontrollierte anfangs fast jede Formulierung. Dadurch entstand zusätzliche Arbeit.' },
-  { title: 'Was hat überrascht?', text: 'Einige scheinbar kleine Änderungen waren fachlich relevant, wurden vom vorbereiteten Entwurf aber nicht entsprechend gewichtet.' },
-  { title: 'Wo blieb menschliche Arbeit entscheidend?', text: 'Priorisierung, sensible Fälle und die Bedeutung von Veränderungen für andere Teams.' },
-  { title: 'Teambeobachtung', text: 'Im vorbereiteten Beispiel wurde nach zwei Wochen klarer, welche Teile zuverlässig unterstützt werden konnten und wo weiterhin Rückfragen nötig waren.' },
+  { title: 'Was wurde besser?', text: 'Informationen liessen sich schneller strukturieren und wiederkehrende Themen wurden leichter sichtbar.' },
+  { title: 'Was wurde schwieriger?', text: 'Das Team prüfte die vorbereiteten Ergebnisse anfangs sehr intensiv. Dadurch entstand zusätzliche Kontrollarbeit.' },
+  { title: 'Was hat überrascht?', text: 'Einige fachlich relevante Informationen wirkten im vorbereiteten Ergebnis zunächst nebensächlich. Ihre Bedeutung wurde erst durch den Kontext des Teams sichtbar.' },
+  { title: 'Wo blieb menschliche Arbeit entscheidend?', text: 'Bei der Einordnung von Bedeutung, Prioritäten, sensiblen Situationen und den Auswirkungen auf andere Beteiligte.' },
+  { title: 'Teambeobachtung', text: 'Im Verlauf des vorbereiteten Demo-Beispiels wurde klarer, welche Arbeitsschritte zuverlässig unterstützt werden könnten und wo weiterhin Rückfragen oder menschliche Entscheidungen nötig wären.' },
 ];
 export const outcomeOptions = [
   { id: 'continue', title: 'Weiterführen', description: 'Der Ansatz funktioniert ausreichend gut und wird Teil der Arbeitsweise.' },
@@ -79,12 +79,12 @@ export const reflectionPrompts = [
 ] as const;
 export type TeamReflection = Record<(typeof reflectionPrompts)[number]['id'], string>;
 export const defaultReflection: TeamReflection = {
-  work: 'Das Zusammentragen der Statusinformationen lässt sich vom fachlichen Beurteilen trennen. Prioritäten brauchen weiterhin unseren Kontext.',
-  ai: 'Strukturierung war hilfreich. Die Bedeutung kleiner Veränderungen mussten wir selbst prüfen; die zusätzliche Kontrollarbeit war anfangs höher als erwartet.',
+  work: 'Das Strukturieren von Informationen lässt sich vom fachlichen Beurteilen trennen. Bedeutung und Prioritäten brauchen weiterhin unseren Kontext.',
+  ai: 'Im vorbereiteten Beispiel war Strukturierung hilfreich. Die Bedeutung der Informationen musste das Team selbst prüfen; dabei entstand zusätzliche Kontrollarbeit.',
   others: 'Plant Zeit für Prüfung und Rückfragen ein. Legt vorher fest, welche Entscheidungen beim Team bleiben.',
 };
 export const defaultNextSteps: Record<Outcome, string> = {
   continue: 'Datenfreigaben, Ergebnisprüfung und menschliche Verantwortung regelmässig im Team klären.',
-  adapt: 'AI nur für Strukturierung und Veränderungshinweise verwenden. Priorisierung bleibt vollständig beim Team.',
+  adapt: 'AI nur für die Strukturierung von Informationen verwenden. Priorisierung bleibt vollständig beim Team.',
   stop: 'Den AI-Versuch beenden, zur bisherigen Arbeitsweise zurückkehren und die beobachteten Grenzen im Team festhalten.',
 };
