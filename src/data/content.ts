@@ -31,7 +31,7 @@ export const useCases: UseCase[] = [
     description: 'Eine Aufgabe aus eurem Arbeitsalltag auswählen und gemeinsam erproben, wo AI euch unterstützen kann.',
     duration: 'ca. 45 min', context: 'Team', icon: 'team',
     href: '/team-lab', action: 'Experiment starten',
-    keywords: ['team', 'teams', 'experiment', 'meetings', 'meeting', 'recherche', 'zusammenarbeit'],
+    keywords: ['team', 'teams', 'zusammenarbeit', 'experiment', 'arbeitsweise'],
   },
 ];
 

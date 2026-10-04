@@ -29,7 +29,7 @@ npm start
 - `src/data/content.ts`: typed, fictional use cases, search keywords, learning example, and information categories.
 - `src/app/globals.css`: responsive visual system using Tailwind's CSS integration and shared component styles.
 
-The homepage, Recruiting journey, and Project Management workflow are implemented. Team Lab remains a preview. Community contains one fictional experience; Guidelines provides illustrative orientation, not an organisation's approved policy. The profile avatar is a placeholder. No user contributions are stored externally or durably.
+The homepage, Recruiting journey, Project Management workflow, and Team Lab are implemented. Community contains one fictional experience; Guidelines provides illustrative orientation, not an organisation's approved policy. The profile avatar is a placeholder. No user contributions are stored externally or durably.
 
 ## Deployment from GitHub
 
@@ -78,3 +78,13 @@ The previous status and at least one current source are required for comparison.
 Source changes reset downstream work. Changed assessments require explicit draft regeneration with a notice that draft edits will be replaced; navigating back without changes preserves edits. Reuse asks before clearing the current preparation and retains only the source selection. It uses the same fictional reporting period, not new information. Sharing first shows a learning preview generated from the reflection, including an optional next-time note. Users can return to edit the reflection before confirming the preview. Confirmation is local to the session, with no publication, API calls, storage or analytics. Reloading clears the session.
 
 The existing Playwright command also runs the project workflow tests on desktop and mobile, including evidence dialogs, keyboard controls, high-risk contextual review, editing the resulting status, source exclusions, reflection and reuse. No additional packages or infrastructure are required.
+
+## Team Lab workshop
+
+`/team-lab` introduces the facilitated team experiment; `/team-lab/experiment` opens the workshop canvas. `src/data/team.ts` separates all fictional roles, activities, task mappings, prerequisites, criteria, retrospective findings and editable learning suggestions. `src/components/team/` contains the activity/focus boards, keyboard-accessible responsibility board, experiment canvas, retrospective, learning preview and workshop state.
+
+The canvas starts with work friction. Teams select activities, add/edit one local activity, discuss qualitative questions without scoring, and focus on one task. The prepared service-status example has a specific task breakdown; other activities use a clearly identified general information-structuring template. Assignments describe support, not delegated decision authority. Team conditions and desired/negative observations feed the editable experiment summary. Changing focus resets task-specific suggestions; back navigation otherwise preserves work.
+
+A prepared retrospective is explicitly illustrative and unrelated to elapsed time or real measured results. Continue, adapt and stop share equal visual weight. Editable reflections and the selected outcome feed a transparent preview before local confirmation. No collaborators are connected; no scheduling, uploads, APIs, notifications, persistence or real publishing are implemented. Reload/navigation clears state. Starting another experiment after completion resets all workshop data.
+
+Team Lab search keywords now cover team, teams, zusammenarbeit, experiment and arbeitsweise. Meeting/research searches are no longer routed to it. The existing search algorithm and other use cases are unchanged. Team Lab Playwright tests run alongside Recruiting and Project Management on desktop and mobile.

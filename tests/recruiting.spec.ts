@@ -144,7 +144,7 @@ test('sharing stays local and negative reflection is a valid outcome', async ({ 
   expect(await page.evaluate(() => Object.keys(sessionStorage))).toEqual([]);
 });
 
-test('existing routes remain available and Team Lab remains a placeholder', async ({ page }) => {
+test('existing application routes remain available', async ({ page }) => {
   await page.goto('/');
   await expect(page.locator('.use-case-card')).toHaveCount(3);
   await noOverflow(page);
@@ -152,8 +152,7 @@ test('existing routes remain available and Team Lab remains a placeholder', asyn
     const response = await page.goto(path);
     expect(response?.status()).toBe(200);
   }
-  for (const path of ['/team-lab']) {
-    await page.goto(path);
-    await expect(page.getByRole('heading', { name: 'Hier geht es bald weiter.' })).toBeVisible();
-  }
+  await page.goto('/team-lab');
+  await expect(page.getByRole('heading', { name: 'AI Team Experiment', exact: true })).toBeVisible();
+  await expect(page.getByRole('link', { name: 'Team Lab starten', exact: true })).toBeVisible();
 });

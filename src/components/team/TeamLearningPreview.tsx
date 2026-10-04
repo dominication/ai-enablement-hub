@@ -1,0 +1,5 @@
+import { demoTeam, outcomeOptions, reflectionPrompts, type Outcome, type TeamReflection } from '@/data/team';
+
+export function TeamLearningPreview({ activityTitle, outcome, nextStep, reflection }: { activityTitle: string; outcome: Outcome; nextStep: string; reflection: TeamReflection }) {
+  return <><article className="tl-learning-preview" aria-label="Team-Learning"><p className="eyebrow">TEAM LAB · FIKTIVES BEISPIEL</p><h2>{demoTeam.name}</h2><dl><dt>Experiment</dt><dd>{activityTitle}</dd><dt>Entscheidung</dt><dd>{outcomeOptions.find((option) => option.id === outcome)!.title}</dd></dl>{reflectionPrompts.map((prompt) => reflection[prompt.id].trim() && <section key={prompt.id}><h3>{prompt.title}</h3><p>{reflection[prompt.id].trim()}</p></section>)}<section><h3>Unser nächster Schritt</h3><p>{nextStep.trim() || 'Noch gemeinsam zu klären.'}</p></section></article><p className="tl-demo-note">So könnte dieses Learning für andere Teams sichtbar werden. Im Prototyp wird nichts veröffentlicht.</p></>;
+}
