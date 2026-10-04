@@ -2,6 +2,7 @@ import { expect, test, type Page } from '@playwright/test';
 
 const detail = '/use-cases/projektstatus-vorbereiten';
 const workspace = `${detail}/experiment`;
+const initialOverall = 'Noch festzulegen\nDie Projektleitung legt den Gesamtstatus unter Berücksichtigung der bestätigten Veränderungen, Risiken und des Projektkontexts selbst fest.';
 const addedContext = 'Der Test ist Voraussetzung für den extern vereinbarten Pilot. Zwei Teams sind abhängig. Eine weitere Verschiebung gefährdet den Go-live.';
 
 async function openReview(page: Page) {
@@ -20,11 +21,15 @@ async function noOverflow(page: Page) {
 test('complete workspace: evidence, keyboard risk judgement, editable status and local learning', async ({ page }, testInfo) => {
   const errors: string[] = [];
   const mutations: string[] = [];
+  const externalRequests: string[] = [];
+  page.on('request', (request) => { if (new URL(request.url()).hostname !== '127.0.0.1') externalRequests.push(request.url()); });
   page.on('pageerror', (error) => errors.push(error.message));
   page.on('request', (request) => { if (['POST', 'PUT', 'PATCH', 'DELETE'].includes(request.method())) mutations.push(request.url()); });
   await page.goto(detail);
   await expect(page.getByRole('heading', { name: 'Was verändert sich?' })).toBeVisible();
-  await expect(page.getByRole('heading', { name: 'Mehr Zeit für Steuerung statt Sammelarbeit' })).toBeVisible();
+  await expect(page.locator('.pm-metadata')).toContainText('Menschliche Einordnung');
+  await expect(page.locator('.pm-metadata')).not.toContainText('Human Review erforderlich');
+  await expect(page.getByRole('heading', { name: 'Ziel: weniger Sammelarbeit, mehr Aufmerksamkeit für Steuerung' })).toBeVisible();
   await noOverflow(page);
   await page.screenshot({ path: testInfo.outputPath('project-detail.png'), fullPage: true });
   await page.getByRole('link', { name: 'Workflow ausprobieren', exact: true }).click();
@@ -67,7 +72,7 @@ test('complete workspace: evidence, keyboard risk judgement, editable status and
   await page.getByRole('button', { name: 'Statusentwurf erstellen', exact: true }).click();
   await expect(page.getByLabel('Risiken', { exact: true })).toHaveValue(new RegExp('Risiko: hoch'));
   await expect(page.getByLabel('Risiken', { exact: true })).toHaveValue(new RegExp(addedContext.replaceAll('.', '\\.')));
-  await expect(page.getByLabel('Gesamtstatus', { exact: true })).toHaveValue(/Formulierungsvorschlag/);
+  await expect(page.getByLabel('Gesamtstatus', { exact: true })).toHaveValue(initialOverall);
   await expect(page.getByLabel('Entscheidungen', { exact: true })).toHaveValue(/Betreuungskapazität/);
   await expect(page.getByLabel('Offene Punkte', { exact: true })).toHaveValue(/Noch nicht eingeordnete Hinweise/);
   await expect(page.getByLabel('Offene Punkte', { exact: true })).not.toHaveValue(/Kommunikation/);
@@ -93,11 +98,36 @@ test('complete workspace: evidence, keyboard risk judgement, editable status and
   await page.getByRole('checkbox', { name: 'Stakeholder-Kontext', exact: true }).check();
   await page.getByLabel('Was würdest du beim nächsten Mal anders machen?', { exact: false }).fill('Pilotabhängigkeiten früher abstimmen.');
   await page.getByRole('button', { name: 'Learning teilen', exact: true }).click();
+  await expect(page.getByRole('heading', { level: 1 })).toHaveText('Vorschau deines Learnings');
+  const learning = page.getByRole('article', { name: 'Learning-Vorschau' });
+  await expect(learning).toContainText('AI hat vor allem beim Zusammentragen von Informationen unterstützt.');
+  await expect(learning).toContainText('bei der Bewertung von Risiken und der Einordnung des Stakeholder-Kontexts wichtig.');
+  await expect(learning).toContainText('Pilotabhängigkeiten früher abstimmen.');
+  await expect(page.getByText('So könnte dieses Learning mit anderen Teams geteilt werden. Im Prototyp wird nichts veröffentlicht.')).toBeVisible();
+  await noOverflow(page);
+  await page.getByRole('button', { name: 'Zurück zur Reflexion', exact: true }).click();
+  await expect(page.getByRole('radio', { name: 'Informationen zusammentragen', exact: true })).toBeChecked();
+  await expect(page.getByRole('checkbox', { name: 'Risiken bewerten', exact: true })).toBeChecked();
+  await page.getByRole('radio', { name: 'Status strukturieren', exact: true }).check();
+  await page.getByRole('checkbox', { name: 'Stakeholder-Kontext', exact: true }).uncheck();
+  await page.getByRole('checkbox', { name: 'Prioritäten', exact: true }).check();
+  await page.getByLabel('Was würdest du beim nächsten Mal anders machen?', { exact: false }).fill('Prioritäten früher abstimmen.');
+  await page.getByRole('button', { name: 'Learning teilen', exact: true }).click();
+  await expect(learning).toContainText('AI hat vor allem beim Strukturieren des Status unterstützt.');
+  await expect(learning).toContainText('bei der Bewertung von Risiken und der Priorisierung wichtig.');
+  await expect(learning).not.toContainText('Stakeholder-Kontext');
+  await expect(learning).toContainText('Prioritäten früher abstimmen.');
+  await page.evaluate(() => window.scrollTo(0, 0));
+  await page.screenshot({ path: testInfo.outputPath('learning-preview.png'), fullPage: true });
+  await page.getByRole('button', { name: 'Vorschau bestätigen', exact: true }).focus();
+  await page.keyboard.press('Enter');
   await expect(page.getByRole('heading', { level: 1 })).toHaveText('Erfahrung gespeichert');
-  await expect(page.locator('.pm-completion')).toContainText('Pilotabhängigkeiten früher abstimmen.');
+  await expect(page.locator('.pm-completion')).toContainText('Prioritäten früher abstimmen.');
+  await expect(page.locator('.pm-workspace-heading')).toContainText('Use Cases und Guidelines gemeinsam weiterzuentwickeln');
   await expect(page.locator('.pm-completion')).toContainText('nicht veröffentlicht');
   await noOverflow(page);
   expect(mutations).toEqual([]);
+  expect(externalRequests).toEqual([]);
   expect(errors).toEqual([]);
   expect(await page.evaluate(() => Object.keys(localStorage))).toEqual([]);
   expect(await page.evaluate(() => Object.keys(sessionStorage))).toEqual([]);
@@ -146,7 +176,7 @@ test('revised context refreshes drafts explicitly and empty documents cannot be 
   await page.getByRole('button', { name: 'Statusentwurf erstellen', exact: true }).click();
   await expect(page.getByLabel('Risiken', { exact: true })).toHaveValue(/Risiko: mittel/);
   await expect(page.getByLabel('Risiken', { exact: true })).toHaveValue(/Ersatzfenster/);
-  await expect(page.getByLabel('Gesamtstatus', { exact: true })).not.toHaveValue('Eigene Formulierung');
+  await expect(page.getByLabel('Gesamtstatus', { exact: true })).toHaveValue(initialOverall);
   for (const title of ['Gesamtstatus', 'Wichtigste Veränderungen', 'Risiken', 'Entscheidungen', 'Offene Punkte', 'Nächste Schritte']) {
     await page.getByRole('button', { name: `${title} entfernen`, exact: true }).click();
   }
@@ -183,6 +213,38 @@ test('reuse starts an honest new demo preparation and reload clears state', asyn
   await page.getByRole('button', { name: 'Veränderungen einordnen', exact: true }).click();
   await expect(page.getByRole('radio', { checked: true })).toHaveCount(0);
   await expect(page.getByLabel('Welcher Kontext fehlt?', { exact: true })).toHaveValue('');
+  await page.reload();
+  await expect(page.getByRole('heading', { level: 1 })).toHaveText('Welche Informationen möchtest du für den Status verwenden?');
+});
+
+test('each individual risk level leaves the overall status open', async ({ page }) => {
+  await openReview(page);
+  for (const risk of ['niedrig', 'mittel', 'hoch']) {
+    await page.getByRole('radio', { name: risk, exact: true }).check();
+    await page.getByLabel('Welcher Kontext fehlt?', { exact: true }).fill(`Eigener Projektkontext für die Einordnung ${risk}.`);
+    await page.getByRole('button', { name: 'Statusentwurf erstellen', exact: true }).click();
+    await expect(page.getByLabel('Gesamtstatus', { exact: true })).toHaveValue(initialOverall);
+    await expect(page.getByLabel('Risiken', { exact: true })).toHaveValue(new RegExp(`Risiko: ${risk}`));
+    await expect(page.getByLabel('Risiken', { exact: true })).toHaveValue(new RegExp(`Eigener Projektkontext für die Einordnung ${risk}`));
+    await page.getByRole('button', { name: 'Einordnung prüfen', exact: true }).click();
+  }
+});
+
+test('learning preview preserves a negative outcome without inventing benefits or optional text', async ({ page }) => {
+  await openReview(page);
+  await chooseHighRisk(page);
+  await page.getByRole('button', { name: 'Statusentwurf erstellen', exact: true }).click();
+  await page.getByRole('button', { name: 'Status finalisieren', exact: true }).click();
+  await page.getByRole('radio', { name: 'Keine erkennbare Entlastung', exact: true }).check();
+  await page.getByRole('checkbox', { name: 'Kommunikation', exact: true }).check();
+  await page.getByRole('button', { name: 'Learning teilen', exact: true }).click();
+  const preview = page.getByRole('article', { name: 'Learning-Vorschau' });
+  await expect(preview).toContainText('In diesem Experiment war keine Entlastung durch AI erkennbar.');
+  await expect(preview).toContainText('Menschliche Einschätzung war besonders bei der Kommunikation wichtig.');
+  await expect(preview.getByRole('heading', { name: 'Beim nächsten Mal' })).toHaveCount(0);
+  await expect(page.getByRole('heading', { name: 'Erfahrung gespeichert', exact: true })).toHaveCount(0);
+  await page.getByRole('button', { name: 'Vorschau bestätigen', exact: true }).click();
+  await expect(page.getByRole('heading', { level: 1 })).toHaveText('Erfahrung gespeichert');
   await page.reload();
   await expect(page.getByRole('heading', { level: 1 })).toHaveText('Welche Informationen möchtest du für den Status verwenden?');
 });

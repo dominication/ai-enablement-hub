@@ -14,7 +14,7 @@ export function createStatusDraft(changes: ProjectChange[], reviews: ChangeRevie
   };
   const pending = changes.filter((change) => (reviews[change.id]?.state ?? 'pending') === 'pending');
   return [
-    { id: 'overall', title: 'Gesamtstatus', text: integration && risk ? `${risk === 'hoch' ? 'angespannt' : risk === 'mittel' ? 'aufmerksam beobachten' : 'weiter beobachten'} – Formulierungsvorschlag auf Basis deiner Einordnung «${risk}». Gesamtstatus vor Verwendung selbst festlegen.` : 'Noch festzulegen – eine Gesamtbeurteilung durch die Projektleitung steht aus.' },
+    { id: 'overall', title: 'Gesamtstatus', text: 'Noch festzulegen\nDie Projektleitung legt den Gesamtstatus unter Berücksichtigung der bestätigten Veränderungen, Risiken und des Projektkontexts selbst fest.' },
     { id: 'changes', title: 'Wichtigste Veränderungen', text: included.map(reviewedText).join('\n\n') || 'Noch keine Veränderungen bestätigt.' },
     { id: 'risks', title: 'Risiken', text: integration && risk ? `${reviews.integration!.wording}\nRisiko: ${risk} – Einordnung der Projektleitung.\nZusätzlicher Kontext: ${context.trim() || 'Kein zusätzlicher Kontext angegeben.'}` : 'Noch keine Risikoeinordnung der Projektleitung übernommen. Das bedeutet nicht, dass keine Risiken bestehen.' },
     { id: 'decisions', title: 'Entscheidungen', text: included.filter((change) => change.category === 'Entscheidung').map(reviewedText).join('\n\n') || 'Keine bestätigten Entscheidungen aus der ausgewählten Auswertung übernommen.' },

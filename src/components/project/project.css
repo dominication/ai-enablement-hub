@@ -185,3 +185,10 @@
   .pm-status-document { padding: 21px 17px; }.pm-document-section > div { align-items: flex-start; gap: 5px; flex-direction: column; }.pm-document-section label { font-size: 21px; }.pm-document-section textarea { font-size: 14px; }
   .pm-project-sidebar { gap: 20px; }.pm-sidebar-sources .pm-text-button { font-size: 11px; }
 }
+.pm-learning-preview { border: 1px solid var(--line); border-radius: 7px; padding: 25px; background: #f3f5ef; }
+.pm-learning-preview > .eyebrow { color: var(--muted); margin-bottom: 17px; }
+.pm-learning-preview blockquote { margin: 0; font-size: 17px; line-height: 1.8; letter-spacing: -.01em; }
+.pm-learning-preview blockquote p + p { margin-top: 12px; }
+.pm-learning-next-time { margin-top: 22px; padding-top: 20px; border-top: 1px solid var(--line); }
+.pm-learning-next-time h2 { font-size: 15px; letter-spacing: 0; }
+.pm-learning-next-time p { font-size: 14px; white-space: pre-wrap; overflow-wrap: anywhere; margin-top: 10px; }
