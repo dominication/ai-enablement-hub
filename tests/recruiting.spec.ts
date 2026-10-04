@@ -144,7 +144,7 @@ test('sharing stays local and negative reflection is a valid outcome', async ({ 
   expect(await page.evaluate(() => Object.keys(sessionStorage))).toEqual([]);
 });
 
-test('existing routes remain available and other journeys remain placeholders', async ({ page }) => {
+test('existing routes remain available and Team Lab remains a placeholder', async ({ page }) => {
   await page.goto('/');
   await expect(page.locator('.use-case-card')).toHaveCount(3);
   await noOverflow(page);
@@ -152,7 +152,7 @@ test('existing routes remain available and other journeys remain placeholders', 
     const response = await page.goto(path);
     expect(response?.status()).toBe(200);
   }
-  for (const path of ['/use-cases/projektstatus-vorbereiten', '/team-lab']) {
+  for (const path of ['/team-lab']) {
     await page.goto(path);
     await expect(page.getByRole('heading', { name: 'Hier geht es bald weiter.' })).toBeVisible();
   }

@@ -29,7 +29,7 @@ npm start
 - `src/data/content.ts`: typed, fictional use cases, search keywords, learning example, and information categories.
 - `src/app/globals.css`: responsive visual system using Tailwind's CSS integration and shared component styles.
 
-The homepage and the Recruiting journey are implemented. Project management and Team Lab remain previews. Community contains one fictional experience; Guidelines provides illustrative orientation, not an organisation's approved policy. The profile avatar is a placeholder. No user contributions are stored externally or durably.
+The homepage, Recruiting journey, and Project Management workflow are implemented. Team Lab remains a preview. Community contains one fictional experience; Guidelines provides illustrative orientation, not an organisation's approved policy. The profile avatar is a placeholder. No user contributions are stored externally or durably.
 
 ## Deployment from GitHub
 
@@ -64,3 +64,17 @@ npm run test:e2e
 ```
 
 Tests run against the production server on port 3100. In a cloud image with system Chromium, optionally set `PLAYWRIGHT_CHROMIUM_EXECUTABLE_PATH=/usr/bin/chromium` for the test command instead of downloading a browser. This setting is for tests only; the application still requires no environment variables. The suite covers the complete flow, source exclusions, focus changes, empty selections, editing, alternatives, problem reporting, review, reflection, local-only sharing, mobile layout, and existing routes.
+
+## Project Management workspace
+
+`/use-cases/projektstatus-vorbereiten` introduces the workflow; `/use-cases/projektstatus-vorbereiten/experiment` opens a project workspace. A source sidebar, evidence timeline, contextual assessment, and editable status document distinguish it from the Recruiting wizard while retaining the shared shell, icons, colours and typography.
+
+- `src/data/project.ts`: fictional Projekt Nordstern metadata, baseline status, meeting notes, milestones, decisions, dependencies, source references and prepared changes.
+- `src/data/project-status.ts`: typed review state and pure draft assembly from selected, confirmed information.
+- `src/components/project/`: source selection/evidence, change timeline, contextual review, status document, work comparison, reflection and workspace orchestration.
+
+The previous status and at least one current source are required for comparison. Only changes supported by selected evidence appear. The preliminary low-risk assessment is explicitly incomplete: the project manager chooses the impact and adds context. Confirmed changes feed the draft; unreviewed hints remain labelled as open, and excluded hints contribute neither assertions nor next actions. Overall status is a wording suggestion, not a project decision. Every report section is editable and removable, with restoration available.
+
+Source changes reset downstream work. Changed assessments require explicit draft regeneration with a notice that draft edits will be replaced; navigating back without changes preserves edits. Reuse asks before clearing the current preparation and retains only the source selection. It uses the same fictional reporting period, not new information. Sharing is a local demo confirmation, with no publication, API calls, storage or analytics. Reloading clears the session.
+
+The existing Playwright command also runs the project workflow tests on desktop and mobile, including evidence dialogs, keyboard controls, high-risk contextual review, editing the resulting status, source exclusions, reflection and reuse. No additional packages or infrastructure are required.
