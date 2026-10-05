@@ -1,10 +1,20 @@
-import { expect, test } from '@playwright/test';
+import { expect, test, type Locator } from '@playwright/test';
 
 const entries = [
-  { route: '/use-cases/interview-vorbereiten', task: 'Was du hier machst', result: 'Was du am Ende hast', ai: 'AI unterstützt', human: 'Du entscheidest', cta: 'Experiment starten', guard: 'Dieser Use Case verarbeitet Personendaten' },
-  { route: '/use-cases/projektstatus-vorbereiten', task: 'Was du hier machst', result: 'Was du am Ende hast', ai: 'AI unterstützt', human: 'Du entscheidest', cta: 'Workflow ausprobieren', guard: 'Projektinformationen bewusst verwenden' },
-  { route: '/team-lab', task: 'Was ihr hier macht', result: 'Was ihr am Ende habt', ai: 'AI kann unterstützen bei', human: 'Ihr entscheidet gemeinsam', cta: 'Team Lab starten', guard: 'Nicht das Tool steht am Anfang' },
+  { route: '/use-cases/interview-vorbereiten', task: 'Was du hier machst', result: 'Was du am Ende hast', ai: 'AI unterstützt', human: 'Du entscheidest', cta: 'Experiment starten', guard: 'Dieser Use Case verarbeitet Personendaten', metadata: '.recruiting-meta', note: '.recruiting-start p', items: 9 },
+  { route: '/use-cases/projektstatus-vorbereiten', task: 'Was du hier machst', result: 'Was du am Ende hast', ai: 'AI unterstützt', human: 'Du entscheidest', cta: 'Workflow ausprobieren', guard: 'Projektinformationen bewusst verwenden', metadata: '.pm-metadata', note: '.pm-start p', items: 9 },
+  { route: '/team-lab', task: 'Was ihr hier macht', result: 'Was ihr am Ende habt', ai: 'AI kann unterstützen bei', human: 'Ihr entscheidet gemeinsam', cta: 'Team Lab starten', guard: 'Nicht das Tool steht am Anfang', metadata: '.tl-meta', note: '.tl-detail > .tl-small', items: 6 },
 ];
+
+async function expectBefore(first: Locator, second: Locator) {
+  const next = await second.elementHandle();
+  expect(await first.evaluate((element, following) => Boolean(following && element.compareDocumentPosition(following) & Node.DOCUMENT_POSITION_FOLLOWING), next)).toBe(true);
+  const firstBox = await first.boundingBox();
+  const secondBox = await second.boundingBox();
+  expect(firstBox).not.toBeNull();
+  expect(secondBox).not.toBeNull();
+  expect(firstBox!.y + firstBox!.height).toBeLessThanOrEqual(secondBox!.y);
+}
 
 test('navigation reflects available features and retains active routes', async ({ page }) => {
   await page.goto('/');
@@ -43,6 +53,8 @@ test('entry expectations, responsibility and original experiment destinations st
       await expect(page.getByRole('heading', { name, exact: true })).toBeVisible();
     }
     await expect(page.locator('.entry-summary section p')).toHaveCount(2);
+    await expect(page.locator('.entry-responsibility li')).toHaveCount(entry.items);
+    if (entry.route.includes('projektstatus')) await expect(page.getByRole('region', { name: 'Veränderte Arbeitsweise' })).toBeVisible();
     const start = page.getByRole('link', { name: entry.cta, exact: true });
     await expect(start).toHaveAttribute('href', `${entry.route}/experiment`);
     await start.click(); await expect(page).toHaveURL(`${entry.route}/experiment`);
@@ -70,6 +82,17 @@ test('header and entry pages fit all requested widths with usable actions', asyn
       }
       await expect(page.getByRole('banner').getByText('Hilfe', { exact: true })).toBeVisible();
       const cta = page.getByRole('link', { name: entry.cta, exact: true });
+      const summary = page.locator('.entry-summary');
+      const metadata = page.locator(entry.metadata);
+      const note = page.locator(entry.note);
+      const responsibility = page.locator('.entry-responsibility');
+      await expectBefore(summary, metadata);
+      await expectBefore(metadata, cta);
+      await expectBefore(cta, responsibility);
+      await expectBefore(note, responsibility);
+      await expectBefore(responsibility, page.getByRole('heading', { name: entry.guard, exact: true }));
+      await expect(responsibility.getByRole('list')).toHaveCount(2);
+      await expect(responsibility.getByRole('listitem')).toHaveCount(entry.items);
       await cta.scrollIntoViewIfNeeded(); await expect(cta).toBeInViewport();
       expect((await cta.boundingBox())?.height).toBeGreaterThanOrEqual(44);
       await page.evaluate(() => window.scrollTo(0, 0));
