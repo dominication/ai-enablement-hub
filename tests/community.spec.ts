@@ -162,7 +162,7 @@ test('homepage keeps its single learning and familiar structure, backed by the C
   const quote = await learning.locator('blockquote').textContent();
   await noOverflow(page);
   await page.screenshot({ path: testInfo.outputPath('homepage-with-shared-learning.png'), fullPage: true });
-  await page.getByRole('link', { name: 'Weitere Erfahrungen', exact: true }).click();
+  await page.getByRole('link', { name: 'Weitere Learnings', exact: true }).click();
   await expect(page.getByRole('article', { name: stories[0].title, exact: true }).locator('.community-summary')).toHaveText(quote!);
 });
 

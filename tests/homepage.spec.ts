@@ -17,9 +17,9 @@ test('homepage explains the product in order and keeps work search as its primar
   expect(response?.status()).toBe(200);
   await expect(page.getByRole('heading', { level: 1 })).toHaveText(headline);
   const hero = page.locator('.hero');
-  await expect(hero.locator('.hero-description')).toHaveText('Starte bei einer konkreten Aufgabe. Finde einen passenden Use Case, probiere eine neue Arbeitsweise aus und nutze Erfahrungen anderer für deinen nächsten Schritt.');
+  await expect(hero.locator('.hero-description')).toHaveText('Starte mit einer konkreten Aufgabe. Finde einen passenden Use Case und sieh, wie AI unterstützen kann – und wo deine Einordnung entscheidend bleibt.');
   await expect(hero.getByRole('search')).toHaveCount(1);
-  await expect(hero.getByRole('searchbox', { name: 'Was möchtest du erreichen?', exact: true })).toHaveAttribute('placeholder', 'Ich muss jede Woche einen Projektstatus erstellen.');
+  await expect(hero.getByRole('searchbox', { name: 'Was möchtest du erreichen?', exact: true })).toHaveAttribute('placeholder', 'z. B. Projektstatus vorbereiten, Meetingnotizen strukturieren …');
   await expect(hero.getByRole('button')).toHaveCount(1);
   await expect(hero.getByRole('button', { name: 'Use Case finden', exact: true })).toBeVisible();
   await expect(hero.getByRole('link')).toHaveCount(4);
@@ -31,15 +31,15 @@ test('homepage explains the product in order and keeps work search as its primar
 
 test('four orientation stages remain semantic guidance without progress or completion controls', async ({ page }) => {
   await page.goto('/');
-  const orientation = page.getByRole('region', { name: 'So unterstützt dich der Hub', exact: true });
+  const orientation = page.getByRole('region', { name: 'So funktioniert der Hub', exact: true });
   await expect(orientation.getByRole('list')).toHaveCount(1);
   await expect(orientation.getByRole('listitem')).toHaveCount(4);
   await expect(orientation.getByRole('heading', { level: 3 })).toHaveText(stageTitles);
   await expect(orientation).toContainText('auch wenn ein Experiment angepasst oder beendet wurde');
   await expect(orientation.locator('button, a, input, progress, meter, [role="progressbar"], [aria-current="step"]')).toHaveCount(0);
   await expect(orientation).not.toContainText(/%|abgeschlossen|Level|Punkte/);
-  expect(await page.locator('.home-sections > section').evaluateAll((sections) => sections.map((section) => section.getAttribute('aria-labelledby')))).toEqual(['orientation-title', 'featured-title', 'learning-title', 'guidelines-title']);
-  await expect(page.locator('main h2')).toHaveText(['So unterstützt dich der Hub', 'Empfohlene Use Cases', 'Was andere gerade lernen', 'Welche Informationen darf ich verwenden?']);
+  expect(await page.locator('.home-sections > section').evaluateAll((sections) => sections.map((section) => section.getAttribute('aria-labelledby')))).toEqual(['featured-title', 'orientation-title', 'learning-title', 'guidelines-title']);
+  await expect(page.locator('main h2')).toHaveText(['Empfohlene Use Cases', 'So funktioniert der Hub', 'Was andere gerade lernen', 'Welche Informationen darf ich verwenden?']);
 });
 
 test('all four homepage example searches lead to the reviewed library results', async ({ page }) => {
@@ -78,8 +78,8 @@ test('featured journeys and library links work and shared learning stays a singl
   await expect(page.locator('.learning-card blockquote')).toHaveText(featuredCommunityLearning.summary);
   await expect(page.locator('.learning-card')).toContainText(featuredCommunityLearning.takeaway);
   await expect(page.locator('.learning-card')).toContainText('Fiktives Beispiel');
-  await expect(page.locator('.home-learning-intro')).toHaveText('Erfahrungen zeigen nicht nur, was funktioniert hat, sondern auch, wo menschliche Einordnung, Anpassung oder ein bewusster Stopp sinnvoll waren.');
-  await page.getByRole('link', { name: 'Weitere Erfahrungen', exact: true }).click();
+  await expect(page.locator('.home-learning-intro')).toHaveText('Was hat geholfen? Was musste angepasst oder bewusst beendet werden?');
+  await page.getByRole('link', { name: 'Weitere Learnings', exact: true }).click();
   await expect(page).toHaveURL('/community');
   await expect(page.locator('.community-card')).toHaveCount(7);
 });

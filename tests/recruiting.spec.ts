@@ -18,7 +18,7 @@ test('full recruiting journey: source preview, edit, alternative, report, human 
   page.on('pageerror', (error) => errors.push(error.message));
   await page.goto(entry);
   await expect(page.getByRole('heading', { name: 'Interview mit AI vorbereiten', exact: true })).toBeVisible();
-  await expect(page.getByRole('heading', { name: 'Du bleibst verantwortlich für' })).toBeVisible();
+  await expect(page.getByRole('heading', { name: 'Du entscheidest' })).toBeVisible();
   await noOverflow(page);
   await page.screenshot({ path: testInfo.outputPath('recruiting-detail.png'), fullPage: true });
   await page.getByRole('link', { name: 'Experiment starten' }).click();

@@ -26,7 +26,7 @@ test('complete workspace: evidence, keyboard risk judgement, editable status and
   page.on('pageerror', (error) => errors.push(error.message));
   page.on('request', (request) => { if (['POST', 'PUT', 'PATCH', 'DELETE'].includes(request.method())) mutations.push(request.url()); });
   await page.goto(detail);
-  await expect(page.getByRole('heading', { name: 'Was verändert sich?' })).toBeVisible();
+  await expect(page.getByRole('heading', { name: 'Unterstützung und Verantwortung' })).toBeVisible();
   await expect(page.locator('.pm-metadata')).toContainText('Menschliche Einordnung');
   await expect(page.locator('.pm-metadata')).not.toContainText('Human Review erforderlich');
   await expect(page.getByRole('heading', { name: 'Ziel: weniger Sammelarbeit, mehr Aufmerksamkeit für Steuerung' })).toBeVisible();

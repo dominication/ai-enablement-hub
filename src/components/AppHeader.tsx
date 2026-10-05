@@ -3,7 +3,7 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { Icon } from './Icon';
 
-const navigation = [{ href: '/use-cases', label: 'Use Cases' }, { href: '/team-lab', label: 'Team Lab' }, { href: '/community', label: 'Community' }, { href: '/guidelines', label: 'Guidelines' }];
+const navigation = [{ href: '/use-cases', label: 'Use Cases' }, { href: '/team-lab', label: 'Team Lab' }, { href: '/community', label: 'Learnings' }, { href: '/guidelines', label: 'Guidelines' }];
 export function AppHeader() {
   const pathname = usePathname();
   return <header className="app-header">
@@ -15,7 +15,7 @@ export function AppHeader() {
       <nav className="main-nav" aria-label="Hauptnavigation">
         {navigation.map(({ href, label }) => <Link key={href} href={href} aria-current={pathname.startsWith(href) ? 'page' : undefined}>{label}</Link>)}
       </nav>
-      <div className="header-tools"><Link href="/help" className="help-link"><Icon name="help" /><span>Help</span></Link><span className="avatar" role="img" aria-label="Demo-Profil">ML</span></div>
+      <div className="header-tools"><Link href="/help" className="help-link" aria-current={pathname === "/help" ? "page" : undefined}><Icon name="help" /><span>Hilfe</span></Link></div>
     </div>
   </header>;
 }

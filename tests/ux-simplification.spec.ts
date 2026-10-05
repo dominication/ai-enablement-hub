@@ -1,0 +1,79 @@
+import { expect, test } from '@playwright/test';
+
+const entries = [
+  { route: '/use-cases/interview-vorbereiten', task: 'Was du hier machst', result: 'Was du am Ende hast', ai: 'AI unterstützt', human: 'Du entscheidest', cta: 'Experiment starten', guard: 'Dieser Use Case verarbeitet Personendaten' },
+  { route: '/use-cases/projektstatus-vorbereiten', task: 'Was du hier machst', result: 'Was du am Ende hast', ai: 'AI unterstützt', human: 'Du entscheidest', cta: 'Workflow ausprobieren', guard: 'Projektinformationen bewusst verwenden' },
+  { route: '/team-lab', task: 'Was ihr hier macht', result: 'Was ihr am Ende habt', ai: 'AI kann unterstützen bei', human: 'Ihr entscheidet gemeinsam', cta: 'Team Lab starten', guard: 'Nicht das Tool steht am Anfang' },
+];
+
+test('navigation reflects available features and retains active routes', async ({ page }) => {
+  await page.goto('/');
+  const header = page.getByRole('banner');
+  await expect(header.getByRole('navigation').getByRole('link')).toHaveText(['Use Cases', 'Team Lab', 'Learnings', 'Guidelines']);
+  await expect(header.getByText('ML', { exact: true })).toHaveCount(0);
+  await expect(header.getByRole('img', { name: 'Demo-Profil' })).toHaveCount(0);
+  for (const [label, route] of [['Use Cases', '/use-cases'], ['Team Lab', '/team-lab'], ['Learnings', '/community'], ['Guidelines', '/guidelines'], ['Hilfe', '/help']]) {
+    const link = header.getByRole('link', { name: label, exact: true });
+    await expect(link).toHaveAttribute('href', route);
+    await link.focus(); await page.keyboard.press('Enter');
+    await expect(page).toHaveURL(route);
+    await expect(link).toHaveAttribute('aria-current', 'page');
+    await expect(header.locator('[aria-current="page"]')).toHaveCount(1);
+  }
+  await page.goto('/use-cases/projektstatus-vorbereiten/experiment');
+  await expect(header.getByRole('link', { name: 'Use Cases', exact: true })).toHaveAttribute('aria-current', 'page');
+});
+
+test('each featured journey states exactly one concrete outcome', async ({ page }) => {
+  await page.goto('/');
+  const cards = page.locator('.use-case-card');
+  await expect(cards).toHaveCount(3);
+  await expect(cards.locator('.card-outcome strong')).toHaveText(['Am Ende', 'Am Ende', 'Am Ende']);
+  await expect(cards.locator('.card-outcome p')).toHaveText([
+    'Ein geprüftes Set relevanter Interviewfragen.',
+    'Ein strukturierter Statusentwurf zur menschlichen Einordnung.',
+    'Ein kleines Experiment mit gemeinsamen Beobachtungskriterien.',
+  ]);
+});
+
+test('entry expectations, responsibility and original experiment destinations stay predictable', async ({ page }) => {
+  for (const entry of entries) {
+    await page.goto(entry.route);
+    for (const name of [entry.task, entry.result, entry.ai, entry.human, entry.guard]) {
+      await expect(page.getByRole('heading', { name, exact: true })).toBeVisible();
+    }
+    await expect(page.locator('.entry-summary section p')).toHaveCount(2);
+    const start = page.getByRole('link', { name: entry.cta, exact: true });
+    await expect(start).toHaveAttribute('href', `${entry.route}/experiment`);
+    await start.click(); await expect(page).toHaveURL(`${entry.route}/experiment`);
+  }
+});
+
+test('header and entry pages fit all requested widths with usable actions', async ({ page }, testInfo) => {
+  for (const width of [360, 768, 1024, 1440]) {
+    await page.setViewportSize({ width, height: 1000 });
+    for (const entry of entries) {
+      await page.goto(entry.route);
+      expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
+      const links = page.getByRole('banner').getByRole('link');
+      const boxes = await links.evaluateAll((elements) => elements.map((el) => {
+        const r = el.getBoundingClientRect();
+        return { left: r.left, right: r.right, top: r.top, bottom: r.bottom, width: r.width };
+      }));
+      for (let i = 0; i < boxes.length; i++) {
+        expect(boxes[i].left).toBeGreaterThanOrEqual(0);
+        expect(boxes[i].right).toBeLessThanOrEqual(width);
+        expect(boxes[i].width).toBeGreaterThan(0);
+        for (let j = i + 1; j < boxes.length; j++) {
+          expect(boxes[i].right <= boxes[j].left || boxes[j].right <= boxes[i].left || boxes[i].bottom <= boxes[j].top || boxes[j].bottom <= boxes[i].top).toBe(true);
+        }
+      }
+      await expect(page.getByRole('banner').getByText('Hilfe', { exact: true })).toBeVisible();
+      const cta = page.getByRole('link', { name: entry.cta, exact: true });
+      await cta.scrollIntoViewIfNeeded(); await expect(cta).toBeInViewport();
+      expect((await cta.boundingBox())?.height).toBeGreaterThanOrEqual(44);
+      await page.evaluate(() => window.scrollTo(0, 0));
+      await page.screenshot({ path: testInfo.outputPath(`${entry.route.split('/').pop()}-${width}.png`), fullPage: true });
+    }
+  }
+});

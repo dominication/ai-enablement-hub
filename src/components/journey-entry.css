@@ -1,0 +1,18 @@
+/* Shared rhythm scoped to entry pages; experiment surfaces retain their own styles. */
+.journey-entry .entry-summary { display: grid; grid-template-columns: 1.2fr 1fr; gap: 32px; margin-top: 28px; }
+.journey-entry .entry-summary h2 { font-size: 16px; letter-spacing: 0; margin-bottom: 10px; }
+.journey-entry .entry-summary p { font-size: 16px; line-height: 1.8; color: var(--muted); }
+.journey-entry .entry-summary section:last-child { border-left: 2px solid #b4c4ae; padding-left: 24px; }
+.journey-entry .entry-responsibility { margin-top: 32px; }
+.journey-entry .entry-responsibility > h2 { font-size: 20px; }
+.journey-entry .entry-pair { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-top: 18px; }
+.journey-entry .entry-pair > div { padding: 22px 24px; border: 1px solid var(--line); border-radius: 6px; background: #f0f3ef; }
+.journey-entry .entry-pair > div:last-child { background: #f4f3ed; }
+.journey-entry .entry-pair h3 { font-size: 20px; margin: 0; }
+.journey-entry .entry-pair ul { list-style: disc; padding-left: 18px; margin: 14px 0 0; color: var(--muted); font-size: 13px; line-height: 1.75; }
+.journey-entry .entry-pair li { margin-top: 5px; }
+@media (max-width: 640px) {
+  .journey-entry .entry-summary, .journey-entry .entry-pair { grid-template-columns: 1fr; gap: 18px; }
+  .journey-entry .entry-summary p { font-size: 14px; }
+  .journey-entry .entry-pair > div { padding: 20px; }
+}
