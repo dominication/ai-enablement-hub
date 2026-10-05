@@ -10,6 +10,8 @@ export type UseCase = {
   href: string;
   action: string;
   keywords: string[];
+  // Generic context terms only match the entire normalized query.
+  contextKeywords?: string[];
 };
 
 export const useCases: UseCase[] = [
@@ -18,7 +20,8 @@ export const useCases: UseCase[] = [
     description: 'Anforderungen ordnen, fiktive Bewerbungsunterlagen durchdenken und passende Interviewfragen entwickeln.',
     duration: 'ca. 15 min', context: 'Personendaten', icon: 'interview',
     href: '/use-cases/interview-vorbereiten', action: 'Use Case ansehen',
-    keywords: ['interview', 'interviews', 'recruiting', 'hr', 'bewerbung', 'personal', 'fragen'],
+    keywords: ['interview', 'interviews', 'recruiting', 'hr', 'bewerbung', 'personal'],
+    contextKeywords: ['fragen'],
   },
   {
     slug: "interviewnotizen-strukturieren", category: "Recruiting", title: "Interviewnotizen strukturieren",
@@ -95,7 +98,8 @@ export const useCases: UseCase[] = [
     description: 'Eine Aufgabe aus eurem Arbeitsalltag auswählen und gemeinsam erproben, wo AI euch unterstützen kann.',
     duration: 'ca. 45 min', context: 'Team', icon: 'team',
     href: '/team-lab', action: 'Experiment starten',
-    keywords: ['team', 'teams', 'zusammenarbeit', 'experiment', 'arbeitsweise'],
+    keywords: ['zusammenarbeit', 'experiment', 'arbeitsweise'],
+    contextKeywords: ['team', 'teams'],
   },
 ];
 
@@ -120,12 +124,16 @@ export function searchUseCases(query: string): UseCase[] {
   if (!words.length) return [];
   // Whole terms avoid substring matches (e.g. “steam” → “team”).
   // A specific phrase takes precedence over broader single-word matches.
+  const normalizedQuery = words.join(' ');
   const matches = useCases.map((item) => ({
     item,
-    specificity: Math.max(0, ...item.keywords.map((keyword) => {
-      const phrase = searchWords(keyword);
-      return words.some((_, start) => phrase.every((word, offset) => words[start + offset] === word)) ? phrase.length : 0;
-    })),
+    specificity: Math.max(
+      item.contextKeywords?.some((keyword) => searchWords(keyword).join(' ') === normalizedQuery) ? words.length : 0,
+      ...item.keywords.map((keyword) => {
+        const phrase = searchWords(keyword);
+        return words.some((_, start) => phrase.every((word, offset) => words[start + offset] === word)) ? phrase.length : 0;
+      }),
+    ),
   }));
   const specificity = Math.max(0, ...matches.map((match) => match.specificity));
   return specificity ? matches.filter((match) => match.specificity === specificity).map((match) => match.item) : [];
