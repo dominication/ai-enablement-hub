@@ -101,13 +101,6 @@ export const useCases: UseCase[] = [
 
 export const featuredUseCases = useCases.filter((item) => item.featured);
 
-export const learning = {
-  category: 'Projektmanagement',
-  quote: 'AI konnte Änderungen aus unseren Projektinformationen gut herausarbeiten. Ob daraus tatsächlich ein relevantes Projektrisiko entsteht, mussten wir selbst beurteilen.',
-  attribution: 'Ein Projektteam teilt seine Erfahrung',
-  takeaway: 'Informationen ordnen hilft. Die Einordnung bleibt bei uns.',
-};
-
 export const informationCategories = [
   { name: 'Öffentlich', description: 'Frei zugängliche Informationen. Prüfe auch hier Nutzungsrechte und Quellen.' },
   { name: 'Intern', description: 'Nicht öffentlich zugängliche Informationen. Kläre vorab, ob das verwendete AI-System dafür freigegeben ist.' },
