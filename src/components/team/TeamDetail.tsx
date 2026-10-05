@@ -5,7 +5,6 @@ import '../journey-entry.css';
 
 export function TeamDetail() {
   return <div className="page-container detail-page journey-entry tl-detail">
-    <Link className="back-link" href="/use-cases">← Zurück zu den Use Cases</Link>
     <p className="eyebrow">TEAM LAB</p><h1>AI Team Experiment</h1>
     <div className="entry-summary"><section><h2>Was ihr hier macht</h2><p>Eine konkrete Aufgabe aus eurem Arbeitsalltag auswählen und gemeinsam prüfen, wo AI sinnvoll unterstützen könnte.</p></section><section><h2>Was ihr am Ende habt</h2><p>Ein kleines Experiment mit klaren Verantwortlichkeiten und gemeinsamen Beobachtungskriterien.</p></section></div>
     <div className="tl-meta"><span><Icon name="clock" />ca. 45 min</span><span><Icon name="team" />Team</span><span>gemeinsames Experiment</span></div>

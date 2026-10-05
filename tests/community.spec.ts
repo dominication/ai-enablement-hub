@@ -17,6 +17,8 @@ test('Community presents seven fictional mixed experiences with working use case
   const errors: string[] = [];
   page.on('pageerror', (error) => errors.push(error.message));
   await page.goto('/community');
+  await expect(page).toHaveTitle('Community | AI Enablement Hub');
+  await expect(page.locator('.community-page > .eyebrow')).toHaveText('COMMUNITY');
   await expect(page.getByRole('heading', { level: 1 })).toHaveText('Erfahrungen teilen. Gemeinsam besser entscheiden.');
   await expect(page.getByText('Alle Beiträge in diesem Prototyp sind fiktiv.', { exact: true })).toBeVisible();
   await expect(page.getByRole('heading', { name: 'Nicht nur Erfolg ist ein Learning' })).toBeVisible();
@@ -162,7 +164,7 @@ test('homepage keeps its single learning and familiar structure, backed by the C
   const quote = await learning.locator('blockquote').textContent();
   await noOverflow(page);
   await page.screenshot({ path: testInfo.outputPath('homepage-with-shared-learning.png'), fullPage: true });
-  await page.getByRole('link', { name: 'Weitere Learnings', exact: true }).click();
+  await page.getByRole('link', { name: 'Weitere Erfahrungen', exact: true }).click();
   await expect(page.getByRole('article', { name: stories[0].title, exact: true }).locator('.community-summary')).toHaveText(quote!);
 });
 

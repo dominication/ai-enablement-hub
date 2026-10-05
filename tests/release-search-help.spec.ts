@@ -45,6 +45,7 @@ test('context terms still work alone but cannot guess an unsupported task in a l
 
 test('Help describes the reviewed scope and preserves the prototype limits', async ({ page }) => {
   const response = await page.goto('/help');
+  await expect(page).toHaveTitle('Hilfe | AI Enablement Hub');
   expect(response?.status()).toBe(200);
   const main = page.locator('main');
   await expect(main).not.toContainText(/einen der drei Use Cases|eine Beispielerfahrung/);

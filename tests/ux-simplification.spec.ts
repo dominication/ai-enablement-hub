@@ -19,10 +19,11 @@ async function expectBefore(first: Locator, second: Locator) {
 test('navigation reflects available features and retains active routes', async ({ page }) => {
   await page.goto('/');
   const header = page.getByRole('banner');
-  await expect(header.getByRole('navigation').getByRole('link')).toHaveText(['Use Cases', 'Team Lab', 'Learnings', 'Guidelines']);
+  await expect(header.getByRole('navigation').getByRole('link')).toHaveText(['Use Cases', 'Team Lab', 'Community', 'Guidelines']);
+  await expect(header.getByRole('navigation').getByRole('link', { name: 'Learnings', exact: true })).toHaveCount(0);
   await expect(header.getByText('ML', { exact: true })).toHaveCount(0);
   await expect(header.getByRole('img', { name: 'Demo-Profil' })).toHaveCount(0);
-  for (const [label, route] of [['Use Cases', '/use-cases'], ['Team Lab', '/team-lab'], ['Learnings', '/community'], ['Guidelines', '/guidelines'], ['Hilfe', '/help']]) {
+  for (const [label, route] of [['Use Cases', '/use-cases'], ['Team Lab', '/team-lab'], ['Community', '/community'], ['Guidelines', '/guidelines'], ['Hilfe', '/help']]) {
     const link = header.getByRole('link', { name: label, exact: true });
     await expect(link).toHaveAttribute('href', route);
     await link.focus(); await page.keyboard.press('Enter');
@@ -51,6 +52,14 @@ test('entry expectations, responsibility and original experiment destinations st
     await page.goto(entry.route);
     for (const name of [entry.task, entry.result, entry.ai, entry.human, entry.guard]) {
       await expect(page.getByRole('heading', { name, exact: true })).toBeVisible();
+    }
+    const back = page.getByRole('link', { name: '← Zurück zu den Use Cases', exact: true });
+    if (entry.route === '/team-lab') {
+      await expect(page.locator('main')).not.toContainText('Zurück zu den Use Cases');
+      await expect(page.locator('.tl-detail .back-link')).toHaveCount(0);
+    } else {
+      await expect(back).toBeVisible();
+      await expect(back).toHaveAttribute('href', '/use-cases');
     }
     await expect(page.locator('.entry-summary section p')).toHaveCount(2);
     await expect(page.locator('.entry-responsibility li')).toHaveCount(entry.items);

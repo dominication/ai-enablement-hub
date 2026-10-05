@@ -79,7 +79,7 @@ test('featured journeys and library links work and shared learning stays a singl
   await expect(page.locator('.learning-card')).toContainText(featuredCommunityLearning.takeaway);
   await expect(page.locator('.learning-card')).toContainText('Fiktives Beispiel');
   await expect(page.locator('.home-learning-intro')).toHaveText('Was hat geholfen? Was musste angepasst oder bewusst beendet werden?');
-  await page.getByRole('link', { name: 'Weitere Learnings', exact: true }).click();
+  await page.getByRole('link', { name: 'Weitere Erfahrungen', exact: true }).click();
   await expect(page).toHaveURL('/community');
   await expect(page.locator('.community-card')).toHaveCount(7);
 });
