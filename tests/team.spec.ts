@@ -186,10 +186,11 @@ test('search returns Team Lab only for relevant intent', async ({ page }) => {
     await expect(page.locator('.use-case-card')).toHaveCount(1);
     await expect(page.locator('.use-case-card')).toContainText('AI Team Experiment');
   }
-  for (const term of ['meeting', 'meetings', 'recherche']) {
+  for (const [term, title] of [['meeting', 'Meeting-Ergebnisse aufbereiten'], ['meetings', 'Meeting-Ergebnisse aufbereiten'], ['recherche', 'Recherche strukturieren und verdichten']]) {
     await page.goto(`/use-cases?q=${term}`);
-    await expect(page.locator('.use-case-card')).toHaveCount(0);
-    await expect(page.getByRole('heading', { name: 'Noch kein passender Use Case dabei.' })).toBeVisible();
+    await expect(page.locator('.use-case-card')).toHaveCount(1);
+    await expect(page.locator('.use-case-card h3')).toHaveText(title);
+    await expect(page.locator('.use-case-card')).not.toContainText('AI Team Experiment');
   }
 });
 

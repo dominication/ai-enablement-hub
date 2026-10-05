@@ -1,7 +1,8 @@
 import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import { useCases } from '@/data/content';
-import { PlaceholderPage } from '@/components/PlaceholderPage';
+import { UseCaseOverview } from '@/components/UseCaseOverview';
+import { useCaseOverviews } from '@/data/use-case-library';
 import { RecruitingDetail } from '@/components/recruiting/RecruitingDetail';
 import { ProjectDetail } from '@/components/project/ProjectDetail';
 export const dynamicParams = false;
@@ -13,5 +14,7 @@ export default async function UseCasePage({ params }: { params: Promise<{ slug: 
   if (!item) notFound();
   if (slug === 'interview-vorbereiten') return <RecruitingDetail />;
   if (slug === 'projektstatus-vorbereiten') return <ProjectDetail />;
-  return <PlaceholderPage category={item.category} title={item.title} description={item.description} note={item.context === 'Personendaten' ? 'Nutze hier ausschliesslich fiktive Bewerbungsunterlagen. Interviewentscheidungen bleiben bei den verantwortlichen Menschen.' : 'Prüfe vor der Nutzung, welche Projektinformationen du in einem freigegebenen AI-System verwenden darfst.'} />;
+  const content = useCaseOverviews[slug];
+  if (!content) notFound();
+  return <UseCaseOverview item={item} content={content} />;
 }

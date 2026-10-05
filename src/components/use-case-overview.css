@@ -1,0 +1,25 @@
+.uc-overview { max-width: 1120px; }
+.uc-overview-meta { display: flex; flex-wrap: wrap; gap: 12px 24px; margin: 24px 0 40px; font-size: 13px; color: var(--muted); }
+.uc-overview-meta span { display: inline-flex; align-items: center; gap: 8px; }
+.uc-overview-meta svg { width: 18px; height: 18px; }
+.uc-overview-roles { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 24px; }
+.uc-overview-roles section { padding: 28px; background: white; border: 1px solid var(--line); border-radius: 7px; }
+.uc-overview h2 { font-size: 24px; }
+.uc-overview ul { list-style: disc; padding-left: 20px; margin: 20px 0 0; }
+.uc-overview li { padding-left: 4px; }
+.uc-overview li + li { margin-top: 14px; }
+.uc-overview li, .uc-overview-steps p { color: var(--muted); font-size: 14px; line-height: 1.8; }
+.uc-overview-steps { margin: 40px 0; }
+.uc-overview-steps ol { list-style: decimal; padding-left: 24px; margin: 24px 0 0; }
+.uc-overview-steps li { padding-left: 12px; }
+.uc-overview-steps li::marker { color: var(--accent); font-weight: 600; }
+.uc-overview-steps li + li { margin-top: 24px; }
+.uc-overview-steps h3 { font-size: 18px; color: var(--ink); margin-bottom: 8px; }
+.uc-overview-considerations { padding: 28px; background: #f0f3ed; border: 1px solid var(--line); border-radius: 7px; }
+.uc-overview-considerations .text-link { margin-top: 24px; white-space: normal; }
+.uc-overview-considerations .text-link svg { flex-shrink: 0; }
+@media (max-width: 700px) {
+  .uc-overview-roles { grid-template-columns: 1fr; gap: 18px; }
+  .uc-overview-roles section, .uc-overview-considerations { padding: 24px 20px; }
+  .uc-overview h2 { font-size: 22px; }
+}

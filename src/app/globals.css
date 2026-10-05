@@ -86,6 +86,8 @@ h2 { font-size: 27px; }
 .use-case-card > p { font-size: 13px; line-height: 1.85; color: var(--muted); margin-bottom: 25px; }
 .card-meta { display: flex; gap: 12px; align-items: center; font-size: 10px; color: #617067; margin-top: auto; margin-bottom: 21px; }
 .card-meta > span { display: inline-flex; align-items: center; gap: 5px; white-space: nowrap; }
+.library-page .card-meta { flex-wrap: wrap; }
+.library-page .card-meta > span:last-child { white-space: normal; }
 .card-meta svg { width: 14px; height: 14px; }
 .meta-divider { width: 1px; height: 11px; background: var(--line); }
 .card-action { border-top: 1px solid #e9ede7; padding: 17px 0; display: flex; justify-content: space-between; align-items: center; font-size: 12px; font-weight: 600; }
