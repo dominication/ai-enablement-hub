@@ -166,4 +166,30 @@ test('homepage text and action tokens preserve AA contrast on the pale surfaces'
   function contrast(a: string, b: string) { const values = [luminance(a), luminance(b)].sort((x, y) => y - x); return (values[0] + .05) / (values[1] + .05); }
   for (const foreground of ['ink', 'muted', 'petrol']) for (const background of ['page', 'mint', 'sky', 'apricot', 'surface']) expect(contrast(tokens[foreground], tokens[background])).toBeGreaterThanOrEqual(4.5);
   expect(contrast('#ffffff', tokens.petrol)).toBeGreaterThanOrEqual(4.5);
+  for (const background of ['#f0f7f3', '#f0f6fa', '#fcf3e9']) for (const foreground of ['ink', 'muted']) expect(contrast(tokens[foreground], background)).toBeGreaterThanOrEqual(4.5);
+});
+
+
+test('polished homepage keeps readable type, editorial thumbnails and qualitative signals', async ({ page }) => {
+  for (const width of [360, 768, 1024, 1440]) {
+    await page.setViewportSize({ width, height: 1000 });
+    await page.goto('/');
+    for (const selector of ['.hf-benefit', '.hf-status p', '.hf-learning h3', '.hf-guidelines p']) {
+      for (const element of await page.locator(selector).all()) expect(await element.evaluate((node) => parseFloat(getComputedStyle(node).fontSize))).toBeGreaterThanOrEqual(14);
+    }
+    for (const element of await page.locator('.hf-primary, .hf-home .text-link, .search-field button').all()) expect(await element.evaluate((node) => parseFloat(getComputedStyle(node).fontSize))).toBeGreaterThanOrEqual(13);
+    expect(await page.locator('.hf-home').evaluate((node) => getComputedStyle(node).fontFamily)).toContain('system-ui');
+    const previews = await page.locator('.hf-learning img').evaluateAll((images) => images.map((image) => image.getAttribute('src')));
+    const journeys = await page.locator('.hf-journey img').evaluateAll((images) => images.map((image) => image.getAttribute('src')));
+    expect(new Set(previews).size).toBe(3);
+    for (const preview of previews) expect(journeys).not.toContain(preview);
+    await expect(page.locator('.hf-learning img[alt=""]')).toHaveCount(3);
+    const backgrounds = await page.locator('.hf-status').evaluateAll((nodes) => nodes.map((node) => getComputedStyle(node).backgroundColor));
+    expect(new Set(backgrounds).size).toBe(3);
+    await expect(page.locator('.hf-status h3')).toHaveText(['Schon nutzbar', 'In Erprobung', 'Nächster Fokus']);
+    expect(await page.locator('.hf-status-section').evaluate((node) => parseFloat(getComputedStyle(node).marginTop))).toBeGreaterThanOrEqual(24);
+    const action = page.locator('.hf-primary').first();
+    await action.focus();
+    expect(await action.evaluate((node) => getComputedStyle(node).outlineStyle)).not.toBe('none');
+  }
 });

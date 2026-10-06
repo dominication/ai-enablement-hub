@@ -15,9 +15,9 @@ export const homepageSignals = [
 ] as const;
 
 const previewSelection = [
-  { id: 'meeting-entscheidungen-bestaetigen', title: 'Aus Meetingnotizen klare nächste Schritte machen', image: 'notes.svg', label: 'Praxisbeispiel' },
-  { id: 'projektstatus-kontext', title: 'Ein guter Status braucht menschlichen Kontext', image: 'project.svg', label: 'Aus der Projektarbeit' },
-  { id: 'team-einsatz-eingrenzen', title: 'Was im Team funktioniert – und was wir anpassen', image: 'team.svg', label: 'Aus der Community' },
+  { id: 'meeting-entscheidungen-bestaetigen', title: 'Aus Meetingnotizen klare nächste Schritte machen', image: 'learning-notes.svg', label: 'Praxisbeispiel' },
+  { id: 'projektstatus-kontext', title: 'Ein guter Status braucht menschlichen Kontext', image: 'learning-project.svg', label: 'Aus der Projektarbeit' },
+  { id: 'team-einsatz-eingrenzen', title: 'Was im Team funktioniert – und was wir anpassen', image: 'learning-team.svg', label: 'Aus der Community' },
 ];
 export const homepageLearnings = previewSelection.map((preview) => {
   const learning = communityLearnings.find((item) => item.id === preview.id);

@@ -30,7 +30,7 @@ export default function Home() {
 
       <section className="hf-status-section" aria-labelledby="status-title">
         <div className="section-header"><h2 id="status-title">Wo stehen wir mit AI?</h2><Link href="/organisation" className="text-link">Zum AI Standortbild<Icon name="arrow" /></Link></div>
-        <div className="hf-status-grid">{homepageSignals.map((signal) => <article className="hf-status" key={signal.title}><span className={`hf-signal-icon hf-${signal.tone}`}><Icon name={signal.icon} /></span><div><h3>{signal.title}</h3><p>{signal.description}</p></div></article>)}</div>
+        <div className="hf-status-grid">{homepageSignals.map((signal) => <article className={`hf-status hf-status-${signal.tone}`} key={signal.title}><span className={`hf-signal-icon hf-${signal.tone}`}><Icon name={signal.icon} /></span><div><h3>{signal.title}</h3><p>{signal.description}</p></div></article>)}</div>
       </section>
 
       <section className="learning-section" aria-labelledby="learning-title">
