@@ -173,3 +173,50 @@ blockquote { margin: 0; font-size: 19px; line-height: 1.65; letter-spacing: -.02
 .card-outcome { margin-bottom: 22px; font-size: 13px; line-height: 1.7; }
 .card-outcome strong { display: block; margin-bottom: 4px; font-size: 11px; color: var(--accent); }
 .card-outcome p { color: var(--muted); }
+
+/* Approved homepage foundations, also used by the shared header. */
+:root {
+  --hub-page: #fdfcf9;
+  --hub-ink: #17232f;
+  --hub-muted: #50616b;
+  --hub-petrol: #086474;
+  --hub-petrol-hover: #064d59;
+  --hub-mint: #edf7f3;
+  --hub-sky: #edf7fc;
+  --hub-apricot: #fff0e1;
+  --hub-surface: #ffffff;
+  --hub-radius: 14px;
+  --hub-button-radius: 12px;
+  --hub-shadow: 0 3px 16px rgb(27 53 59 / 5%);
+  --hub-section-gap: 24px;
+  --hub-container: 1280px;
+  --hub-title-size: clamp(32px, 3.2vw, 46px);
+  --hub-section-title-size: 18px;
+}
+.app-header { background: var(--hub-surface); border-bottom: 0; color: var(--hub-ink); }
+.header-inner { max-width: var(--hub-container); min-height: 76px; padding: 0 24px; gap: 32px; }
+.brand { font-size: 17px; letter-spacing: -.6px; gap: 12px; }
+.brand-mark { transform: none; position: relative; display: block; width: 32px; height: 34px; }
+.brand-mark span { position: absolute; width: 18px; height: 18px; border-radius: 50%; }
+.brand-mark span:nth-child(1) { left: 12px; top: 0; background: #4a8c99; }
+.brand-mark span:nth-child(2) { left: 0; top: 13px; background: #f2bb91; border-radius: 50%; }
+.brand-mark span:nth-child(3) { left: 18px; top: 19px; width: 13px; height: 13px; background: #8ebdba; }
+.brand-mark span:nth-child(4) { display: none; }
+.main-nav { margin: 0 0 0 auto; gap: 28px; }
+.main-nav a { min-height: 44px; font-size: 13px; }
+.main-nav a[aria-current="page"]::after { background: var(--hub-petrol); height: 2px; }
+.help-link { color: var(--hub-petrol); font-size: 13px; padding-left: 24px; border-left: 1px solid #edf0ee; }
+.help-link svg { display: none; }
+@media (max-width: 900px) {
+  .header-inner { padding-top: 14px; gap: 14px; }
+  .main-nav { order: 3; width: 100%; height: 50px; margin: 0; justify-content: flex-start; gap: 28px; }
+  .header-tools { margin-left: auto; }
+}
+@media (max-width: 640px) {
+  .header-inner { padding-inline: 20px; }
+  .brand { font-size: 16px; }
+  .help-link { padding-left: 12px; }
+  .main-nav { justify-content: space-between; gap: 10px; }
+  .main-nav a { font-size: 12px; }
+}
+.brand { min-height: 44px; }

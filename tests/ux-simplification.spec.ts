@@ -35,16 +35,21 @@ test('navigation reflects available features and retains active routes', async (
   await expect(header.getByRole('link', { name: 'Use Cases', exact: true })).toHaveAttribute('aria-current', 'page');
 });
 
-test('each featured journey states exactly one concrete outcome', async ({ page }) => {
+test('each featured journey has a concise benefit and its original destination', async ({ page }) => {
   await page.goto('/');
   const cards = page.locator('.use-case-card');
   await expect(cards).toHaveCount(3);
-  await expect(cards.locator('.card-outcome strong')).toHaveText(['Am Ende', 'Am Ende', 'Am Ende']);
-  await expect(cards.locator('.card-outcome p')).toHaveText([
-    'Ein geprüftes Set relevanter Interviewfragen.',
-    'Ein strukturierter Statusentwurf zur menschlichen Einordnung.',
-    'Ein kleines Experiment mit gemeinsamen Beobachtungskriterien.',
+  await expect(cards.locator('.hf-benefit')).toHaveText([
+    'Bessere Fragen, strukturierte Vorbereitung und gezieltere Gespräche.',
+    'Projektinformationen strukturieren und einen klaren Statusentwurf vorbereiten.',
+    'Gemeinsam Ideen testen und herausfinden, was für eure Arbeit funktioniert.',
   ]);
+  for (let index = 0; index < entries.length; index++) {
+    const link = cards.nth(index).locator('.hf-primary');
+    await expect(link).toHaveAttribute('href', entries[index].route);
+    await link.click(); await expect(page).toHaveURL(entries[index].route);
+    await page.goto('/');
+  }
 });
 
 test('entry expectations, responsibility and original experiment destinations stay predictable', async ({ page }) => {

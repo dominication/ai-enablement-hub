@@ -44,7 +44,7 @@ test('Standortbild gives qualitative fictional orientation with three observatio
   await expect(page.locator('main')).not.toContainText(/%|Score|Reifegradstufe|Priorität|Rangliste|Schweregrad|Produktivitätssteigerung/);
 });
 
-test('Community is the contextual entry and primary navigation and homepage remain unchanged', async ({ page }) => {
+test('Community and homepage link to Standortbild without adding it to primary navigation', async ({ page }) => {
   await page.goto('/community');
   await expect(page.locator('.community-card')).toHaveCount(7);
   const entry = page.getByRole('region', { name: 'Was lernen wir daraus als Organisation?' });
@@ -58,7 +58,7 @@ test('Community is the contextual entry and primary navigation and homepage rema
   await expect(page.getByRole('banner').getByRole('link', { name: 'Hilfe', exact: true })).toHaveAttribute('href', '/help');
   await expect(page.getByRole('banner').locator('a[href="/organisation"]')).toHaveCount(0);
   await page.goto('/');
-  await expect(page.locator('a[href="/organisation"]')).toHaveCount(0);
+  await expect(page.getByRole('region', { name: 'Wo stehen wir mit AI?' }).getByRole('link', { name: 'Zum AI Standortbild' })).toHaveAttribute('href', '/organisation');
   await expect(page.locator('.use-case-card')).toHaveCount(3);
 });
 

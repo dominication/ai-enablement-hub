@@ -147,25 +147,26 @@ test('details preserve the work-specific limitations and human judgement behind 
   await expect(communication).toContainText('Kritische Einschränkungen werden vor dem Umformulieren ausdrücklich markiert');
 });
 
-test('homepage keeps its single learning and familiar structure, backed by the Community experience', async ({ page }, testInfo) => {
+test('homepage previews link to existing fictional Community experiences', async ({ page }, testInfo) => {
   await page.goto('/');
   await expect(page.locator('.hero')).toHaveCount(1);
   await expect(page.locator('.use-case-card')).toHaveCount(3);
-  await expect(page.locator('.learning-section')).toHaveCount(1);
-  const learning = page.locator('.learning-card');
-  await expect(learning).toHaveCount(1);
-  await expect(learning.locator('.learning-label')).toHaveCount(1);
-  await expect(learning.locator('.quote-layout blockquote')).toHaveCount(1);
-  await expect(learning.locator('.learning-footer')).toHaveCount(1);
-  await expect(learning).toContainText('Fiktives Beispiel');
-  await expect(learning).toContainText(stories[0].title);
+  await expect(page.locator('.hf-learning')).toHaveCount(3);
   await expect(page.locator('.guidelines-teaser')).toHaveCount(1);
   await expect(page.locator('.community-card, .community-filters')).toHaveCount(0);
-  const quote = await learning.locator('blockquote').textContent();
+  const destinations = await page.locator('.hf-learning h3 a').evaluateAll((links) => links.map((link) => link.getAttribute('href')!));
   await noOverflow(page);
   await page.screenshot({ path: testInfo.outputPath('homepage-with-shared-learning.png'), fullPage: true });
+  for (const href of destinations) {
+    await page.goto('/');
+    await page.locator(`.hf-learning a[href="${href}"]`).click();
+    await expect(page).toHaveURL(href);
+    await expect(page.locator(new URL(page.url()).hash)).toBeVisible();
+    await expect(page.locator('.community-card')).toHaveCount(7);
+  }
+  await page.goto('/');
   await page.getByRole('link', { name: 'Weitere Erfahrungen', exact: true }).click();
-  await expect(page.getByRole('article', { name: stories[0].title, exact: true }).locator('.community-summary')).toHaveText(quote!);
+  await expect(page).toHaveURL('/community');
 });
 
 test('Community stays readable at narrow and intermediate widths with expanded details', async ({ page }) => {
