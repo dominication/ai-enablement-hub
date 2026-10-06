@@ -153,3 +153,67 @@ test('library metadata and detail pages fit intermediate screen widths', async (
     await noOverflow(page);
   }
 });
+
+test('library categories combine with search and preserve keyboard navigation', async ({ page }) => {
+  await page.goto('/use-cases');
+  const filters = page.getByRole('navigation', { name: 'Use Cases nach Kategorie' });
+  await expect(filters.getByRole('link')).toHaveCount(8);
+  await expect(filters.getByRole('link', { name: 'Alle', exact: true })).toHaveAttribute('aria-current', 'page');
+  for (const category of ['Recruiting', 'Projektmanagement', 'Zusammenarbeit', 'Kommunikation', 'Wissensarbeit', 'Entscheidungen', 'Teams']) {
+    const link = filters.getByRole('link', { name: category, exact: true });
+    await link.focus();
+    expect(await link.evaluate((node) => getComputedStyle(node).outlineStyle)).not.toBe('none');
+    await page.keyboard.press('Enter');
+    await expect(link).toHaveAttribute('aria-current', 'page');
+    const categories = await page.locator('.library-grid .eyebrow').allTextContents();
+    expect(categories.length).toBeGreaterThan(0);
+    expect(categories.every((value) => value === category)).toBe(true);
+  }
+  await filters.getByRole('link', { name: 'Recruiting', exact: true }).click();
+  await page.getByLabel('Was möchtest du erreichen?').fill('interviewnotizen');
+  await page.getByRole('button', { name: 'Use Case finden' }).click();
+  await expect(page).toHaveURL(/category=Recruiting/);
+  await expect(page.locator('.use-case-card h3')).toHaveText(['Interviewnotizen strukturieren']);
+  await filters.getByRole('link', { name: 'Teams', exact: true }).click();
+  await expect(page.getByRole('heading', { name: 'Noch kein passender Use Case dabei.' })).toBeVisible();
+  await page.locator('.empty-state').getByRole('link', { name: /Alle Use Cases ansehen/ }).click();
+  await expect(page.locator('.use-case-card')).toHaveCount(12);
+  await page.goto('/use-cases?category=unknown');
+  await expect(page.locator('.use-case-card')).toHaveCount(12);
+});
+
+test('high fidelity library fits four widths with local visuals and accessible actions', async ({ page }, testInfo) => {
+  const errors: string[] = [];
+  const unexpected: string[] = [];
+  page.on('pageerror', (error) => errors.push(error.message));
+  page.on('console', (message) => { if (message.type() === 'error') errors.push(message.text()); });
+  page.on('request', (request) => { if (new URL(request.url()).hostname !== '127.0.0.1' || !['GET', 'HEAD'].includes(request.method())) unexpected.push(request.url()); });
+  for (const width of [360, 768, 1024, 1440]) {
+    await page.setViewportSize({ width, height: 1000 });
+    await page.goto('/use-cases');
+    await noOverflow(page);
+    await expect(page.locator('h1')).toHaveCount(1);
+    await expect(page.locator('.library-featured .use-case-card')).toHaveCount(3);
+    await expect(page.locator('.library-grid .use-case-card')).toHaveCount(9);
+    for (const link of await page.locator('.library-filters a, .uc-library .card-action, .library-text-link').all()) {
+      expect((await link.boundingBox())!.height).toBeGreaterThanOrEqual(44);
+    }
+    for (const image of await page.locator('.uc-library img').all()) {
+      if (!await image.isVisible()) continue;
+      await image.scrollIntoViewIfNeeded();
+      await expect.poll(() => image.evaluate((node) => (node as HTMLImageElement).complete && (node as HTMLImageElement).naturalWidth > 0)).toBe(true);
+      await expect(image).toHaveAttribute('alt', '');
+    }
+    if (width === 1440) expect((await page.locator('.library-featured').boundingBox())!.y).toBeLessThan(600);
+    await page.evaluate(() => window.scrollTo(0, 0));
+    await page.screenshot({ path: testInfo.outputPath(`library-${width}.png`), fullPage: true });
+  }
+  await page.getByRole('link', { name: 'Zu den Guidelines', exact: true }).click();
+  await expect(page).toHaveURL('/guidelines');
+  await page.goto('/use-cases');
+  await page.getByRole('link', { name: 'Zur Community', exact: true }).click();
+  await expect(page).toHaveURL('/community');
+  expect(errors).toEqual([]); expect(unexpected).toEqual([]);
+  expect(await page.evaluate(() => Object.keys(localStorage))).toEqual([]);
+  expect(await page.evaluate(() => Object.keys(sessionStorage))).toEqual([]);
+});

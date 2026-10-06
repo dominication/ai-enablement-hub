@@ -1,9 +1,10 @@
 import Link from 'next/link';
 import { Icon } from './Icon';
 
-export function HeroSearch({ initialQuery = '', compact = false }: { initialQuery?: string; compact?: boolean }) {
+export function HeroSearch({ initialQuery = '', compact = false, category = '' }: { initialQuery?: string; compact?: boolean; category?: string }) {
   return <div className={compact ? 'hero-search compact' : 'hero-search'}>
     <form action="/use-cases" method="get" role="search">
+      {category && <input type="hidden" name="category" value={category} />}
       <label htmlFor="work-search">Was möchtest du erreichen?</label>
       <div className="search-field"><Icon name="search" /><input id="work-search" name="q" type="search" defaultValue={initialQuery} maxLength={200} placeholder="z. B. Projektstatus vorbereiten, Meetingnotizen strukturieren …" /><button type="submit">Use Case finden<Icon name="arrow" /></button></div>
     </form>
