@@ -33,6 +33,12 @@
 .community-pattern h2 { font-size: 23px; }
 .community-pattern ul { margin: 20px 0 0; padding-left: 20px; list-style: disc; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px 36px; color: var(--muted); font-size: 14px; }
 .community-empty { padding: 28px; border: 1px solid var(--line); border-radius: 7px; color: var(--muted); }
+.community-organisation { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 20px 32px; margin-top: 40px; padding-top: 28px; border-top: 1px solid var(--line); }
+.community-organisation > div { flex: 1 1 440px; }
+.community-organisation .eyebrow { color: var(--muted); margin-bottom: 10px; }
+.community-organisation h2 { font-size: 23px; }
+.community-organisation p:not(.eyebrow) { margin-top: 10px; font-size: 14px; color: var(--muted); max-width: 720px; }
+.community-organisation > a { min-height: 44px; }
 @media (max-width: 760px) {
   .community-grid, .community-pattern ul { grid-template-columns: 1fr; }
   .community-card, .community-principle { padding: 24px 20px; }
