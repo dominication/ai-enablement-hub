@@ -18,33 +18,33 @@ export type OrganisationalPerspective = {
 export type AttentionArea = { id: string; title: string; description: string };
 
 export const organisationalObservations: readonly OrganisationalObservation[] = [
-  { title: 'Konkrete Anfänge', description: 'Erste Use Cases sind etabliert und helfen bei konkreten Aufgaben im Arbeitsalltag.' },
-  { title: 'Lernen nimmt zu', description: 'Erfahrungen werden geteilt und erste Muster zwischen unterschiedlichen Arbeitssituationen sichtbar.' },
+  { title: 'Konkrete Anfänge', description: 'Erste Use Cases zeigen, wie AI bei konkreten Aufgaben im Arbeitsalltag unterstützen kann.' },
+  { title: 'Lernen wird sichtbar', description: 'Die Community-Beispiele machen erste Muster zwischen unterschiedlichen Arbeitssituationen sichtbar.' },
   { title: 'Noch offene Fragen', description: 'Der Umgang mit sensiblen Informationen ist nicht in allen Arbeitssituationen gleich eindeutig.' },
 ];
 
 export const organisationalPerspectives: readonly OrganisationalPerspective[] = [
   {
     id: 'orientierung', title: 'Orientierung & Befähigung',
-    observation: 'Mitarbeitende finden erste geeignete Anwendungen und informieren sich aktiv über sinnvolle Einsatzmöglichkeiten.',
+    observation: 'Erste Use Cases schaffen Orientierung für geeignete Anwendungen und machen sinnvolle Einsatzmöglichkeiten sichtbar.',
     question: 'Wie erreichen Orientierung und sichere Anwendung auch weniger erfahrene Mitarbeitende?',
     evidence: [{ kind: 'use-case', slug: 'interview-vorbereiten' }, { kind: 'use-case', slug: 'recherche-strukturieren' }],
   },
   {
     id: 'anwendung', title: 'Anwendung im Arbeitsalltag',
-    observation: 'Mehrere konkrete Aufgaben werden bereits mit AI unterstützt – besonders beim Strukturieren und Vorbereiten.',
+    observation: 'Die Use Cases zeigen AI-Unterstützung für konkrete Aufgaben – besonders beim Strukturieren und Vorbereiten.',
     question: 'Wo verändert AI tatsächlich Arbeitsabläufe und nicht nur einzelne Arbeitsschritte?',
     evidence: [{ kind: 'use-case', slug: 'projektstatus-vorbereiten' }, { kind: 'community', id: 'projektstatus-kontext' }],
   },
   {
     id: 'teams', title: 'Teams & Zusammenarbeit',
-    observation: 'Einzelne Teams testen neue Arbeitsweisen gemeinsam und reflektieren erste Erfahrungen.',
+    observation: 'Team Lab und Community-Beispiele zeigen, wie Teams neue Arbeitsweisen gemeinsam erproben und reflektieren können.',
     question: 'Wie werden Erfahrungen zwischen Teams systematischer nutzbar?',
     evidence: [{ kind: 'use-case', slug: 'team-experiment' }, { kind: 'community', id: 'team-einsatz-eingrenzen' }],
   },
   {
     id: 'lernen', title: 'Lernen & Austausch',
-    observation: 'Erfahrungen werden geteilt und machen sichtbar, was funktioniert, angepasst oder bewusst beendet wurde.',
+    observation: 'Die Community-Beispiele machen sichtbar, was in fiktiven Experimenten funktioniert, angepasst oder bewusst beendet wurde.',
     question: 'Wie werden Learnings wiederverwendet, statt nur dokumentiert?',
     evidence: [{ kind: 'community', id: 'interviewfragen-pruefen' }, { kind: 'community', id: 'team-versuch-beenden' }],
   },
@@ -57,8 +57,8 @@ export const organisationalPerspectives: readonly OrganisationalPerspective[] = 
 ];
 
 export const attentionAreas: readonly AttentionArea[] = [
-  { id: 'austausch', title: 'Erfahrungen zwischen Teams nutzbarer machen', description: 'Ähnliche Learnings entstehen in mehreren Experimenten, werden aber noch wenig miteinander verbunden.' },
-  { id: 'leitplanken', title: 'Datenleitplanken konkreter machen', description: 'Bei sensiblen Informationen entstehen wiederkehrende Unsicherheiten. Konkretere Beispiele könnten Orientierung geben.' },
+  { id: 'austausch', title: 'Erfahrungen zwischen Teams nutzbarer machen', description: 'Die Community-Beispiele zeigen ähnliche Learnings aus unterschiedlichen Arbeitssituationen. Diese lassen sich für den Austausch zwischen Teams verbinden.' },
+  { id: 'leitplanken', title: 'Datenleitplanken konkreter machen', description: 'Die Beispiele machen Prüfbedarf bei sensiblen Informationen sichtbar. Konkretere Leitplanken könnten Orientierung geben.' },
   { id: 'erproben', title: 'Geeignete Use Cases gezielt weiter erproben', description: 'Strukturierungs- und Vorbereitungsaufgaben zeigen wiederholt Potenzial und eignen sich für weitere kontrollierte Experimente.' },
 ];
 
