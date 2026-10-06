@@ -7,7 +7,7 @@
 .library-hero-copy > .eyebrow { letter-spacing: .3em; margin-bottom: 10px; }
 .uc-library h1 { font-size: clamp(30px, 3vw, 42px); font-weight: 750; line-height: 1.12; letter-spacing: -.045em; }
 .library-intro { color: var(--hub-muted); font-size: 16px; line-height: 1.5; margin-top: 10px; max-width: 620px; }
-.library-hero-art { position: absolute; right: 0; bottom: 0; width: 40%; height: 100%; object-fit: cover; object-position: center; mix-blend-mode: multiply; mask-image: linear-gradient(to right, transparent, #000 15%); }
+.library-hero-art { position: absolute; right: 0; bottom: 0; width: 40%; height: 100%; object-fit: contain; object-position: center bottom; mix-blend-mode: multiply; }
 .uc-library .hero-search { max-width: none; margin-top: 16px; }
 .uc-library .hero-search label { font-size: 13px; color: var(--hub-ink); margin-bottom: 6px; }
 .uc-library .search-field { border: 1px solid #e8e9e5; border-radius: 30px; padding: 4px 4px 4px 16px; box-shadow: var(--hub-shadow); gap: 10px; }
@@ -97,3 +97,28 @@
 .uc-library .library-grid .card-meta > span { white-space: normal; }
 .uc-library .library-grid .card-action { position: absolute; bottom: 14px; right: 10px; width: 44px; height: 44px; padding: 0; display: grid; place-items: center; border-radius: 50%; background: #f4f7f6; }
 .uc-library .library-featured-card .card-meta { margin-bottom: 0; }
+
+/* Reset shared card-action alignment; center the arrow's visible 4–19 viewBox extent. */
+.uc-library .library-featured-card .card-action,
+.uc-library .library-grid .card-action {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  min-width: 44px;
+  min-height: 44px;
+  margin: 0;
+  padding: 0;
+  gap: 0;
+  line-height: 0;
+}
+.uc-library .card-action > svg {
+  display: block;
+  flex: 0 0 20px;
+  width: 20px;
+  height: 20px;
+  margin: 0;
+  padding: 0;
+  transform: translateX(.4167px);
+}
