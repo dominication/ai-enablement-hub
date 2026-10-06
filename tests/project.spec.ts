@@ -29,7 +29,7 @@ test('complete workspace: evidence, keyboard risk judgement, editable status and
   await expect(page.getByRole('heading', { name: 'Unterstützung und Verantwortung' })).toBeVisible();
   await expect(page.locator('.pm-metadata')).toContainText('Menschliche Einordnung');
   await expect(page.locator('.pm-metadata')).not.toContainText('Human Review erforderlich');
-  await expect(page.getByRole('heading', { name: 'Ziel: weniger Sammelarbeit, mehr Aufmerksamkeit für Steuerung' })).toBeVisible();
+  await expect(page.getByRole('heading', { name: 'So verändert sich dein Arbeitsalltag' })).toBeVisible();
   await noOverflow(page);
   await page.screenshot({ path: testInfo.outputPath('project-detail.png'), fullPage: true });
   await page.getByRole('link', { name: 'Workflow ausprobieren', exact: true }).click();
@@ -247,4 +247,20 @@ test('learning preview preserves a negative outcome without inventing benefits o
   await expect(page.getByRole('heading', { level: 1 })).toHaveText('Erfahrung gespeichert');
   await page.reload();
   await expect(page.getByRole('heading', { level: 1 })).toHaveText('Welche Informationen möchtest du für den Status verwenden?');
+});
+
+
+test('project entry explains the five work-sharing steps and keeps the prototype boundary', async ({ page }) => {
+  await page.goto(detail);
+  const workflow = page.getByRole('region', { name: 'Veränderte Arbeitsweise' });
+  await expect(workflow.locator('ol > li h3')).toHaveText(['Informationen sammeln', 'AI strukturiert', 'Kontext ergänzen', 'Prüfen', 'Kommunizieren']);
+  await expect(workflow).toContainText('Du passt an und gibst frei.');
+  await expect(workflow).toContainText('Du verantwortest den Status.');
+  await expect(page.locator('.pm-start')).toContainText('vollständig fiktiven Projektdaten');
+  await expect(page.locator('.entry-responsibility li')).toHaveCount(9);
+  const cta = page.getByRole('link', { name: 'Workflow ausprobieren', exact: true });
+  await cta.focus();
+  expect(await cta.evaluate((node) => getComputedStyle(node).outlineStyle)).not.toBe('none');
+  await page.keyboard.press('Enter');
+  await expect(page).toHaveURL(workspace);
 });

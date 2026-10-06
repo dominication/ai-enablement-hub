@@ -100,7 +100,8 @@ test('header and entry pages fit all requested widths with usable actions', asyn
       const metadata = page.locator(entry.metadata);
       const note = page.locator(entry.note);
       const responsibility = page.locator('.entry-responsibility');
-      await expectBefore(summary, metadata);
+      if (entry.route.includes('projektstatus')) await expectBefore(metadata, summary);
+      else await expectBefore(summary, metadata);
       await expectBefore(metadata, cta);
       await expectBefore(cta, responsibility);
       await expectBefore(note, responsibility);
