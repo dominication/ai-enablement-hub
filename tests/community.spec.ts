@@ -1,10 +1,10 @@
 import { expect, test, type Page } from '@playwright/test';
 
 const stories = [
-  { title: 'Informationen erkennen ist nicht dasselbe wie ihre Bedeutung verstehen.', category: 'Projektmanagement', outcome: 'Weiterführen', href: '/use-cases/projektstatus-vorbereiten', useCase: 'Projektstatus mit AI vorbereiten' },
-  { title: 'Ein plausibler AI-Vorschlag ist noch keine faire oder belegte Interviewfrage.', category: 'Recruiting', outcome: 'Anpassen', href: '/use-cases/interview-vorbereiten', useCase: 'Interview mit AI vorbereiten' },
-  { title: 'Ein kleinerer Einsatzbereich kann sinnvoller sein als möglichst viel AI.', category: 'Teams', outcome: 'Anpassen', href: '/team-lab', useCase: 'AI Team Experiment' },
-  { title: 'Ein bewusst beendetes Experiment ist ebenfalls ein gutes Ergebnis.', category: 'Teams', outcome: 'Stoppen', href: '/team-lab', useCase: 'AI Team Experiment' },
+  { title: 'Informationen erkennen ist nicht dasselbe wie ihre Bedeutung verstehen.', category: 'Projektmanagement', outcome: 'Weiterführen', href: '/use-cases/projektstatus-vorbereiten', useCase: 'Projektstatus mit KI vorbereiten' },
+  { title: 'Ein plausibler KI-Vorschlag ist noch keine faire oder belegte Interviewfrage.', category: 'Recruiting', outcome: 'Anpassen', href: '/use-cases/interview-vorbereiten', useCase: 'Interview mit KI vorbereiten' },
+  { title: 'Ein kleinerer Einsatzbereich kann sinnvoller sein als möglichst viel KI.', category: 'Teams', outcome: 'Anpassen', href: '/team-lab', useCase: 'KI Team Experiment' },
+  { title: 'Ein bewusst beendetes Experiment ist ebenfalls ein gutes Ergebnis.', category: 'Teams', outcome: 'Stoppen', href: '/team-lab', useCase: 'KI Team Experiment' },
   { title: 'Struktur hilft – Verbindlichkeit entsteht im Team.', category: 'Zusammenarbeit', outcome: 'Weiterführen', href: '/use-cases/meeting-ergebnisse-aufbereiten', useCase: 'Meeting-Ergebnisse aufbereiten' },
   { title: 'Eine Zusammenfassung ist Orientierung, kein Beleg.', category: 'Wissensarbeit', outcome: 'Anpassen', href: '/use-cases/recherche-strukturieren', useCase: 'Recherche strukturieren und verdichten' },
   { title: 'Verständlicher darf nicht ungenauer bedeuten.', category: 'Kommunikation', outcome: 'Weiterführen', href: '/use-cases/komplexe-inhalte-verstaendlich-machen', useCase: 'Komplexe Inhalte verständlich machen' },

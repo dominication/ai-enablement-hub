@@ -33,7 +33,7 @@ test('full team canvas: custom contribution, mapping, criteria, adaptation and t
     if (new URL(request.url()).hostname !== '127.0.0.1') external.push(request.url());
   });
   await page.goto('/team-lab');
-  await expect(page.getByRole('heading', { name: 'AI Team Experiment', exact: true })).toBeVisible();
+  await expect(page.getByRole('heading', { name: 'KI Team Experiment', exact: true })).toBeVisible();
   await expect(page.getByRole('heading', { name: 'Nicht das Tool steht am Anfang' })).toBeVisible();
   await noOverflow(page);
   await page.getByRole('link', { name: 'Team Lab starten', exact: true }).click();
@@ -56,7 +56,7 @@ test('full team canvas: custom contribution, mapping, criteria, adaptation and t
   const focusCard = page.locator('.tl-focus-card').filter({ has: page.getByRole('heading', { name: service, exact: true }) });
   await focusCard.getByRole('combobox', { name: 'Kostet sie spürbar Zeit oder Aufmerksamkeit?', exact: true }).selectOption('mittel');
   await page.getByRole('radio', { name: `Unser Fokus: ${service}`, exact: true }).check();
-  await expect(page.getByText('AI könnte bei Vorbereitung oder Strukturierung unterstützen. Die Beurteilung selbst bleibt beim Menschen.', { exact: false }).first()).toBeVisible();
+  await expect(page.getByText('KI könnte bei Vorbereitung oder Strukturierung unterstützen. Die Beurteilung selbst bleibt beim Menschen.', { exact: false }).first()).toBeVisible();
   await page.getByRole('button', { name: 'Aufgabe gemeinsam untersuchen', exact: true }).click();
   const assignment = page.getByLabel('Zuordnung: Informationen aus Quellen sammeln', { exact: true });
   await assignment.focus();
@@ -92,7 +92,7 @@ test('full team canvas: custom contribution, mapping, criteria, adaptation and t
   await page.getByRole('radio', { name: /^Anpassen und erneut testen/ }).check();
   await page.getByLabel('Was verändern wir beim nächsten Versuch?', { exact: true }).fill('Prüfung gemeinsam im Team durchführen.');
   await page.getByLabel('Was haben wir über unsere Arbeit gelernt?', { exact: true }).fill('Einordnung braucht Perspektiven aus mehreren Rollen.');
-  await page.getByLabel('Was haben wir über die Zusammenarbeit mit AI gelernt?', { exact: true }).fill('Prüfen bleibt notwendig.');
+  await page.getByLabel('Was haben wir über die Zusammenarbeit mit KI gelernt?', { exact: true }).fill('Prüfen bleibt notwendig.');
   await page.getByLabel('Was sollten andere Teams wissen?', { exact: true }).fill('Kontrollarbeit bewusst einplanen.');
   await page.getByRole('button', { name: 'Learning teilen', exact: true }).click();
   await expect(page.getByRole('heading', { level: 1 })).toHaveText('Vorschau des Team-Learnings');
@@ -137,11 +137,11 @@ test('stopping is an equal valid outcome and preview excludes stale continuation
   await stop.focus(); await page.keyboard.press('Space');
   const stopStyle = await stop.locator('..').evaluate((label) => ({ background: getComputedStyle(label).backgroundColor, border: getComputedStyle(label).borderColor }));
   expect(stopStyle).toEqual(continueStyle);
-  await expect(page.getByText('Ein bewusst beendetes Experiment ist ebenfalls ein Ergebnis. Das Team weiss jetzt mehr darüber, wo AI in dieser Arbeit nicht sinnvoll unterstützt.')).toBeVisible();
+  await expect(page.getByText('Ein bewusst beendetes Experiment ist ebenfalls ein Ergebnis. Das Team weiss jetzt mehr darüber, wo KI in dieser Arbeit nicht sinnvoll unterstützt.')).toBeVisible();
   await page.getByRole('button', { name: 'Learning teilen', exact: true }).click();
   const preview = page.getByRole('article', { name: 'Team-Learning' });
   await expect(preview).toContainText('Stoppen');
-  await expect(preview).toContainText('Den AI-Versuch beenden');
+  await expect(preview).toContainText('Den KI-Versuch beenden');
   await expect(preview).not.toContainText('Nur für Weiterführen');
   await page.getByRole('button', { name: 'Vorschau bestätigen', exact: true }).click();
   await expect(page.getByRole('heading', { level: 1 })).toHaveText('Team Experiment abgeschlossen');
@@ -184,13 +184,13 @@ test('search returns Team Lab only for relevant intent', async ({ page }) => {
   for (const term of ['team', 'teams', 'zusammenarbeit', 'experiment', 'arbeitsweise']) {
     await page.goto(`/use-cases?q=${encodeURIComponent(term)}`);
     await expect(page.locator('.use-case-card')).toHaveCount(1);
-    await expect(page.locator('.use-case-card')).toContainText('AI Team Experiment');
+    await expect(page.locator('.use-case-card')).toContainText('KI Team Experiment');
   }
   for (const [term, title] of [['meeting', 'Meeting-Ergebnisse aufbereiten'], ['meetings', 'Meeting-Ergebnisse aufbereiten'], ['recherche', 'Recherche strukturieren und verdichten']]) {
     await page.goto(`/use-cases?q=${term}`);
     await expect(page.locator('.use-case-card')).toHaveCount(1);
     await expect(page.locator('.use-case-card h3')).toHaveText(title);
-    await expect(page.locator('.use-case-card')).not.toContainText('AI Team Experiment');
+    await expect(page.locator('.use-case-card')).not.toContainText('KI Team Experiment');
   }
 });
 
@@ -256,7 +256,7 @@ test('switching focus resets dependent edits and removing focus requires a fresh
   await page.getByLabel('Unsere Hypothese', { exact: true }).fill('Alte Hypothese');
   await page.getByLabel('Zeitraum', { exact: true }).selectOption('4 Wochen');
   await page.getByRole('checkbox', { name: 'Zusammenarbeit wird klarer', exact: true }).check();
-  await page.getByRole('button', { name: /Mensch & AI/ }).click();
+  await page.getByRole('button', { name: /Mensch & KI/ }).click();
   await page.getByLabel('Zuordnung: Informationen aus Quellen sammeln', { exact: true }).selectOption('human');
   await page.getByRole('button', { name: 'Voraussetzungen klären', exact: true }).click();
   await page.getByRole('button', { name: 'Experiment gestalten', exact: true }).click();

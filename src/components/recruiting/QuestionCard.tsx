@@ -19,6 +19,6 @@ export function QuestionCard({ question, selected, onSelect, onEdit, onAlternati
       {!review && <><button type="button" className="r-text-button" disabled={editing} onClick={onAlternative}>Alternative</button><button type="button" className="r-text-button report-button" onClick={onReport}>Problem melden</button></>}
       {review && <div className="reorder-actions"><button type="button" className="r-text-button" disabled={position === 0} onClick={() => onMove?.(-1)} aria-label={`${question.title} nach oben`}>↑ Nach oben</button><button type="button" className="r-text-button" disabled={position === (total ?? 0) - 1} onClick={() => onMove?.(1)} aria-label={`${question.title} nach unten`}>↓ Nach unten</button></div>}
     </div>
-    {reported && !review && <p className="report-confirmation" role="status">Danke. Kritisches Feedback hilft, AI-Unterstützung besser einzuordnen.</p>}
+    {reported && !review && <p className="report-confirmation" role="status">Danke. Kritisches Feedback hilft, KI-Unterstützung besser einzuordnen.</p>}
   </article>;
 }

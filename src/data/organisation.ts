@@ -18,7 +18,7 @@ export type OrganisationalPerspective = {
 export type AttentionArea = { id: string; title: string; description: string };
 
 export const organisationalObservations: readonly OrganisationalObservation[] = [
-  { title: 'Konkrete Anfänge', description: 'Erste Use Cases zeigen, wie AI bei konkreten Aufgaben im Arbeitsalltag unterstützen kann.' },
+  { title: 'Konkrete Anfänge', description: 'Erste Use Cases zeigen, wie KI bei konkreten Aufgaben im Arbeitsalltag unterstützen kann.' },
   { title: 'Lernen wird sichtbar', description: 'Die Community-Beispiele machen erste Muster zwischen unterschiedlichen Arbeitssituationen sichtbar.' },
   { title: 'Noch offene Fragen', description: 'Der Umgang mit sensiblen Informationen ist nicht in allen Arbeitssituationen gleich eindeutig.' },
 ];
@@ -32,8 +32,8 @@ export const organisationalPerspectives: readonly OrganisationalPerspective[] = 
   },
   {
     id: 'anwendung', title: 'Anwendung im Arbeitsalltag',
-    observation: 'Die Use Cases zeigen AI-Unterstützung für konkrete Aufgaben – besonders beim Strukturieren und Vorbereiten.',
-    question: 'Wo verändert AI tatsächlich Arbeitsabläufe und nicht nur einzelne Arbeitsschritte?',
+    observation: 'Die Use Cases zeigen KI-Unterstützung für konkrete Aufgaben – besonders beim Strukturieren und Vorbereiten.',
+    question: 'Wo verändert KI tatsächlich Arbeitsabläufe und nicht nur einzelne Arbeitsschritte?',
     evidence: [{ kind: 'use-case', slug: 'projektstatus-vorbereiten' }, { kind: 'community', id: 'projektstatus-kontext' }],
   },
   {

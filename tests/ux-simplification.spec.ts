@@ -1,9 +1,9 @@
 import { expect, test, type Locator } from '@playwright/test';
 
 const entries = [
-  { route: '/use-cases/interview-vorbereiten', task: 'Was du hier machst', result: 'Was du am Ende hast', ai: 'AI unterstützt', human: 'Du entscheidest', cta: 'Experiment starten', guard: 'Dieser Use Case verarbeitet Personendaten', metadata: '.recruiting-meta', note: '.recruiting-start p', items: 8 },
-  { route: '/use-cases/projektstatus-vorbereiten', task: 'Was du hier machst', result: 'Was du am Ende hast', ai: 'AI unterstützt', human: 'Du entscheidest', cta: 'Workflow ausprobieren', guard: 'Projektinformationen bewusst verwenden', metadata: '.pm-metadata', note: '.pm-start p', items: 9 },
-  { route: '/team-lab', task: 'Was ihr hier macht', result: 'Was ihr am Ende habt', ai: 'AI kann unterstützen bei', human: 'Ihr entscheidet gemeinsam', cta: 'Team Lab starten', guard: 'Nicht das Tool steht am Anfang', metadata: '.tl-meta', note: '.hub-journey-start p', items: 6 },
+  { route: '/use-cases/interview-vorbereiten', task: 'Was du hier machst', result: 'Was du am Ende hast', ai: 'KI unterstützt', human: 'Du entscheidest', cta: 'Experiment starten', guard: 'Dieser Use Case verarbeitet Personendaten', metadata: '.recruiting-meta', note: '.recruiting-start p', items: 8 },
+  { route: '/use-cases/projektstatus-vorbereiten', task: 'Was du hier machst', result: 'Was du am Ende hast', ai: 'KI unterstützt', human: 'Du entscheidest', cta: 'Workflow ausprobieren', guard: 'Projektinformationen bewusst verwenden', metadata: '.pm-metadata', note: '.pm-start p', items: 9 },
+  { route: '/team-lab', task: 'Was ihr hier macht', result: 'Was ihr am Ende habt', ai: 'KI kann unterstützen bei', human: 'Ihr entscheidet gemeinsam', cta: 'Team Lab starten', guard: 'Nicht das Tool steht am Anfang', metadata: '.tl-meta', note: '.hub-journey-start p', items: 6 },
 ];
 
 async function expectBefore(first: Locator, second: Locator) {
@@ -14,11 +14,11 @@ async function expectBefore(first: Locator, second: Locator) {
 test('navigation reflects available features and retains active routes', async ({ page }) => {
   await page.goto('/');
   const header = page.getByRole('banner');
-  await expect(header.getByRole('navigation').getByRole('link')).toHaveText(['Use Cases', 'Team Lab', 'Community', 'Guidelines']);
+  await expect(header.getByRole('navigation').getByRole('link')).toHaveText(['Use Cases', 'KI-Kompass', 'Team Lab', 'Community', 'Guidelines']);
   await expect(header.getByRole('navigation').getByRole('link', { name: 'Learnings', exact: true })).toHaveCount(0);
   await expect(header.getByText('ML', { exact: true })).toHaveCount(0);
   await expect(header.getByRole('img', { name: 'Demo-Profil' })).toHaveCount(0);
-  for (const [label, route] of [['Use Cases', '/use-cases'], ['Team Lab', '/team-lab'], ['Community', '/community'], ['Guidelines', '/guidelines'], ['Hilfe', '/help']]) {
+  for (const [label, route] of [['Use Cases', '/use-cases'], ['KI-Kompass', '/organisation'], ['Team Lab', '/team-lab'], ['Community', '/community'], ['Guidelines', '/guidelines'], ['Hilfe', '/help']]) {
     const link = header.getByRole('link', { name: label, exact: true });
     await expect(link).toHaveAttribute('href', route);
     await link.focus(); await page.keyboard.press('Enter');
@@ -108,9 +108,9 @@ test('header and entry pages fit all requested widths with usable actions', asyn
 
 test('guided demos share the same responsive orientation shell while retaining their work areas', async ({ page }, testInfo) => {
   const demos = [
-    { route: '/use-cases/interview-vorbereiten/experiment', id: 'recruiting-demo', steps: 4, responsibility: 'AI unterstützt. Du entscheidest.' },
-    { route: '/use-cases/projektstatus-vorbereiten/experiment', id: 'project-demo', steps: 4, responsibility: 'AI unterstützt. Du entscheidest.' },
-    { route: '/team-lab/experiment', id: 'team-demo', steps: 5, responsibility: 'AI kann unterstützen. Ihr entscheidet gemeinsam.' },
+    { route: '/use-cases/interview-vorbereiten/experiment', id: 'recruiting-demo', steps: 4, responsibility: 'KI unterstützt. Du entscheidest.' },
+    { route: '/use-cases/projektstatus-vorbereiten/experiment', id: 'project-demo', steps: 4, responsibility: 'KI unterstützt. Du entscheidest.' },
+    { route: '/team-lab/experiment', id: 'team-demo', steps: 5, responsibility: 'KI kann unterstützen. Ihr entscheidet gemeinsam.' },
   ];
   for (const width of [360, 768, 1024, 1440]) {
     await page.setViewportSize({ width, height: 1000 });
@@ -129,7 +129,7 @@ test('guided demos share the same responsive orientation shell while retaining t
       await expect(page.getByRole('heading', { name: demo.responsibility, exact: true })).toBeVisible();
       if (demo.id === 'team-demo') {
         const responsibility = page.locator('.hub-experiment-responsibility');
-        await expect(responsibility).toContainText('AI kann unterstützen');
+        await expect(responsibility).toContainText('KI kann unterstützen');
         await expect(responsibility).toContainText('Ihr entscheidet gemeinsam');
         await expect(responsibility).not.toContainText('Du entscheidest');
       }

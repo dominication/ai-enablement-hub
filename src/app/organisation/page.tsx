@@ -5,7 +5,7 @@ import { attentionAreas, organisationalObservations, organisationalPerspectives,
 import { HubPageIntro } from '@/components/hub-ui/HubPage';
 import './organisation.css';
 
-export const metadata = { title: 'AI Standortbild' };
+export const metadata = { title: 'KI-Kompass' };
 
 const orientationStates = [
   { title: 'Schon sichtbar', description: 'Erste Use Cases machen konkrete Unterstützung im Arbeitsalltag sichtbar.', icon: 'shield' },
@@ -18,8 +18,8 @@ const perspectiveIcons = ['search', 'project', 'team', 'book', 'shield'] as cons
 
 export default function OrganisationPage() {
   return <div className="page-container detail-page organisation-page hub-content-page hub-organisation">
-    <section className="organisation-hero" aria-label="Einführung zum AI Standortbild">
-      <HubPageIntro eyebrow="ORGANISATION" title="AI Standortbild" lead="Was wir aktuell bei der Einführung von AI in der Arbeit beobachten." description="Ein gemeinsames Bild aus Use Cases, Experimenten und geteilten Erfahrungen. Es ist keine vollständige Reifegradmessung, sondern eine qualitative Orientierung." meta={<p className="organisation-context">Stand: Oktober 2026 · Fiktive Beispieldaten</p>} />
+    <section className="organisation-hero" aria-label="Einführung zum KI-Kompass">
+      <HubPageIntro eyebrow="ORGANISATION" title="KI-Kompass" lead="Was wir aktuell bei der Einführung von KI in der Arbeit beobachten." description="Ein gemeinsames Bild aus Use Cases, Experimenten und geteilten Erfahrungen. Es ist keine vollständige Reifegradmessung, sondern eine qualitative Orientierung." meta={<p className="organisation-context">Stand: Oktober 2026 · Fiktive Beispieldaten</p>} />
       <div className="organisation-hero-visual" aria-hidden="true">
         <Image src="/images/home/team-hero.webp" alt="" width={1400} height={933} priority sizes="(max-width: 760px) 100vw, 46vw" />
         <div className="organisation-hero-sources"><span><Icon name="project" />Use Cases</span><span><Icon name="team" />Community</span><span><Icon name="shield" />Guidelines</span></div>

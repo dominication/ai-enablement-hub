@@ -98,13 +98,13 @@ export function JourneyContextNotice({ title, description, href, linkLabel, icon
   </aside>;
 }
 
-export function ExperimentResponsibility({ aiDescription, humanDescription, aiLabel = 'AI unterstützt', humanLabel = 'Du entscheidest' }: ExperimentResponsibilityProps) {
+export function ExperimentResponsibility({ aiDescription, humanDescription, aiLabel = 'KI unterstützt', humanLabel = 'Du entscheidest' }: ExperimentResponsibilityProps) {
   const humanMark = humanLabel.startsWith('Ihr') ? 'Ihr' : 'Du';
   return <section className="hub-experiment-responsibility" aria-labelledby="experiment-responsibility-title">
     <p className="eyebrow hub-eyebrow">ARBEITSTEILUNG</p>
     <h2 className="hub-section-heading" id="experiment-responsibility-title">{aiLabel}. {humanLabel}.</h2>
     <div className="hub-experiment-responsibility-grid">
-      <div><span className="hub-experiment-responsibility-mark" aria-hidden="true">AI</span><p><strong>{aiLabel}</strong>{aiDescription}</p></div>
+      <div><span className="hub-experiment-responsibility-mark" aria-hidden="true">KI</span><p><strong>{aiLabel}</strong>{aiDescription}</p></div>
       <div><span className="hub-experiment-responsibility-mark" aria-hidden="true">{humanMark}</span><p><strong>{humanLabel}</strong>{humanDescription}</p></div>
     </div>
   </section>;

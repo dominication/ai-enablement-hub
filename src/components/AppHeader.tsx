@@ -3,7 +3,7 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { Icon } from './Icon';
 
-const navigation = [{ href: '/use-cases', label: 'Use Cases' }, { href: '/team-lab', label: 'Team Lab' }, { href: '/community', label: 'Community' }, { href: '/guidelines', label: 'Guidelines' }];
+const navigation = [{ href: '/use-cases', label: 'Use Cases' }, { href: '/organisation', label: 'KI-Kompass' }, { href: '/team-lab', label: 'Team Lab' }, { href: '/community', label: 'Community' }, { href: '/guidelines', label: 'Guidelines' }];
 export function AppHeader() {
   const pathname = usePathname();
   return <header className="app-header">

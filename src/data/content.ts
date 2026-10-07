@@ -16,7 +16,7 @@ export type UseCase = {
 
 export const useCases: UseCase[] = [
   {
-    featured: true, slug: 'interview-vorbereiten', category: 'Recruiting', title: 'Interview mit AI vorbereiten',
+    featured: true, slug: 'interview-vorbereiten', category: 'Recruiting', title: 'Interview mit KI vorbereiten',
     description: 'Anforderungen ordnen, fiktive Bewerbungsunterlagen durchdenken und passende Interviewfragen entwickeln.',
     duration: 'ca. 15 min', context: 'Personendaten', icon: 'interview',
     href: '/use-cases/interview-vorbereiten', action: 'Use Case ansehen',
@@ -31,7 +31,7 @@ export const useCases: UseCase[] = [
     keywords: ["interview", "interviews", "interviewnotizen", "recruiting", "interview notizen", "interviewnotizen strukturieren"],
   },
   {
-    featured: true, slug: 'projektstatus-vorbereiten', category: 'Projektmanagement', title: 'Projektstatus mit AI vorbereiten',
+    featured: true, slug: 'projektstatus-vorbereiten', category: 'Projektmanagement', title: 'Projektstatus mit KI vorbereiten',
     description: 'Projektinformationen zusammenführen, Veränderungen erkennen und einen klaren Statusbericht vorbereiten.',
     duration: 'ca. 15–20 min', context: 'Workflow', icon: 'project',
     href: '/use-cases/projektstatus-vorbereiten', action: 'Use Case ansehen',
@@ -94,8 +94,8 @@ export const useCases: UseCase[] = [
     keywords: ["entscheidung", "entscheidungen", "entscheidungsoptionen", "optionen vergleichen", "handlungsoptionen", "entscheidungsoptionen strukturieren"],
   },
   {
-    featured: true, slug: 'team-experiment', category: 'Teams', title: 'AI Team Experiment',
-    description: 'Eine Aufgabe aus eurem Arbeitsalltag auswählen und gemeinsam erproben, wo AI euch unterstützen kann.',
+    featured: true, slug: 'team-experiment', category: 'Teams', title: 'KI Team Experiment',
+    description: 'Eine Aufgabe aus eurem Arbeitsalltag auswählen und gemeinsam erproben, wo KI euch unterstützen kann.',
     duration: 'ca. 45 min', context: 'Team', icon: 'team',
     href: '/team-lab', action: 'Experiment starten',
     keywords: ['zusammenarbeit', 'experiment', 'arbeitsweise'],
@@ -107,7 +107,7 @@ export const featuredUseCases = useCases.filter((item) => item.featured);
 
 export const informationCategories = [
   { name: 'Öffentlich', description: 'Frei zugängliche Informationen. Prüfe auch hier Nutzungsrechte und Quellen.' },
-  { name: 'Intern', description: 'Nicht öffentlich zugängliche Informationen. Kläre vorab, ob das verwendete AI-System dafür freigegeben ist.' },
+  { name: 'Intern', description: 'Nicht öffentlich zugängliche Informationen. Kläre vorab, ob das verwendete KI-System dafür freigegeben ist.' },
   { name: 'Vertraulich', description: 'Besonders schützenswerte Geschäftsinformationen. Verwende sie nur nach ausdrücklicher Freigabe im dafür vorgesehenen System.' },
   { name: 'Personendaten', description: 'Informationen über identifizierbare Personen. Nutze für Experimente fiktive Daten und kläre reale Anwendungen mit der zuständigen Datenschutzstelle.' },
 ];

@@ -24,8 +24,8 @@ export function LearningPreview({ value, onConfirm, onBack }: {
       <p className="eyebrow">Projektmanagement</p>
       <blockquote>
         <p>{value.relief === 'Keine erkennbare Entlastung'
-          ? 'In diesem Experiment war keine Entlastung durch AI erkennbar.'
-          : `AI hat vor allem ${reliefPhrases[value.relief] ?? value.relief} unterstützt.`}</p>
+          ? 'In diesem Experiment war keine Entlastung durch KI erkennbar.'
+          : `KI hat vor allem ${reliefPhrases[value.relief] ?? value.relief} unterstützt.`}</p>
         <p>Menschliche Einschätzung war besonders bei {judgement} wichtig.</p>
       </blockquote>
       {value.nextTime.trim() && <div className="pm-learning-next-time"><h2>Beim nächsten Mal</h2><p>{value.nextTime.trim()}</p></div>}
