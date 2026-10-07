@@ -48,7 +48,7 @@ test('all orientation pages share the migrated responsibility and guidance patte
   ]) {
     await page.goto(route);
     await expect(page.locator('.hub-use-case-orientation')).toBeVisible();
-    await expect(page.getByRole('heading', { name: 'Wobei AI unterstützen kann' })).toBeVisible();
+    await expect(page.getByRole('heading', { name: 'Wobei KI unterstützen kann' })).toBeVisible();
     await expect(page.getByRole('heading', { name: 'Was bei dir bleibt' })).toBeVisible();
     await expect(page.locator('.uc-overview-considerations .text-link')).toHaveAttribute('href', '/guidelines');
   }

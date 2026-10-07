@@ -17,13 +17,13 @@ test('full recruiting journey: source preview, edit, alternative, report, human 
   const errors: string[] = [];
   page.on('pageerror', (error) => errors.push(error.message));
   await page.goto(entry);
-  await expect(page.getByRole('heading', { name: 'Interview mit AI vorbereiten', exact: true })).toBeVisible();
+  await expect(page.getByRole('heading', { name: 'Interview mit KI vorbereiten', exact: true })).toBeVisible();
   await expect(page.getByRole('heading', { name: 'Du entscheidest' })).toBeVisible();
   for (const statement of ['die Vorbereitung strukturieren', 'mögliche Interviewfragen ableiten', 'relevante Themen sichtbar machen', 'Fragen formulieren und ordnen', 'Kandidat:innen bewerten', 'Personalentscheidungen treffen', 'das Gespräch führen']) await expect(page.locator('.entry-responsibility')).toContainText(statement);
   await expect(page.locator('main')).not.toContainText(/objektiver|objektivere Bewertung/i);
   await expect(page.getByRole('region', { name: 'Veränderte Arbeitsweise' }).getByRole('listitem')).toHaveCount(5);
   const personalData = page.getByRole('complementary').filter({ hasText: 'Dieser Use Case verarbeitet Personendaten' });
-  await expect(personalData).toContainText('Verwende für Bewerbungsunterlagen ausschliesslich dafür freigegebene Unternehmenslösungen. AI kann die Vorbereitung unterstützen, trifft aber keine Personalentscheidung.');
+  await expect(personalData).toContainText('Verwende für Bewerbungsunterlagen ausschliesslich dafür freigegebene Unternehmenslösungen. KI kann die Vorbereitung unterstützen, trifft aber keine Personalentscheidung.');
   await expect(personalData.getByRole('link', { name: 'Mehr zu Personendaten' })).toHaveAttribute('href', '/guidelines#4');
   await noOverflow(page);
   await page.screenshot({ path: testInfo.outputPath('recruiting-detail.png'), fullPage: true });
@@ -65,7 +65,7 @@ test('full recruiting journey: source preview, edit, alternative, report, human 
   await report.click();
   await page.getByRole('radio', { name: 'missverständlich', exact: true }).check();
   await page.getByRole('button', { name: 'Feedback abgeben' }).click();
-  await expect(second.getByText('Danke. Kritisches Feedback hilft, AI-Unterstützung besser einzuordnen.')).toBeVisible();
+  await expect(second.getByText('Danke. Kritisches Feedback hilft, KI-Unterstützung besser einzuordnen.')).toBeVisible();
   await second.getByRole('button', { name: 'Übernehmen', exact: true }).click();
   await noOverflow(page);
   await page.screenshot({ path: testInfo.outputPath('recruiting-questions.png'), fullPage: true });
@@ -157,7 +157,7 @@ test('recruiting experiment keeps the shared workspace pattern responsive', asyn
     await expect(page.locator('.hub-experiment')).toBeVisible();
     await expect(page.getByRole('heading', { level: 1 })).toBeFocused();
     await expect(page.getByRole('navigation', { name: 'Fortschritt' })).toContainText('1 von 4');
-    await expect(page.locator('.hub-experiment-responsibility')).toContainText('AI unterstützt');
+    await expect(page.locator('.hub-experiment-responsibility')).toContainText('KI unterstützt');
     await expect(page.locator('.hub-experiment-responsibility')).toContainText('Du entscheidest');
     const personalData = page.getByRole('complementary').filter({ hasText: 'Dieser Use Case verarbeitet Personendaten' });
     await expect(personalData.getByRole('link', { name: 'Mehr zu Personendaten' })).toHaveAttribute('href', '/guidelines#4');
@@ -179,6 +179,6 @@ test('existing application routes remain available', async ({ page }) => {
     expect(response?.status()).toBe(200);
   }
   await page.goto('/team-lab');
-  await expect(page.getByRole('heading', { name: 'AI Team Experiment', exact: true })).toBeVisible();
+  await expect(page.getByRole('heading', { name: 'KI Team Experiment', exact: true })).toBeVisible();
   await expect(page.getByRole('link', { name: 'Team Lab starten', exact: true })).toBeVisible();
 });

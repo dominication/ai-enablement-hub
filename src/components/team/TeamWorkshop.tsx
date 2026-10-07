@@ -16,9 +16,9 @@ import '../hub-ui/hub-experiment.css';
 
 type Stage = 'work' | 'focus' | 'mapping' | 'needs' | 'experiment' | 'summary' | 'prepared' | 'retro' | 'preview' | 'complete';
 const stageInfo: Record<Stage, { group: number; title: string; intro: string }> = {
-  work: { group: 0, title: 'Wo verlieren wir heute Zeit oder Energie?', intro: 'Startet bei konkreten Tätigkeiten aus eurem Arbeitsalltag – nicht bei möglichen AI-Funktionen.' },
+  work: { group: 0, title: 'Wo verlieren wir heute Zeit oder Energie?', intro: 'Startet bei konkreten Tätigkeiten aus eurem Arbeitsalltag – nicht bei möglichen KI-Funktionen.' },
   focus: { group: 1, title: 'Welche Aufgabe lohnt sich für ein Experiment?', intro: 'Besprecht eure Auswahl aus unterschiedlichen Perspektiven. Die vorbereiteten Einschätzungen sind Gesprächsanfänge, keine Bewertung des Teams.' },
-  mapping: { group: 2, title: 'Welche Arbeit soll AI unterstützen – und was bleibt bei uns?', intro: 'Ordnet die Teilaufgaben gemeinsam zu. Die Zuordnung beschreibt Unterstützung, nicht die Abgabe von Verantwortung.' },
+  mapping: { group: 2, title: 'Welche Arbeit soll KI unterstützen – und was bleibt bei uns?', intro: 'Ordnet die Teilaufgaben gemeinsam zu. Die Zuordnung beschreibt Unterstützung, nicht die Abgabe von Verantwortung.' },
   needs: { group: 2, title: 'Was brauchen wir, damit wir das sinnvoll ausprobieren können?', intro: 'Unterschiedliche Voraussetzungen und Bedenken gehören zu einem Experiment dazu. Klärt sie, bevor ihr startet.' },
   experiment: { group: 3, title: 'Unser Experiment', intro: 'Beschreibt einen überschaubaren Versuch. Beobachtet gewünschte Wirkung und mögliche Nebenwirkungen gleich aufmerksam.' },
   summary: { group: 3, title: 'Euer Experiment auf einen Blick', intro: 'Prüft den Canvas gemeinsam. Er ist eine Vereinbarung für einen Versuch, keine Verpflichtung zur dauerhaften Nutzung.' },
@@ -27,7 +27,7 @@ const stageInfo: Record<Stage, { group: number; title: string; intro: string }> 
   preview: { group: 4, title: 'Vorschau des Team-Learnings', intro: 'Prüft, was andere Teams aus dieser Erfahrung mitnehmen könnten.' },
   complete: { group: 4, title: 'Team Experiment abgeschlossen', intro: 'Das Demo-Learning wurde nur in dieser Sitzung gespeichert und nicht veröffentlicht. In einem realen AI Enablement Hub könnten solche Erfahrungen anderen Teams helfen, geeignete Experimente schneller einzuschätzen und wiederkehrende Hindernisse sichtbar zu machen.' },
 };
-const groups: { title: string; stage: Stage }[] = [{ title: 'Arbeit', stage: 'work' }, { title: 'Fokus', stage: 'focus' }, { title: 'Mensch & AI', stage: 'mapping' }, { title: 'Experiment', stage: 'experiment' }, { title: 'Retrospektive', stage: 'retro' }];
+const groups: { title: string; stage: Stage }[] = [{ title: 'Arbeit', stage: 'work' }, { title: 'Fokus', stage: 'focus' }, { title: 'Mensch & KI', stage: 'mapping' }, { title: 'Experiment', stage: 'experiment' }, { title: 'Retrospektive', stage: 'retro' }];
 function newExperiment(activity: Activity): Experiment {
   return { hypothesis: activity.hypothesis, duration: '3 Wochen', effects: [desiredEffects[0], desiredEffects[4]], sideEffects: [possibleSideEffects[0], possibleSideEffects[1]] };
 }
@@ -82,7 +82,7 @@ export function TeamWorkshop() {
     <ExperimentStepper ariaLabel="Workshop-Phasen" currentIndex={info.group} steps={groups.map((group, index) => ({ label: group.title, disabled: index > info.group, onSelect: () => go(group.stage) }))} />
     <ExperimentStageHeader stageLabel={`Phase ${info.group + 1} von 5 · ${groups[info.group].title}`} title={info.title} description={info.intro} headingRef={heading} className="tl-stage-heading" />
     <div className="hub-experiment-context-grid">
-      <ExperimentResponsibility aiLabel="AI kann unterstützen" humanLabel="Ihr entscheidet gemeinsam" aiDescription="Hilft, Material und Beobachtungen für das Experiment zu strukturieren." humanDescription="Wählt die Aufgabe, klärt Verantwortung und entscheidet über Weiterführen, Anpassen oder Stoppen." />
+      <ExperimentResponsibility aiLabel="KI kann unterstützen" humanLabel="Ihr entscheidet gemeinsam" aiDescription="Hilft, Material und Beobachtungen für das Experiment zu strukturieren." humanDescription="Wählt die Aufgabe, klärt Verantwortung und entscheidet über Weiterführen, Anpassen oder Stoppen." />
       <JourneyContextNotice title="Fiktive Team-Demo" description={`Demo-Team – alle Rollen, Beiträge und Inhalte sind fiktiv. ${demoTeam.situation} Ihr erkundet eine lokale Demo; es sind keine anderen Personen verbunden.`} icon={<span className="hub-icon-badge"><Icon name="team" /></span>} variant="guideline" />
     </div>
     {notice && <p className="tl-insight" role="status">{notice}</p>}

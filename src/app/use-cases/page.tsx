@@ -26,7 +26,7 @@ export default async function UseCasesPage({ searchParams }: { searchParams: Pro
   }
   return <div className="uc-library">
     <section className="library-hero" aria-labelledby="library-title"><div className="library-hero-inner">
-      <div className="library-hero-copy"><p className="eyebrow hub-eyebrow">AI IM ARBEITSALLTAG</p><h1 id="library-title">Deine Aufgabe. Ein neuer Ansatz.</h1><p className="library-intro">Entdecke einen passenden Einstieg für deine Arbeit. Du entscheidest, was du ausprobieren möchtest.</p><HeroSearch initialQuery={query} compact category={category} /></div>
+      <div className="library-hero-copy"><p className="eyebrow hub-eyebrow">KI IM ARBEITSALLTAG</p><h1 id="library-title">Deine Aufgabe. Ein neuer Ansatz.</h1><p className="library-intro">Entdecke einen passenden Einstieg für deine Arbeit. Du entscheidest, was du ausprobieren möchtest.</p><HeroSearch initialQuery={query} compact category={category} /></div>
       <Image className="library-hero-art" src="/images/use-cases/hero.webp" alt="" width={1200} height={598} sizes="(max-width: 760px) 100vw, 40vw" priority />
     </div></section>
     <div className="library-content">

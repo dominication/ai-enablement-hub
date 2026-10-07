@@ -16,7 +16,7 @@ export const useCaseOverviews: Record<string, UseCaseOverviewContent> = {
     humanResponsibility: [
       'Prüfen, ob Aussagen korrekt wiedergegeben werden und im Gesprächskontext bleiben.',
       'Beobachtung, Interpretation und persönliche Annahmen auseinanderhalten.',
-      'Eignung anhand vereinbarter Kriterien selbst beurteilen; AI bewertet oder rankt keine Kandidat:innen.',
+      'Eignung anhand vereinbarter Kriterien selbst beurteilen; KI bewertet oder rankt keine Kandidat:innen.',
     ],
     steps: [
       { title: 'Notizen und Zweck klären', description: 'Nutze zum Ausprobieren fiktive Notizen. Lege Themen fest und kennzeichne Zitate, Beobachtungen und eigene Fragen.' },
@@ -70,7 +70,7 @@ export const useCaseOverviews: Record<string, UseCaseOverviewContent> = {
       { title: 'Mit Beteiligten abstimmen', description: 'Prüfe die Zusammenfassung anhand der Notizen und lasse strittige Punkte klären, bevor du das Ergebnis weitergibst.' },
     ],
     considerations: [
-      'AI weiss nicht automatisch, ob ein Diskussionspunkt eine endgültige Entscheidung ist.',
+      'KI weiss nicht automatisch, ob ein Diskussionspunkt eine endgültige Entscheidung ist.',
       'Fehlende Namen oder Termine bleiben offen; sie dürfen nicht ergänzt werden, nur damit die Liste vollständig wirkt.',
       'Teile nur Notizen, deren Vertraulichkeit und Freigabe zum verwendeten System passen.',
     ],
@@ -162,7 +162,7 @@ export const useCaseOverviews: Record<string, UseCaseOverviewContent> = {
       { title: 'Fundstellen im Original prüfen', description: 'Lies relevante Passagen selbst nach. Ergänze fehlenden Kontext und halte fest, welche Unterschiede fachlich bedeutsam sind.' },
     ],
     considerations: [
-      'AI kann Tabellen, Fussnoten oder Ausnahmen übersehen. Eine Gegenüberstellung garantiert kein vollständiges Dokumentverständnis.',
+      'KI kann Tabellen, Fussnoten oder Ausnahmen übersehen. Eine Gegenüberstellung garantiert kein vollständiges Dokumentverständnis.',
       'Quellenverweise müssen stimmen; prüfe sie direkt in den Originaldokumenten.',
       'Vergleiche nur Dokumente, die im gewählten System verwendet werden dürfen. Unterschiedliche Vertraulichkeit bleibt auch im Vergleich relevant.',
     ],
@@ -185,7 +185,7 @@ export const useCaseOverviews: Record<string, UseCaseOverviewContent> = {
       { title: 'Belege prüfen und weiterrecherchieren', description: 'Öffne die Originalquellen und prüfe wichtige Aussagen. Ergänze fehlende Perspektiven und dokumentiere, welche Fragen offen bleiben.' },
     ],
     considerations: [
-      'AI-Zusammenfassungen sind keine Belege. Quellen müssen sichtbar, auffindbar und überprüfbar bleiben.',
+      'KI-Zusammenfassungen sind keine Belege. Quellen müssen sichtbar, auffindbar und überprüfbar bleiben.',
       'Eine übereinstimmende Aussage in mehreren Texten kann auf derselben ursprünglichen Quelle beruhen.',
       'Prüfe Aktualität, Interessen der Herausgebenden und Nutzungsrechte; öffentlich zugänglich bedeutet nicht uneingeschränkt nutzbar.',
     ],
@@ -208,7 +208,7 @@ export const useCaseOverviews: Record<string, UseCaseOverviewContent> = {
       { title: 'Abwägen und selbst entscheiden', description: 'Prüft Belege und Zielkonflikte gemeinsam. Klärt Informationslücken und dokumentiert die menschliche Entscheidung samt Begründung.' },
     ],
     considerations: [
-      'AI organisiert Perspektiven, trifft aber keine Entscheidung und bestimmt keine beste Option.',
+      'KI organisiert Perspektiven, trifft aber keine Entscheidung und bestimmt keine beste Option.',
       'Eine längere Argumenteliste bedeutet nicht, dass eine Option besser ist. Anzahl und Formulierung ersetzen keine Abwägung.',
       'Haltet Annahmen sichtbar und prüft, ob wichtige Betroffene oder Auswirkungen in der Gegenüberstellung fehlen.',
     ],
