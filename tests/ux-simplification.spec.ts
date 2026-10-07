@@ -1,9 +1,9 @@
 import { expect, test, type Locator } from '@playwright/test';
 
 const entries = [
-  { route: '/use-cases/interview-vorbereiten', task: 'Was du hier machst', result: 'Was du am Ende hast', ai: 'AI unterstützt', human: 'Du entscheidest', cta: 'Experiment starten', guard: 'Dieser Use Case verarbeitet Personendaten', metadata: '.recruiting-meta', note: '.recruiting-start p', items: 9 },
+  { route: '/use-cases/interview-vorbereiten', task: 'Was du hier machst', result: 'Was du am Ende hast', ai: 'AI unterstützt', human: 'Du entscheidest', cta: 'Experiment starten', guard: 'Dieser Use Case verarbeitet Personendaten', metadata: '.recruiting-meta', note: '.recruiting-start p', items: 8 },
   { route: '/use-cases/projektstatus-vorbereiten', task: 'Was du hier machst', result: 'Was du am Ende hast', ai: 'AI unterstützt', human: 'Du entscheidest', cta: 'Workflow ausprobieren', guard: 'Projektinformationen bewusst verwenden', metadata: '.pm-metadata', note: '.pm-start p', items: 9 },
-  { route: '/team-lab', task: 'Was ihr hier macht', result: 'Was ihr am Ende habt', ai: 'AI kann unterstützen bei', human: 'Ihr entscheidet gemeinsam', cta: 'Team Lab starten', guard: 'Nicht das Tool steht am Anfang', metadata: '.tl-meta', note: '.tl-detail > .tl-small', items: 6 },
+  { route: '/team-lab', task: 'Was ihr hier macht', result: 'Was ihr am Ende habt', ai: 'AI kann unterstützen bei', human: 'Ihr entscheidet gemeinsam', cta: 'Team Lab starten', guard: 'Nicht das Tool steht am Anfang', metadata: '.tl-meta', note: '.hub-journey-start > .tl-small', items: 6 },
 ];
 
 async function expectBefore(first: Locator, second: Locator) {
@@ -68,7 +68,10 @@ test('entry expectations, responsibility and original experiment destinations st
     }
     await expect(page.locator('.entry-summary section p')).toHaveCount(2);
     await expect(page.locator('.entry-responsibility li')).toHaveCount(entry.items);
-    if (entry.route.includes('projektstatus')) await expect(page.getByRole('region', { name: 'Veränderte Arbeitsweise' })).toBeVisible();
+    if (entry.route !== '/team-lab') {
+      await expect(page.getByRole('region', { name: 'Veränderte Arbeitsweise' })).toBeVisible();
+      await expect(page.locator('.journey-workflow li')).toHaveCount(5);
+    }
     const start = page.getByRole('link', { name: entry.cta, exact: true });
     await expect(start).toHaveAttribute('href', `${entry.route}/experiment`);
     await start.click(); await expect(page).toHaveURL(`${entry.route}/experiment`);
@@ -100,7 +103,8 @@ test('header and entry pages fit all requested widths with usable actions', asyn
       const metadata = page.locator(entry.metadata);
       const note = page.locator(entry.note);
       const responsibility = page.locator('.entry-responsibility');
-      await expectBefore(summary, metadata);
+      if (entry.route !== '/team-lab') await expectBefore(metadata, summary);
+      else await expectBefore(summary, metadata);
       await expectBefore(metadata, cta);
       await expectBefore(cta, responsibility);
       await expectBefore(note, responsibility);

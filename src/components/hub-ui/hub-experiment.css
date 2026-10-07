@@ -1,0 +1,221 @@
+/* Shared high-fidelity workspace pattern for guided Hub experiments. */
+.hub-experiment {
+  max-width: var(--hub-container);
+  padding-top: 22px;
+  padding-bottom: 42px;
+  color: var(--hub-ink);
+  font-family: var(--hub-font);
+}
+
+.hub-experiment .back-link {
+  display: inline-flex;
+  align-items: center;
+  min-height: var(--hub-touch-target);
+  margin-bottom: 12px;
+  color: var(--hub-petrol);
+  font-size: 13px;
+}
+
+.hub-experiment .experiment-topline {
+  padding: 0 2px;
+}
+
+.hub-experiment .experiment-demo {
+  display: inline-flex;
+  align-items: center;
+  min-height: 30px;
+  padding: 5px 12px;
+  border-radius: var(--hub-pill-radius);
+  background: var(--hub-mint);
+  color: var(--hub-petrol);
+  font-size: 12px;
+  font-weight: 650;
+}
+
+.hub-experiment .experiment-progress {
+  display: block;
+  margin-top: 14px;
+  padding: 16px 18px;
+  border: 0;
+  border-radius: var(--hub-radius);
+  background: var(--hub-soft-surface);
+}
+
+.hub-experiment .experiment-progress > p {
+  margin-bottom: 12px;
+  color: var(--hub-petrol);
+  font-size: 12px;
+}
+
+.hub-experiment .experiment-progress ol {
+  gap: 8px;
+}
+
+.hub-experiment .experiment-progress li {
+  flex: 1;
+  min-width: 0;
+  gap: 9px;
+  color: var(--hub-muted);
+  font-size: 13px;
+}
+
+.hub-experiment .experiment-progress li::after {
+  content: '';
+  height: 2px;
+  flex: 1;
+  min-width: 12px;
+  border-radius: 2px;
+  background: #d9e4e0;
+}
+
+.hub-experiment .experiment-progress li:last-child::after { display: none; }
+.hub-experiment .experiment-progress li > span {
+  width: 30px;
+  height: 30px;
+  border: 0;
+  background: var(--hub-surface);
+  box-shadow: var(--hub-shadow);
+  color: var(--hub-muted);
+  font-size: 12px;
+}
+.hub-experiment .experiment-progress li[aria-current="step"] > span { background: var(--hub-petrol); color: white; }
+.hub-experiment .experiment-progress .step-complete > span { background: var(--hub-mint-strong); color: var(--hub-petrol); }
+.hub-experiment .experiment-progress .step-complete::after { background: var(--hub-mint-strong); }
+
+.hub-experiment .experiment-heading {
+  margin: 24px 0 18px;
+}
+
+.hub-experiment .hub-experiment-stage-label {
+  margin-bottom: 8px;
+  color: var(--hub-petrol);
+  font-size: var(--hub-eyebrow-size);
+  font-weight: 700;
+  letter-spacing: .18em;
+  text-transform: uppercase;
+}
+
+.hub-experiment .experiment-heading h1 {
+  max-width: 850px;
+  font-size: clamp(30px, 3.4vw, 43px);
+  font-weight: 750;
+  letter-spacing: -.04em;
+  line-height: 1.12;
+}
+
+.hub-experiment .experiment-heading h1:focus-visible {
+  outline: 3px solid color-mix(in srgb, var(--hub-petrol) 36%, transparent);
+  outline-offset: 5px;
+  border-radius: 4px;
+}
+
+.hub-experiment .experiment-heading p:not(.hub-experiment-stage-label) {
+  max-width: 800px;
+  color: var(--hub-muted);
+  font-size: 15px;
+  line-height: 1.55;
+}
+
+.hub-experiment-context-grid {
+  display: grid;
+  grid-template-columns: 1.15fr .85fr;
+  gap: 14px;
+  margin-bottom: 18px;
+}
+
+.hub-experiment-responsibility,
+.hub-experiment .hub-context-notice {
+  min-width: 0;
+  margin: 0;
+  padding: 18px 20px;
+  border: 0;
+  border-radius: var(--hub-radius);
+  background: var(--hub-mint);
+  box-shadow: none;
+}
+
+.hub-experiment-responsibility .hub-eyebrow { margin-bottom: 4px; color: var(--hub-petrol); }
+.hub-experiment-responsibility > h2,
+.hub-experiment .hub-context-notice h2 { font-size: 16px; }
+.hub-experiment-responsibility-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-top: 13px; }
+.hub-experiment-responsibility-grid > div { display: flex; align-items: flex-start; gap: 10px; }
+.hub-experiment-responsibility-mark {
+  display: inline-grid;
+  place-items: center;
+  flex: 0 0 34px;
+  height: 34px;
+  border-radius: 50%;
+  background: var(--hub-mint-strong);
+  color: var(--hub-petrol);
+  font-size: 11px;
+  font-weight: 750;
+}
+.hub-experiment-responsibility-grid p { color: var(--hub-muted); font-size: 13px; line-height: 1.45; }
+.hub-experiment-responsibility-grid strong { display: block; margin-bottom: 2px; color: var(--hub-ink); font-size: 13px; }
+
+.hub-experiment .hub-context-notice {
+  display: flex;
+  align-items: flex-start;
+  gap: 13px;
+  background: var(--hub-apricot);
+}
+.hub-experiment .hub-context-notice > .hub-icon-badge { flex: 0 0 var(--hub-touch-target); background: var(--hub-apricot-strong); color: var(--hub-petrol); }
+.hub-experiment .hub-context-notice p { margin-top: 5px; color: var(--hub-muted); font-size: 13px; line-height: 1.45; }
+.hub-experiment .hub-context-notice .hub-text-link { display: inline-flex; align-items: center; min-height: var(--hub-touch-target); margin-top: 5px; font-size: 13px; }
+
+.hub-experiment-stage-panel {
+  padding: 26px;
+  border-radius: var(--hub-radius);
+  background: var(--hub-surface);
+  box-shadow: var(--hub-shadow);
+}
+
+/* Existing journey controls adopt the shared workspace finish without changing behaviour. */
+.hub-experiment .role-context,
+.hub-experiment .demo-material-note,
+.hub-experiment .review-reminder,
+.hub-experiment .selection-summary,
+.hub-experiment .completion-card { border: 0; border-radius: var(--hub-radius); background: var(--hub-mint); }
+.hub-experiment .role-context { margin-bottom: 24px; }
+.hub-experiment .r-choice,
+.hub-experiment .document-card,
+.hub-experiment .preparation-panel,
+.hub-experiment .question-card { border-color: transparent; border-radius: var(--hub-radius); background: var(--hub-soft-surface); box-shadow: none; }
+.hub-experiment .r-choice:hover { border-color: var(--hub-mint-strong); }
+.hub-experiment .r-choice:has(input:checked),
+.hub-experiment .document-card:has(input:checked),
+.hub-experiment .question-selected { border-color: var(--hub-petrol); background: var(--hub-mint); }
+.hub-experiment .r-choice { min-height: var(--hub-touch-target); }
+.hub-experiment .r-button { border-radius: var(--hub-button-radius); }
+.hub-experiment .r-primary { background: var(--hub-petrol); }
+.hub-experiment .r-primary:hover:not(:disabled) { background: var(--hub-petrol-hover); }
+.hub-experiment .step-actions { border-top-color: var(--hub-border-soft); }
+.hub-experiment .local-note { font-size: 13px; }
+.hub-experiment .experiment-footnote { margin-top: 22px; text-align: center; line-height: 1.55; }
+.hub-experiment .reflection-form { max-width: none; }
+.hub-experiment .completion-card { background: var(--hub-mint); }
+
+@media (max-width: 900px) {
+  .hub-experiment-context-grid { grid-template-columns: 1fr; }
+  .hub-experiment .experiment-progress { padding: 15px; }
+  .hub-experiment .experiment-progress ol { display: grid; grid-template-columns: 1fr 1fr; }
+  .hub-experiment .experiment-progress li::after { display: none; }
+}
+
+@media (max-width: 640px) {
+  .hub-experiment { padding-top: 12px; padding-bottom: 32px; }
+  .hub-experiment .experiment-progress ol { grid-template-columns: 1fr; gap: 6px; }
+  .hub-experiment .experiment-progress li { min-height: 38px; font-size: 12px; }
+  .hub-experiment .experiment-progress li > span { flex-basis: 30px; }
+  .hub-experiment .experiment-heading { margin: 20px 0 16px; }
+  .hub-experiment .experiment-heading h1 { font-size: 30px; }
+  .hub-experiment-context-grid { gap: 10px; }
+  .hub-experiment-responsibility-grid { grid-template-columns: 1fr; }
+  .hub-experiment-responsibility,
+  .hub-experiment .hub-context-notice,
+  .hub-experiment-stage-panel { padding: 20px 16px; }
+  .hub-experiment .hub-context-notice { flex-wrap: wrap; }
+  .hub-experiment .hub-context-notice > div { flex: 1 1 calc(100% - 58px); }
+  .hub-experiment .step-actions .r-button,
+  .hub-experiment .reflection-actions .r-button { width: 100%; }
+}

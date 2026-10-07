@@ -3,12 +3,14 @@
 import Link from 'next/link';
 import { useEffect, useRef, useState } from 'react';
 import { Icon } from '@/components/Icon';
+import { ExperimentResponsibility, JourneyContextNotice } from '@/components/hub-ui/JourneyPatterns';
 import { benefitOptions, defaultFocus, focusAreas, helpfulnessOptions, jobProfile, questionsForFocus, type DocumentId, type FocusId } from '@/data/recruiting';
 import { DocumentPicker } from './DocumentPicker';
 import { Preparation } from './Preparation';
 import { QuestionCard, type QuestionState } from './QuestionCard';
 import { ReportDialog } from './ReportDialog';
 import './recruiting.css';
+import '../hub-ui/hub-experiment.css';
 
 type Screen = 'focus' | 'documents' | 'preparation' | 'questions' | 'review' | 'reflection' | 'complete';
 const screenInfo: Record<Screen, { step: number; title: string; description: string }> = {
@@ -83,12 +85,31 @@ export function RecruitingExperiment() {
     setAnnouncement(`Frage an Position ${index + direction + 1} verschoben.`);
   }
 
-  return <div className="page-container detail-page recruiting-experiment">
+  const stageLabel = ['reflection', 'complete'].includes(screen) ? 'Nach der Vorbereitung' : `Schritt ${info.step} · ${['Interviewfokus', 'Demo-Unterlagen', 'Vorbereitung', 'Interviewfragen'][info.step - 1]}`;
+
+  return <div className="page-container detail-page recruiting-experiment hub-experiment">
     <Link className="back-link" href="/use-cases/interview-vorbereiten">← Zum Use Case</Link>
     <div className="experiment-topline"><p className="eyebrow">RECRUITING · INTERVIEWVORBEREITUNG</p><span className="experiment-demo">Geführte Demo</span></div>
     {!['reflection', 'complete'].includes(screen) && <nav className="experiment-progress" aria-label="Fortschritt"><p>{info.step} von 4{screen === 'review' ? ' · Human Review' : ''}</p><ol>{['Interviewfokus', 'Demo-Unterlagen', 'Vorbereitung', 'Interviewfragen'].map((label, index) => <li key={label} aria-current={info.step === index + 1 ? 'step' : undefined} className={info.step > index + 1 ? 'step-complete' : ''}><span aria-hidden="true">{index + 1}</span>{label}</li>)}</ol></nav>}
-    <header className="experiment-heading"><h1 ref={heading} tabIndex={-1}>{info.title}</h1><p>{info.description}</p></header>
+    <header className="experiment-heading"><p className="hub-experiment-stage-label">{stageLabel}</p><h1 ref={heading} tabIndex={-1}>{info.title}</h1><p>{info.description}</p></header>
     <div className="r-announcement" role="status" aria-live="polite">{announcement}</div>
+
+    <div className="hub-experiment-context-grid">
+      <ExperimentResponsibility
+        aiDescription="Strukturiert Demo-Unterlagen und bereitet mögliche Interviewfragen vor."
+        humanDescription="Prüfst Relevanz und Fairness und verantwortest Beurteilung und Gesprächsführung."
+      />
+      <JourneyContextNotice
+        title="Dieser Use Case verarbeitet Personendaten"
+        description="Verwende für Bewerbungsunterlagen ausschliesslich dafür freigegebene Unternehmenslösungen. AI kann die Vorbereitung unterstützen, trifft aber keine Personalentscheidung."
+        href="/guidelines#4"
+        linkLabel="Mehr zu Personendaten"
+        icon={<span className="hub-icon-badge"><Icon name="shield" /></span>}
+        variant="personal-data"
+      />
+    </div>
+
+    <section className="hub-experiment-stage-panel" aria-label={info.title}>
 
     {screen === 'focus' && <>
       <div className="role-context"><span className="card-icon"><Icon name="interview" /></span><div><p className="eyebrow">DEINE DEMO-ROLLE</p><p>{jobProfile.title}</p></div></div>
@@ -146,6 +167,7 @@ export function RecruitingExperiment() {
       <details className="completed-questions"><summary>Deine {selectedIds.length} Interviewfragen ansehen</summary><ol>{selectedQuestions.map((question) => <li key={question.id}>{question.text}</li>)}</ol></details>
       <div className="r-actions"><Link className="r-button r-primary" href="/use-cases">Zurück zu den Use Cases<Icon name="arrow" /></Link><button className="r-text-button" onClick={() => go('reflection')}>Reflexion bearbeiten</button></div>
     </>}
+    </section>
 
     {reportedQuestion && <ReportDialog title={reportedQuestion.title} onClose={() => setReportId(null)} onSubmit={(reason) => { setReports((current) => [...current, { id: reportedQuestion.id, text: reportedQuestion.text, reason }]); setReportId(null); setAnnouncement('Danke. Kritisches Feedback hilft, AI-Unterstützung besser einzuordnen.'); }} />}
     <p className="experiment-footnote">Fiktive Demo · Keine echte AI-Verarbeitung · Deine Änderungen bleiben nur bis zum Neuladen oder Verlassen dieses Ablaufs erhalten.</p>

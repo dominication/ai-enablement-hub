@@ -7,13 +7,8 @@
 .recruiting-meta svg { width: 17px; height: 17px; }
 .recruiting-start { display: flex; align-items: center; gap: 22px; margin-top: 30px; }
 .recruiting-start p { font-size: 12px; color: var(--muted); }
-.r-button { display: inline-flex; justify-content: center; align-items: center; gap: 12px; padding: 12px 18px; border-radius: 5px; border: 1px solid transparent; font-size: 13px; font-weight: 600; line-height: 1.5; text-align: center; min-height: 44px; }
-.r-button svg { width: 18px; height: 18px; flex-shrink: 0; }
-.r-primary { background: #285b4e; color: white; }
-.r-primary:hover:not(:disabled) { background: #1c493d; }
-.r-secondary { background: white; border-color: #c4d0c6; color: var(--ink); }
-.r-secondary:hover:not(:disabled) { background: #eff4ee; }
-.r-button:disabled, .r-text-button:disabled { cursor: not-allowed; opacity: .55; }
+.r-button { border-radius: var(--hub-control-radius); }
+.r-text-button:disabled { cursor: not-allowed; opacity: .55; }
 .r-text-button { color: var(--accent); font-size: 13px; text-decoration: underline; text-underline-offset: 4px; padding: 10px 4px; min-height: 44px; border: 0; background: transparent; }
 .support-section { margin-top: 58px; }
 .support-section > .eyebrow { color: var(--muted); margin-bottom: 12px; }
@@ -42,7 +37,7 @@
 .experiment-progress .step-complete > span { background: #e4ede2; }
 .experiment-heading { margin: 36px 0 28px; }
 .experiment-heading h1 { font-size: clamp(28px, 3.2vw, 39px); max-width: 790px; scroll-margin-top: 24px; }
-.experiment-heading h1:focus { outline: none; }
+.experiment-heading h1:focus:not(:focus-visible) { outline: none; }
 .experiment-heading p { color: var(--muted); font-size: 15px; margin-top: 15px; max-width: 760px; }
 .r-announcement:empty { display: none; }
 .r-announcement:not(:empty) { color: var(--accent); font-size: 13px; background: #eef3eb; border-radius: 5px; padding: 10px 14px; margin-bottom: 20px; }

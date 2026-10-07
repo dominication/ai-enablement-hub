@@ -1,0 +1,13 @@
+.journey-workflow { margin-top: var(--hub-section-gap); }
+.journey-workflow > p { font-size: 14px; color: var(--hub-muted); margin: 6px 0 14px; }
+.journey-workflow ol { list-style: none; padding: 0; margin: 0; display: grid; grid-template-columns: repeat(5,minmax(0,1fr)); gap: 24px; }
+.journey-workflow li { position: relative; display: flex; gap: 10px; padding: 16px 12px; background: var(--hub-surface); border-radius: var(--hub-radius); box-shadow: var(--hub-shadow); }
+.workflow-number { display: grid; place-items: center; flex: 0 0 30px; height: 30px; border-radius: 50%; background: var(--hub-apricot); font-weight: 700; }
+.workflow-ai .workflow-number { background: var(--hub-sky-strong); }
+.journey-workflow li:last-child .workflow-number { background: var(--hub-mint-strong); }
+.journey-workflow h3 { font-size: 13px; font-weight: 700; line-height: 1.4; letter-spacing: -.01em; }
+.journey-workflow li p { display: flex; align-items: center; gap: 8px; margin-top: 9px; font-size: 13px; line-height: 1.45; color: var(--hub-muted); }
+.journey-workflow li p svg { flex: 0 0 20px; color: var(--hub-petrol); }
+.workflow-arrow { position: absolute; right: -22px; top: 50%; transform: translateY(-50%); color: var(--hub-muted); }
+.workflow-arrow svg { width: 18px; height: 18px; }
+@media(max-width:900px) { .journey-workflow ol { grid-template-columns: 1fr; gap: 20px; }.workflow-arrow { right: auto; left: 50%; top: auto; bottom: -20px; transform: rotate(90deg); }.journey-workflow li { align-items: center; }.journey-workflow li p { margin-top: 4px; } }

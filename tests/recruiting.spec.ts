@@ -19,6 +19,12 @@ test('full recruiting journey: source preview, edit, alternative, report, human 
   await page.goto(entry);
   await expect(page.getByRole('heading', { name: 'Interview mit AI vorbereiten', exact: true })).toBeVisible();
   await expect(page.getByRole('heading', { name: 'Du entscheidest' })).toBeVisible();
+  for (const statement of ['die Vorbereitung strukturieren', 'mögliche Interviewfragen ableiten', 'relevante Themen sichtbar machen', 'Fragen formulieren und ordnen', 'Kandidat:innen bewerten', 'Personalentscheidungen treffen', 'das Gespräch führen']) await expect(page.locator('.entry-responsibility')).toContainText(statement);
+  await expect(page.locator('main')).not.toContainText(/objektiver|objektivere Bewertung/i);
+  await expect(page.getByRole('region', { name: 'Veränderte Arbeitsweise' }).getByRole('listitem')).toHaveCount(5);
+  const personalData = page.getByRole('complementary').filter({ hasText: 'Dieser Use Case verarbeitet Personendaten' });
+  await expect(personalData).toContainText('Verwende für Bewerbungsunterlagen ausschliesslich dafür freigegebene Unternehmenslösungen. AI kann die Vorbereitung unterstützen, trifft aber keine Personalentscheidung.');
+  await expect(personalData.getByRole('link', { name: 'Mehr zu Personendaten' })).toHaveAttribute('href', '/guidelines#4');
   await noOverflow(page);
   await page.screenshot({ path: testInfo.outputPath('recruiting-detail.png'), fullPage: true });
   await page.getByRole('link', { name: 'Experiment starten' }).click();
@@ -142,6 +148,26 @@ test('sharing stays local and negative reflection is a valid outcome', async ({ 
   expect(mutations).toEqual([]);
   expect(await page.evaluate(() => Object.keys(localStorage))).toEqual([]);
   expect(await page.evaluate(() => Object.keys(sessionStorage))).toEqual([]);
+});
+
+test('recruiting experiment keeps the shared workspace pattern responsive', async ({ page }) => {
+  for (const width of [360, 768, 1024, 1440]) {
+    await page.setViewportSize({ width, height: 900 });
+    await page.goto(experiment);
+    await expect(page.locator('.hub-experiment')).toBeVisible();
+    await expect(page.getByRole('heading', { level: 1 })).toBeFocused();
+    await expect(page.getByRole('navigation', { name: 'Fortschritt' })).toContainText('1 von 4');
+    await expect(page.locator('.hub-experiment-responsibility')).toContainText('AI unterstützt');
+    await expect(page.locator('.hub-experiment-responsibility')).toContainText('Du entscheidest');
+    const personalData = page.getByRole('complementary').filter({ hasText: 'Dieser Use Case verarbeitet Personendaten' });
+    await expect(personalData.getByRole('link', { name: 'Mehr zu Personendaten' })).toHaveAttribute('href', '/guidelines#4');
+    await expect(page.getByRole('button', { name: 'Weiter', exact: true })).toBeVisible();
+    await noOverflow(page);
+
+    for (const control of await page.locator('.hub-experiment-stage-panel button:visible, .hub-experiment-stage-panel label:visible').all()) {
+      expect((await control.boundingBox())?.height ?? 0).toBeGreaterThanOrEqual(44);
+    }
+  }
 });
 
 test('existing application routes remain available', async ({ page }) => {

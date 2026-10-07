@@ -1,20 +1,35 @@
+import Image from 'next/image';
 import Link from 'next/link';
 import { Icon } from '@/components/Icon';
+import { JourneyContextNotice, JourneyHero, JourneyResponsibility, JourneySummary } from '@/components/hub-ui/JourneyPatterns';
+import { JourneyWorkflow } from '@/components/JourneyWorkflow';
 import './recruiting.css';
 import '../journey-entry.css';
 
 export function RecruitingDetail() {
-  return <div className="page-container detail-page journey-entry recruiting-detail">
-    <Link className="back-link" href="/use-cases">← Zurück zu den Use Cases</Link>
-    <div className="recruiting-heading"><span className="card-icon"><Icon name="interview" /></span><p className="eyebrow">Recruiting</p></div>
-    <h1>Interview mit AI vorbereiten</h1>
-    <div className="entry-summary"><section><h2>Was du hier machst</h2><p>Stellenprofil und fiktive Bewerbungsunterlagen strukturieren und daraus relevante Interviewfragen vorbereiten.</p></section><section><h2>Was du am Ende hast</h2><p>Ein geprüftes Set relevanter Interviewfragen für das Gespräch.</p></section></div>
-    <div className="recruiting-meta"><span><Icon name="clock" />ca. 15 min</span><span><Icon name="shield" />Personendaten</span><span><Icon name="team" />Human Review erforderlich</span></div>
-    <div className="recruiting-start"><Link className="r-button r-primary" href="/use-cases/interview-vorbereiten/experiment">Experiment starten<Icon name="arrow" /></Link><p>Ein geführtes Experiment mit fiktiven Unterlagen.</p></div>
-    <section className="entry-responsibility" aria-labelledby="support-title"><h2 id="support-title">Unterstützung und Verantwortung</h2><div className="entry-pair">
-      <div className="responsibility-card"><h3>AI unterstützt</h3><ul><li>Anforderungen aus dem Stellenprofil strukturieren</li><li>relevante Erfahrungen aus Bewerbungsunterlagen erkennen</li><li>Informationslücken sichtbar machen</li><li>mögliche Interviewfragen entwickeln</li></ul></div>
-      <div className="responsibility-card human-card"><h3>Du entscheidest</h3><ul><li>Relevanz und Bewertung der Kandidat:innen</li><li>Interpretation von Erfahrung und Kontext</li><li>Fairness und Gleichbehandlung</li><li>Auswahl und Formulierung der finalen Interviewfragen</li><li>Personalentscheidungen</li></ul></div>
-    </div></section>
-    <aside className="responsible-notice"><Icon name="shield" /><div><h2>Dieser Use Case verarbeitet Personendaten</h2><p>Verwende für Bewerbungsunterlagen ausschliesslich dafür freigegebene Unternehmenslösungen. AI kann die Vorbereitung unterstützen, trifft aber keine Personalentscheidung.</p><Link href="/guidelines#4" className="text-link">Mehr zu Personendaten<Icon name="arrow" /></Link></div></aside>
+  return <div className="journey-entry recruiting-detail hf-recruiting hub-journey-page">
+    <JourneyHero backHref="/use-cases" backLabel="Zurück zu den Use Cases" category="Recruiting" title="Interview mit AI vorbereiten" description="Bessere Fragen, strukturierte Vorbereitung und gezieltere Gespräche."
+      art={<Image className="hub-journey-art" src="/images/home/recruiting.svg" alt="" width={520} height={560} priority sizes="(max-width: 760px) 100vw, 42vw" />}
+      metadata={<div className="recruiting-meta hub-journey-meta hub-meta"><span><Icon name="clock" /><span><strong>ca. 15 min</strong><small>für das geführte Experiment</small></span></span><span><Icon name="shield" /><span><strong>Personendaten</strong><small>nur fiktive Unterlagen</small></span></span><span><Icon name="team" /><span><strong>Human Review erforderlich</strong><small>Einordnung bleibt bei dir</small></span></span></div>} />
+    <div className="hub-journey-content">
+      <div className="hub-journey-orientation"><JourneySummary items={[{
+        title: 'Was du hier machst', description: 'Stellenprofil und fiktive Bewerbungsunterlagen strukturieren und daraus relevante Interviewfragen vorbereiten.', details: ['Relevante Themen sichtbar machen', 'Mögliche Fragen ableiten', 'Fragen prüfen und ordnen'], icon: <span className="hub-icon-badge"><Icon name="search" /></span>,
+      }, {
+        title: 'Was du am Ende hast', description: 'Ein geprüftes Set relevanter Interviewfragen für das Gespräch.', details: ['Fragen mit Bezug zu Rolle und Unterlagen', 'Eine Grundlage für deine Gesprächsführung'], icon: <span className="hub-icon-badge"><Icon name="interview" /></span>,
+      }]} />
+      <div className="recruiting-start hub-journey-start"><Link className="r-button r-primary hub-button hub-button-primary" href="/use-cases/interview-vorbereiten/experiment">Experiment starten<Icon name="arrow" /></Link><p>Ein geführtes Experiment mit fiktiven Unterlagen.</p></div></div>
+      <JourneyResponsibility id="support-title">
+        <div><span className="hub-icon-badge"><Icon name="project" /></span><div><h3>AI unterstützt</h3><ul><li>die Vorbereitung strukturieren</li><li>mögliche Interviewfragen ableiten</li><li>relevante Themen sichtbar machen</li><li>Fragen formulieren und ordnen</li></ul></div></div>
+        <div><span className="hub-icon-badge"><Icon name="team" /></span><div><h3>Du entscheidest</h3><ul><li>Kontext, Fairness und Gleichbehandlung einordnen</li><li>Kandidat:innen bewerten</li><li>Personalentscheidungen treffen</li><li>finale Fragen auswählen und das Gespräch führen</li></ul></div></div>
+      </JourneyResponsibility>
+      <JourneyWorkflow title="So verändert sich deine Interviewvorbereitung" intro="AI hilft beim Strukturieren und Formulieren. Einordnung und Gesprächsführung bleiben bei dir." steps={[
+        { title: 'Unterlagen auswählen', detail: 'Du wählst relevante fiktive Unterlagen.', icon: 'book', role: 'human' },
+        { title: 'AI strukturiert', detail: 'AI macht Themen und Anforderungen sichtbar.', icon: 'project', role: 'ai' },
+        { title: 'Fragen ableiten', detail: 'AI schlägt mögliche Fragen vor.', icon: 'interview', role: 'ai' },
+        { title: 'Prüfen und einordnen', detail: 'Du prüfst Relevanz, Fairness und Kontext.', icon: 'shield', role: 'human' },
+        { title: 'Gespräch führen', detail: 'Du entscheidest und führst das Interview.', icon: 'team', role: 'human' },
+      ]} />
+      <JourneyContextNotice className="responsible-notice" variant="personal-data" icon={<span className="hub-icon-badge"><Icon name="shield" /></span>} title="Dieser Use Case verarbeitet Personendaten" description="Verwende für Bewerbungsunterlagen ausschliesslich dafür freigegebene Unternehmenslösungen. AI kann die Vorbereitung unterstützen, trifft aber keine Personalentscheidung." href="/guidelines#4" linkLabel="Mehr zu Personendaten" />
+    </div>
   </div>;
 }

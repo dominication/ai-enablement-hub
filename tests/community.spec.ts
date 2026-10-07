@@ -18,7 +18,7 @@ test('Community presents seven fictional mixed experiences with working use case
   page.on('pageerror', (error) => errors.push(error.message));
   await page.goto('/community');
   await expect(page).toHaveTitle('Community | AI Enablement Hub');
-  await expect(page.locator('.community-page > .eyebrow')).toHaveText('COMMUNITY');
+  await expect(page.locator('.community-page .hub-page-intro > .eyebrow')).toHaveText('COMMUNITY');
   await expect(page.getByRole('heading', { level: 1 })).toHaveText('Erfahrungen teilen. Gemeinsam besser entscheiden.');
   await expect(page.getByText('Alle Beiträge in diesem Prototyp sind fiktiv.', { exact: true })).toBeVisible();
   await expect(page.getByRole('heading', { name: 'Nicht nur Erfolg ist ein Learning' })).toBeVisible();

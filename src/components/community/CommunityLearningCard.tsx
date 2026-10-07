@@ -1,9 +1,17 @@
+import Image from 'next/image';
 import Link from 'next/link';
 import type { CommunityLearning } from '@/data/community';
 import { Icon } from '../Icon';
 
 export function CommunityLearningCard({ learning }: { learning: CommunityLearning }) {
+  const visual = {
+    'projektstatus-kontext': '/images/home/learning-project.svg',
+    'interviewfragen-pruefen': '/images/home/learning-notes.svg',
+    'team-einsatz-eingrenzen': '/images/home/learning-team.svg',
+  }[learning.id];
+
   return <article className="community-card" aria-labelledby={`learning-${learning.id}`}>
+    {visual && <div className="community-card-visual"><Image src={visual} alt="" width={520} height={300} /></div>}
     <div className="community-card-meta"><span className="eyebrow">{learning.useCase.category}</span><span className="community-outcome"><span className="sr-only">Entscheidung: </span>{learning.outcome}</span></div>
     <p className="community-use-case">{learning.useCase.title}</p>
     <h3 id={`learning-${learning.id}`}>{learning.takeaway}</h3>

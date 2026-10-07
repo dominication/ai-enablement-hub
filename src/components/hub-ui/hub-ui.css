@@ -1,0 +1,73 @@
+.hub-journey-hero { background: var(--hub-hero-surface); overflow: hidden; }
+.hub-journey-hero-inner { position: relative; max-width: var(--hub-container); margin: auto; padding: 8px var(--hub-page-gutter) 20px; }
+.hub-journey-hero .back-link { display: inline-flex; align-items: center; min-height: var(--hub-touch-target); margin: 0 0 12px; font-size: 13px; color: var(--hub-petrol); position: relative; z-index: 1; }
+.hub-journey-hero-copy { position: relative; z-index: 1; width: 61%; }
+.hub-journey-hero .hub-eyebrow { color: var(--hub-petrol); letter-spacing: .3em; margin-bottom: 12px; }
+.hub-journey-hero h1 { font-size: clamp(30px,3vw,42px); font-weight: 750; letter-spacing: -.045em; line-height: 1.12; }
+.hub-journey-benefit { max-width: 570px; color: var(--hub-muted); font-size: 17px; line-height: 1.5; margin-top: 12px; }
+
+/* High-fidelity journey composition. Tone modifiers only select existing Hub tokens. */
+.hub-journey-page.recruiting-detail { max-width: none; background: var(--hub-page); color: var(--hub-ink); font-family: var(--hub-font); }
+.hub-journey-page .hub-journey-art { position: absolute; width: 42%; height: calc(100% - 20px); right: 2%; bottom: 0; object-fit: contain; object-position: right bottom; }
+.hub-journey-page .hub-journey-meta { display: grid; grid-template-columns: 1fr 1fr 1.2fr; gap: 12px; width: 62%; margin-top: 20px; position: relative; z-index: 1; color: var(--hub-ink); }
+.hub-journey-page .hub-journey-meta > span { display: flex; gap: 10px; background: var(--hub-surface); border-radius: var(--hub-radius); padding: 14px 12px; box-shadow: var(--hub-shadow); }
+.hub-journey-page .hub-journey-meta svg { width: 24px; height: 24px; color: var(--hub-petrol); flex-shrink: 0; }
+.hub-journey-page .hub-journey-meta strong { display: block; font-size: 13px; font-weight: 700; }
+.hub-journey-page .hub-journey-meta small { display: block; margin-top: 3px; font-size: 11px; color: var(--hub-muted); }
+.hub-journey-content { max-width: var(--hub-container); margin: auto; padding: 20px var(--hub-page-gutter) 28px; }
+.hub-journey-orientation { display: grid; grid-template-columns: 2.5fr 1fr; gap: 18px; }
+.hub-journey-page .hub-journey-summary.entry-summary { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; margin: 0; }
+.hub-journey-page .hub-journey-summary.entry-summary section { display: flex; align-items: flex-start; gap: 14px; padding: 22px 18px; border: 0; border-radius: var(--hub-radius); background: var(--hub-mint); }
+.hub-journey-page .hub-journey-summary.entry-summary section:last-child { border: 0; padding: 22px 18px; background: var(--hub-surface); box-shadow: var(--hub-shadow); }
+.hub-journey-page .hub-journey-summary.entry-summary .hub-icon-badge { flex: 0 0 var(--hub-touch-target); background: var(--hub-mint-strong); color: var(--hub-petrol); }
+.hub-journey-page .hub-journey-summary.entry-summary h2 { margin: 0 0 10px; font-size: 16px; font-weight: 700; }
+.hub-journey-page .hub-journey-summary.entry-summary p, .hub-journey-page .hub-journey-summary.entry-summary li { font-size: 14px; line-height: 1.5; color: var(--hub-muted); }
+.hub-journey-page .hub-journey-summary.entry-summary ul, .hub-journey-page .hub-journey-responsibility .hub-responsibility-pair ul { list-style: none; padding: 0; margin: 10px 0 0; }
+.hub-journey-page .hub-journey-summary.entry-summary li, .hub-journey-page .hub-journey-responsibility .hub-responsibility-pair li { position: relative; padding-left: 24px; margin-top: 6px; }
+.hub-journey-page .hub-journey-summary.entry-summary li::before, .hub-journey-page .hub-journey-responsibility .hub-responsibility-pair li::before { content: '✓'; position: absolute; left: 0; top: 1px; width: 17px; height: 17px; text-align: center; line-height: 17px; font-size: 12px; border-radius: 50%; background: var(--hub-mint-strong); color: var(--hub-petrol); }
+.hub-journey-page .hub-journey-start { display: flex; flex-direction: column; justify-content: center; gap: 16px; margin: 0; padding: 24px 20px; background: var(--hub-mint); border-radius: var(--hub-radius); }
+.hub-journey-page .hub-journey-start .hub-button { width: 100%; min-height: 52px; border: 0; border-radius: var(--hub-pill-radius); padding: 12px 16px; background: var(--hub-petrol); color: white; font-size: 14px; }
+.hub-journey-page .hub-journey-start .hub-button:hover { background: var(--hub-petrol-hover); }
+.hub-journey-page .hub-journey-start p { font-size: 14px; text-align: center; color: var(--hub-muted); }
+.hub-journey-page .hub-journey-responsibility.entry-responsibility { margin-top: 20px; }
+.hub-journey-page .hub-journey-responsibility .hub-responsibility-pair { gap: 18px; margin-top: 12px; }
+.hub-journey-page .hub-journey-responsibility .hub-responsibility-pair > div { display: flex; align-items: flex-start; gap: 16px; padding: 22px 20px; border: 0; border-radius: var(--hub-radius); background: var(--hub-mint); }
+.hub-journey-page .hub-journey-responsibility .hub-responsibility-pair > div:last-child { background: var(--hub-apricot); }
+.hub-journey-page .hub-journey-responsibility .hub-responsibility-pair .hub-icon-badge { flex: 0 0 var(--hub-touch-target); background: var(--hub-mint-strong); color: var(--hub-petrol); }
+.hub-journey-page .hub-journey-responsibility .hub-responsibility-pair > div:last-child .hub-icon-badge { background: var(--hub-apricot-strong); }
+.hub-journey-page .hub-journey-responsibility .hub-responsibility-pair h3 { margin: 0; font-size: 16px; font-weight: 700; }
+.hub-journey-page .hub-journey-responsibility .hub-responsibility-pair ul { color: var(--hub-muted); font-size: 14px; line-height: 1.5; }
+.hub-journey-page .hub-journey-responsibility .hub-responsibility-pair > div:last-child li::before { background: var(--hub-apricot-strong); }
+.hub-journey-page .hub-journey-workflow li { margin: 0; }
+.hub-journey-page .hub-journey-workflow .workflow-human .workflow-number { background: var(--hub-apricot); }
+.hub-journey-page .hub-journey-workflow .workflow-ai .workflow-number { background: var(--hub-mint-strong); }
+.hub-journey-page .hub-context-notice { display: flex; align-items: center; gap: 16px; margin-top: 20px; padding: 16px 20px; border: 0; background: var(--hub-mint); }
+.hub-journey-page .hub-context-notice > div { flex: 1; }
+.hub-journey-page .hub-context-notice h2 { font-size: 16px; }
+.hub-journey-page .hub-context-notice p { max-width: none; margin: 4px 0 0; font-size: 13px; color: var(--hub-muted); }
+.hub-journey-page .hub-context-notice > .hub-icon-badge { flex: 0 0 var(--hub-touch-target); background: var(--hub-mint-strong); color: var(--hub-petrol); }
+.hub-journey-page .hub-context-notice .hub-text-link { display: inline-flex; align-items: center; min-height: var(--hub-touch-target); margin-left: auto; padding: 8px 16px; border-radius: var(--hub-pill-radius); background: var(--hub-surface); color: var(--hub-petrol); font-size: 13px; white-space: nowrap; }
+
+@media(max-width:1100px) {
+  .hub-journey-hero-copy { width: 54%; }
+  .hub-journey-orientation { grid-template-columns: 1fr; }
+  .hub-journey-page .hub-journey-start { flex-direction: row; }
+  .hub-journey-page .hub-journey-start .hub-button { width: auto; flex-shrink: 0; }
+  .hub-journey-page .hub-journey-meta { width: 70%; }
+}
+@media(max-width:760px) {
+  .hub-journey-hero-inner { padding-inline: 20px; }
+  .hub-journey-hero-copy { width: 100%; }
+  .hub-journey-benefit { font-size: 15px; }
+  .hub-journey-page .hub-journey-art { position: relative; width: 100%; height: 190px; margin-top: 14px; display: block; object-position: center; }
+  .hub-journey-page .hub-journey-meta { width: 100%; grid-template-columns: 1fr; margin-top: 12px; }
+  .hub-journey-page .hub-journey-meta > span { padding: 12px 16px; }
+  .hub-journey-page .hub-journey-meta small { font-size: 12px; }
+  .hub-journey-content { padding: 20px; }
+  .hub-journey-page .hub-journey-summary.entry-summary, .hub-journey-page .hub-journey-responsibility .hub-responsibility-pair { grid-template-columns: 1fr; }
+  .hub-journey-page .hub-journey-start { flex-direction: column; }
+  .hub-journey-page .hub-journey-start .hub-button { width: 100%; }
+  .hub-journey-page .hub-journey-responsibility .hub-responsibility-pair > div { padding: 20px 16px; }
+  .hub-journey-page .hub-context-notice { flex-wrap: wrap; padding: 18px; }
+  .hub-journey-page .hub-context-notice > div { flex-basis: calc(100% - 64px); }
+}
