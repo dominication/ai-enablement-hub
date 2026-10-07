@@ -3,6 +3,7 @@
 import Link from 'next/link';
 import { useEffect, useRef, useState } from 'react';
 import { Icon } from '@/components/Icon';
+import { ExperimentResponsibility, ExperimentStageHeader, ExperimentTopline, JourneyContextNotice } from '@/components/hub-ui/JourneyPatterns';
 import { defaultNextSteps, defaultReflection, demoTeam, desiredEffects, initialAssignments, leadershipRole, possibleSideEffects, teamActivities, teamRequirements, type Activity, type Assignment, type Discussion, type Outcome, type TeamReflection } from '@/data/team';
 import { ActivityBoard } from './ActivityBoard';
 import { FocusBoard } from './FocusBoard';
@@ -11,6 +12,7 @@ import { ChoiceList, ExperimentEditor, ExperimentSummary, type Experiment } from
 import { TeamRetrospective } from './TeamRetrospective';
 import { TeamLearningPreview } from './TeamLearningPreview';
 import './team.css';
+import '../hub-ui/hub-experiment.css';
 
 type Stage = 'work' | 'focus' | 'mapping' | 'needs' | 'experiment' | 'summary' | 'prepared' | 'retro' | 'preview' | 'complete';
 const stageInfo: Record<Stage, { group: number; title: string; intro: string }> = {
@@ -76,13 +78,16 @@ export function TeamWorkshop() {
     setNeeds([teamRequirements[0], teamRequirements[1], teamRequirements[3]]); go('work');
   }
   return <div className="page-container tl-workshop hub-experiment hub-team-workshop">
-    <Link className="back-link" href="/team-lab">← Zum Team Lab</Link><header className="tl-workshop-top"><div><p className="eyebrow">TEAM LAB · GEMEINSAM ARBEIT GESTALTEN</p><p className="tl-team-name">{demoTeam.name}</p></div><span>45 Minuten Teamgespräch</span></header>
-    <p className="tl-demo-note">Demo-Team – alle Rollen, Beiträge und Inhalte sind fiktiv.</p><p className="tl-small">{demoTeam.situation} Du erkundest eine lokale Demo; es sind keine anderen Personen verbunden.</p>
-    <nav className="tl-nav" aria-label="Workshop-Phasen">{groups.map((group, index) => <button key={group.title} disabled={index > info.group} aria-current={info.group === index ? 'step' : undefined} onClick={() => go(group.stage)}><span aria-hidden="true">0{index + 1}</span>{group.title}</button>)}</nav>
-    <header className="tl-stage-heading"><h1 ref={heading} tabIndex={-1}>{info.title}</h1><p>{info.intro}</p></header>
+    <ExperimentTopline backHref="/team-lab" backLabel="Zum Team Lab" category="TEAM LAB · GEMEINSAM ARBEIT GESTALTEN" context={<p>{demoTeam.name} · 45 Minuten Teamgespräch</p>} />
+    <nav className="tl-nav hub-experiment-stepper" aria-label="Workshop-Phasen">{groups.map((group, index) => <button key={group.title} disabled={index > info.group} aria-current={info.group === index ? 'step' : undefined} onClick={() => go(group.stage)}><span aria-hidden="true">0{index + 1}</span>{group.title}</button>)}</nav>
+    <ExperimentStageHeader stageLabel={`Phase ${info.group + 1} von 5 · ${groups[info.group].title}`} title={info.title} description={info.intro} headingRef={heading} className="tl-stage-heading" />
+    <div className="hub-experiment-context-grid">
+      <ExperimentResponsibility aiDescription="Hilft, Material und Beobachtungen für das Experiment zu strukturieren." humanDescription="Wählt die Aufgabe, klärt Verantwortung und entscheidet über Weiterführen, Anpassen oder Stoppen." />
+      <JourneyContextNotice title="Fiktive Team-Demo" description={`Demo-Team – alle Rollen, Beiträge und Inhalte sind fiktiv. ${demoTeam.situation} Du erkundest eine lokale Demo; es sind keine anderen Personen verbunden.`} icon={<span className="hub-icon-badge"><Icon name="team" /></span>} variant="guideline" />
+    </div>
     {notice && <p className="tl-insight" role="status">{notice}</p>}
     {activity && stage !== 'work' && stage !== 'focus' && stage !== 'complete' && <p className="tl-focus-strip"><strong>Euer Fokus:</strong> {activity.title}</p>}
-    <section className="hub-team-stage-panel" aria-label={info.title}>
+    <section className="hub-team-stage-panel hub-experiment-stage-panel" aria-label={info.title}>
     {stage === 'work' && <><ActivityBoard activities={activities} selected={selected} custom={custom} onToggle={toggleActivity} onCustom={updateCustom} /><p className="tl-small">Die Beiträge sind vorbereitete Perspektiven, keine Stimmen oder Live-Abstimmung. Wählt auch Tätigkeiten aus, bei denen ihr euch noch nicht einig seid.</p><div className="tl-actions"><span>{selected.length ? `${selected.length} Tätigkeiten für das Gespräch ausgewählt` : 'Wählt mindestens eine Tätigkeit aus.'}</span><button className="tl-button tl-primary" disabled={!selected.length} onClick={() => go('focus')}>Gemeinsam fokussieren<Icon name="arrow" /></button></div></>}
     {stage === 'focus' && <><FocusBoard activities={activities.filter((item) => selected.includes(item.id))} discussions={discussions} focus={focus} onDiscuss={(id, value) => setDiscussions((current) => ({ ...current, [id]: value }))} onFocus={chooseFocus} /><p className="tl-small">Eine andere Fokusaufgabe setzt Aufgabenaufteilung, Hypothese und Retrospektive auf passende Demo-Vorschläge zurück. Für andere Tätigkeiten wird eine allgemeine, anpassbare Strukturierungshypothese verwendet.</p><div className="tl-actions"><button className="tl-button tl-secondary" onClick={() => go('work')}>Zurück zur Arbeit</button><button className="tl-button tl-primary" disabled={!selected.includes(focus)} onClick={() => go('mapping')}>Aufgabe gemeinsam untersuchen<Icon name="arrow" /></button></div></>}
     {stage === 'mapping' && activity && experiment && <><ResponsibilityBoard activity={activity} assignments={assignments} onChange={(id, value) => { setAssignments((current) => ({ ...current, [id]: value })); setNotice('Zuordnung aktualisiert. Die Verantwortung für Entscheidungen bleibt beim Team.'); }} /><div className="tl-actions"><button className="tl-button tl-secondary" onClick={() => go('focus')}>Fokus prüfen</button><button className="tl-button tl-primary" onClick={() => go('needs')}>Voraussetzungen klären<Icon name="arrow" /></button></div></>}

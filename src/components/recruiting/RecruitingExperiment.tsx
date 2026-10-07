@@ -3,7 +3,7 @@
 import Link from 'next/link';
 import { useEffect, useRef, useState } from 'react';
 import { Icon } from '@/components/Icon';
-import { ExperimentResponsibility, JourneyContextNotice } from '@/components/hub-ui/JourneyPatterns';
+import { ExperimentResponsibility, ExperimentStageHeader, ExperimentTopline, JourneyContextNotice } from '@/components/hub-ui/JourneyPatterns';
 import { benefitOptions, defaultFocus, focusAreas, helpfulnessOptions, jobProfile, questionsForFocus, type DocumentId, type FocusId } from '@/data/recruiting';
 import { DocumentPicker } from './DocumentPicker';
 import { Preparation } from './Preparation';
@@ -88,10 +88,9 @@ export function RecruitingExperiment() {
   const stageLabel = ['reflection', 'complete'].includes(screen) ? 'Nach der Vorbereitung' : `Schritt ${info.step} · ${['Interviewfokus', 'Demo-Unterlagen', 'Vorbereitung', 'Interviewfragen'][info.step - 1]}`;
 
   return <div className="page-container detail-page recruiting-experiment hub-experiment">
-    <Link className="back-link" href="/use-cases/interview-vorbereiten">← Zum Use Case</Link>
-    <div className="experiment-topline"><p className="eyebrow">RECRUITING · INTERVIEWVORBEREITUNG</p><span className="experiment-demo">Geführte Demo</span></div>
+    <ExperimentTopline backHref="/use-cases/interview-vorbereiten" backLabel="Zum Use Case" category="RECRUITING · INTERVIEWVORBEREITUNG" />
     {!['reflection', 'complete'].includes(screen) && <nav className="experiment-progress" aria-label="Fortschritt"><p>{info.step} von 4{screen === 'review' ? ' · Human Review' : ''}</p><ol>{['Interviewfokus', 'Demo-Unterlagen', 'Vorbereitung', 'Interviewfragen'].map((label, index) => <li key={label} aria-current={info.step === index + 1 ? 'step' : undefined} className={info.step > index + 1 ? 'step-complete' : ''}><span aria-hidden="true">{index + 1}</span>{label}</li>)}</ol></nav>}
-    <header className="experiment-heading"><p className="hub-experiment-stage-label">{stageLabel}</p><h1 ref={heading} tabIndex={-1}>{info.title}</h1><p>{info.description}</p></header>
+    <ExperimentStageHeader stageLabel={stageLabel} title={info.title} description={info.description} headingRef={heading} />
     <div className="r-announcement" role="status" aria-live="polite">{announcement}</div>
 
     <div className="hub-experiment-context-grid">

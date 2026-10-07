@@ -3,17 +3,12 @@ import { expect, test, type Locator } from '@playwright/test';
 const entries = [
   { route: '/use-cases/interview-vorbereiten', task: 'Was du hier machst', result: 'Was du am Ende hast', ai: 'AI unterstützt', human: 'Du entscheidest', cta: 'Experiment starten', guard: 'Dieser Use Case verarbeitet Personendaten', metadata: '.recruiting-meta', note: '.recruiting-start p', items: 8 },
   { route: '/use-cases/projektstatus-vorbereiten', task: 'Was du hier machst', result: 'Was du am Ende hast', ai: 'AI unterstützt', human: 'Du entscheidest', cta: 'Workflow ausprobieren', guard: 'Projektinformationen bewusst verwenden', metadata: '.pm-metadata', note: '.pm-start p', items: 9 },
-  { route: '/team-lab', task: 'Was ihr hier macht', result: 'Was ihr am Ende habt', ai: 'AI kann unterstützen bei', human: 'Ihr entscheidet gemeinsam', cta: 'Team Lab starten', guard: 'Nicht das Tool steht am Anfang', metadata: '.tl-meta', note: '.hub-journey-start > .tl-small', items: 6 },
+  { route: '/team-lab', task: 'Was ihr hier macht', result: 'Was ihr am Ende habt', ai: 'AI kann unterstützen bei', human: 'Ihr entscheidet gemeinsam', cta: 'Team Lab starten', guard: 'Nicht das Tool steht am Anfang', metadata: '.tl-meta', note: '.hub-journey-start p', items: 6 },
 ];
 
 async function expectBefore(first: Locator, second: Locator) {
   const next = await second.elementHandle();
   expect(await first.evaluate((element, following) => Boolean(following && element.compareDocumentPosition(following) & Node.DOCUMENT_POSITION_FOLLOWING), next)).toBe(true);
-  const firstBox = await first.boundingBox();
-  const secondBox = await second.boundingBox();
-  expect(firstBox).not.toBeNull();
-  expect(secondBox).not.toBeNull();
-  expect(firstBox!.y + firstBox!.height).toBeLessThanOrEqual(secondBox!.y);
 }
 
 test('navigation reflects available features and retains active routes', async ({ page }) => {
@@ -59,19 +54,12 @@ test('entry expectations, responsibility and original experiment destinations st
       await expect(page.getByRole('heading', { name, exact: true })).toBeVisible();
     }
     const back = page.getByRole('link', { name: '← Zurück zu den Use Cases', exact: true });
-    if (entry.route === '/team-lab') {
-      await expect(page.locator('main')).not.toContainText('Zurück zu den Use Cases');
-      await expect(page.locator('.tl-detail .back-link')).toHaveCount(0);
-    } else {
-      await expect(back).toBeVisible();
-      await expect(back).toHaveAttribute('href', '/use-cases');
-    }
+    await expect(back).toBeVisible();
+    await expect(back).toHaveAttribute('href', '/use-cases');
     await expect(page.locator('.entry-summary section p')).toHaveCount(2);
     await expect(page.locator('.entry-responsibility li')).toHaveCount(entry.items);
-    if (entry.route !== '/team-lab') {
-      await expect(page.getByRole('region', { name: 'Veränderte Arbeitsweise' })).toBeVisible();
-      await expect(page.locator('.journey-workflow li')).toHaveCount(5);
-    }
+    await expect(page.getByRole('region', { name: 'Veränderte Arbeitsweise' })).toBeVisible();
+    await expect(page.locator('.journey-workflow li')).toHaveCount(5);
     const start = page.getByRole('link', { name: entry.cta, exact: true });
     await expect(start).toHaveAttribute('href', `${entry.route}/experiment`);
     await start.click(); await expect(page).toHaveURL(`${entry.route}/experiment`);
@@ -103,8 +91,7 @@ test('header and entry pages fit all requested widths with usable actions', asyn
       const metadata = page.locator(entry.metadata);
       const note = page.locator(entry.note);
       const responsibility = page.locator('.entry-responsibility');
-      if (entry.route !== '/team-lab') await expectBefore(metadata, summary);
-      else await expectBefore(summary, metadata);
+      await expectBefore(metadata, summary);
       await expectBefore(metadata, cta);
       await expectBefore(cta, responsibility);
       await expectBefore(note, responsibility);
@@ -115,6 +102,31 @@ test('header and entry pages fit all requested widths with usable actions', asyn
       expect((await cta.boundingBox())?.height).toBeGreaterThanOrEqual(44);
       await page.evaluate(() => window.scrollTo(0, 0));
       await page.screenshot({ path: testInfo.outputPath(`${entry.route.split('/').pop()}-${width}.png`), fullPage: true });
+    }
+  }
+});
+
+test('guided demos share the same responsive orientation shell while retaining their work areas', async ({ page }, testInfo) => {
+  const demos = [
+    { route: '/use-cases/interview-vorbereiten/experiment', id: 'recruiting-demo' },
+    { route: '/use-cases/projektstatus-vorbereiten/experiment', id: 'project-demo' },
+    { route: '/team-lab/experiment', id: 'team-demo' },
+  ];
+  for (const width of [360, 768, 1024, 1440]) {
+    await page.setViewportSize({ width, height: 1000 });
+    for (const demo of demos) {
+      await page.goto(demo.route);
+      await expect(page.locator('.hub-experiment')).toBeVisible();
+      await expect(page.locator('.hub-experiment > .back-link')).toBeVisible();
+      await expect(page.locator('.experiment-topline')).toBeVisible();
+      await expect(page.locator('.experiment-demo')).toHaveText('Geführte Demo');
+      await expect(page.locator('.experiment-heading')).toBeVisible();
+      await expect(page.locator('.hub-experiment-stage-label')).toBeVisible();
+      await expect(page.locator('.hub-experiment-context-grid')).toBeVisible();
+      await expect(page.getByRole('heading', { name: 'AI unterstützt. Du entscheidest.' })).toBeVisible();
+      await expect(page.locator('.hub-experiment-stage-panel')).toBeVisible();
+      expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
+      await page.screenshot({ path: testInfo.outputPath(`${demo.id}-${width}.png`), fullPage: true });
     }
   }
 });

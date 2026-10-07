@@ -453,92 +453,8 @@
 .hub-use-case-orientation .uc-overview-considerations .hub-icon-badge { background: var(--hub-apricot-strong); color: var(--hub-petrol); }
 .hub-use-case-orientation .uc-overview-considerations .text-link { margin-top: 14px; }
 
-/* Team entry continues the Journey pattern with the established apricot accent. */
-.hub-team-detail.tl-detail { max-width: none; background: var(--hub-page); color: var(--hub-ink); font-family: var(--hub-font); }
-.hub-team-detail .hub-journey-hero { background: var(--hub-hero-surface); }
-.hub-team-detail .hub-journey-hero-inner { padding-top: 28px; }
-.hub-team-detail .hub-journey-art { width: 39%; right: 4%; }
-.hub-team-detail .hub-journey-summary.entry-summary section { background: var(--hub-apricot); }
-.hub-team-detail .hub-journey-summary.entry-summary section:last-child { background: var(--hub-surface); }
-.hub-team-detail .hub-journey-summary .hub-icon-badge,
-.hub-team-detail .hub-journey-responsibility .hub-responsibility-pair > div:last-child .hub-icon-badge { background: var(--hub-apricot-strong); color: var(--hub-petrol); }
-.hub-team-detail .hub-journey-start { background: var(--hub-apricot); }
-.hub-team-detail .hub-team-orientation {
-  display: flex;
-  flex-direction: column;
-  gap: 18px;
-}
-.hub-team-action { display: flex; flex-direction: column; gap: 12px; }
-.hub-team-meta.tl-meta {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 8px;
-  margin: 0;
-}
-.hub-team-meta.tl-meta > span {
-  min-height: var(--hub-touch-target);
-  padding: 9px 12px;
-  border-radius: var(--hub-radius);
-  background: var(--hub-surface);
-  box-shadow: var(--hub-shadow);
-  color: var(--hub-muted);
-}
-.hub-team-detail .hub-team-action .hub-journey-start { flex-direction: row; align-items: center; justify-content: space-between; }
-.hub-team-detail .hub-team-action .hub-journey-start .hub-button { width: auto; flex-shrink: 0; }
-.hub-team-detail .hub-team-action .hub-journey-start p { text-align: left; }
-.hub-team-detail .hub-team-principle {
-  margin-top: 20px;
-  padding: 20px;
-  border-radius: var(--hub-radius);
-  background: var(--hub-sky);
-}
-.hub-team-detail .hub-team-principle .hub-icon-badge { background: var(--hub-sky-strong); color: var(--hub-petrol); }
-.hub-team-detail .hub-team-principle h2 { font-size: 17px; font-weight: 700; }
-.hub-team-detail .hub-team-principle p { margin-top: 6px; font-size: 14px; line-height: 1.55; }
-.hub-team-detail .hub-team-principle .tl-small { margin-top: 5px; }
-
 /* Team Lab workspace uses the same experiment shell while keeping its workshop logic. */
-.hub-team-workshop { max-width: var(--hub-container); padding-top: 22px; padding-bottom: 42px; }
-.hub-team-workshop .tl-workshop-top { padding: 0 2px; }
-.hub-team-workshop .tl-team-name { font-size: 23px; font-weight: 700; color: var(--hub-ink); }
-.hub-team-workshop .tl-workshop-top > span,
-.hub-team-workshop .tl-demo-note {
-  border: 0;
-  border-radius: var(--hub-pill-radius);
-  background: var(--hub-apricot);
-  color: var(--hub-muted);
-}
-.hub-team-workshop .tl-workshop-top > span { padding: 6px 12px; }
-.hub-team-workshop .tl-demo-note { display: inline-flex; margin-top: 14px; padding: 8px 13px; }
-.hub-team-workshop .tl-nav {
-  gap: 5px;
-  margin-top: 16px;
-  padding: 8px;
-  border: 0;
-  border-radius: var(--hub-radius);
-  background: var(--hub-soft-surface);
-}
-.hub-team-workshop .tl-nav button {
-  min-height: var(--hub-touch-target);
-  padding: 10px;
-  border: 0;
-  border-radius: 10px;
-  font-size: 12px;
-}
-.hub-team-workshop .tl-nav button[aria-current="step"] { background: var(--hub-petrol); color: white; }
-.hub-team-workshop .tl-nav button:not(:disabled):hover { background: var(--hub-mint-strong); }
-.hub-team-workshop .tl-stage-heading { margin: 24px 0 18px; }
-.hub-team-workshop .tl-stage-heading h1 { font-size: clamp(30px, 3.4vw, 43px); font-weight: 750; letter-spacing: -.04em; }
-.hub-team-workshop .tl-stage-heading h1:focus:not(:focus-visible) { outline: none; }
-.hub-team-workshop .tl-stage-heading h1:focus-visible { outline: 3px solid color-mix(in srgb, var(--hub-petrol) 36%, transparent); outline-offset: 5px; }
-.hub-team-workshop .tl-stage-heading p { line-height: 1.55; }
 .hub-team-workshop .tl-focus-strip { padding: 10px 14px; border: 0; border-radius: var(--hub-radius); background: var(--hub-mint); }
-.hub-team-stage-panel {
-  padding: 26px;
-  border-radius: var(--hub-radius);
-  background: var(--hub-surface);
-  box-shadow: var(--hub-shadow);
-}
 .hub-team-workshop .tl-activity-card,
 .hub-team-workshop .tl-focus-card,
 .hub-team-workshop .tl-custom-activity,
@@ -557,9 +473,6 @@
 .hub-team-workshop .tl-outcome-options label:has(input:checked) { border-color: var(--hub-petrol); background: var(--hub-mint); }
 .hub-team-workshop .tl-check,
 .hub-team-workshop .tl-outcome-options label { min-height: var(--hub-touch-target); }
-.hub-team-workshop .tl-button { border-radius: var(--hub-button-radius); }
-.hub-team-workshop .tl-primary { background: var(--hub-petrol); }
-.hub-team-workshop .tl-primary:hover:not(:disabled) { background: var(--hub-petrol-hover); }
 .hub-team-workshop .tl-insight,
 .hub-team-workshop .tl-leadership,
 .hub-team-workshop .tl-agreement,
@@ -591,7 +504,6 @@
   .hub-organisation .organisation-observations article { grid-template-columns: 86px minmax(0, 1fr); }
   .hub-organisation .organisation-observations img { width: 86px; height: 100px; }
   .hub-use-case-orientation .uc-overview-steps ol { grid-template-columns: 1fr; }
-  .hub-team-detail .hub-journey-art { width: 45%; right: 0; }
 }
 
 @media (max-width: 760px) {
@@ -614,15 +526,7 @@
   .hub-use-case-orientation .uc-overview-roles { grid-template-columns: 1fr; }
   .hub-use-case-orientation .uc-overview-roles section,
   .hub-use-case-orientation .uc-overview-considerations { padding: 20px 18px; }
-  .hub-team-detail .hub-journey-art { width: 100%; }
-  .hub-team-meta.tl-meta { grid-template-columns: 1fr; }
-  .hub-team-detail .hub-team-action .hub-journey-start { flex-direction: column; align-items: stretch; }
-  .hub-team-detail .hub-team-action .hub-journey-start .hub-button { width: 100%; }
-  .hub-team-detail .hub-team-action .hub-journey-start p { text-align: center; }
-  .hub-team-workshop { padding-top: 12px; padding-bottom: 32px; }
   .hub-team-workshop .tl-nav { grid-template-columns: 1fr 1fr; }
-  .hub-team-workshop .tl-nav button { flex-direction: row; align-items: center; font-size: 12px; padding: 9px; }
-  .hub-team-stage-panel { padding: 20px 16px; }
   .hub-community .community-hero,
   .hub-organisation .organisation-hero {
     grid-template-columns: 1fr;

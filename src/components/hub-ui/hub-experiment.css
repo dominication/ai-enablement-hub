@@ -17,8 +17,15 @@
 }
 
 .hub-experiment .experiment-topline {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
   padding: 0 2px;
 }
+
+.hub-experiment .experiment-topline .hub-eyebrow { margin-bottom: 4px; color: var(--hub-petrol); }
+.hub-experiment .experiment-topline > div > p:last-child:not(.hub-eyebrow) { color: var(--hub-muted); font-size: 14px; }
 
 .hub-experiment .experiment-demo {
   display: inline-flex;
@@ -81,6 +88,22 @@
 .hub-experiment .experiment-progress li[aria-current="step"] > span { background: var(--hub-petrol); color: white; }
 .hub-experiment .experiment-progress .step-complete > span { background: var(--hub-mint-strong); color: var(--hub-petrol); }
 .hub-experiment .experiment-progress .step-complete::after { background: var(--hub-mint-strong); }
+
+.hub-experiment .hub-experiment-stepper {
+  display: grid;
+  gap: 8px;
+  margin-top: 14px;
+  padding: 8px;
+  border: 0;
+  border-radius: var(--hub-radius);
+  background: var(--hub-soft-surface);
+}
+.hub-experiment .hub-experiment-stepper button { display: flex; align-items: center; justify-content: center; gap: 9px; min-height: var(--hub-touch-target); padding: 10px; border: 0; border-radius: 10px; background: transparent; color: var(--hub-muted); font-size: 13px; text-align: left; }
+.hub-experiment .hub-experiment-stepper button > span { display: grid; place-items: center; flex: 0 0 26px; height: 26px; border-radius: 50%; background: var(--hub-surface); color: var(--hub-muted); font-size: 11px; }
+.hub-experiment .hub-experiment-stepper button[aria-current="step"] { background: var(--hub-petrol); color: white; }
+.hub-experiment .hub-experiment-stepper button[aria-current="step"] > span { color: var(--hub-petrol); }
+.hub-experiment .hub-experiment-stepper button:disabled { opacity: 1; }
+.hub-experiment .hub-experiment-stepper button:not(:disabled):hover { background: var(--hub-mint-strong); color: var(--hub-ink); }
 
 .hub-experiment .experiment-heading {
   margin: 24px 0 18px;
@@ -170,6 +193,15 @@
   box-shadow: var(--hub-shadow);
 }
 
+.hub-experiment .pm-button,
+.hub-experiment .tl-button { min-height: var(--hub-touch-target); border-radius: var(--hub-button-radius); font-size: 14px; }
+.hub-experiment .pm-primary,
+.hub-experiment .tl-primary { border-color: transparent; background: var(--hub-petrol); color: white; }
+.hub-experiment .pm-primary:hover:not(:disabled),
+.hub-experiment .tl-primary:hover:not(:disabled) { background: var(--hub-petrol-hover); }
+.hub-experiment .pm-secondary,
+.hub-experiment .tl-secondary { border-color: transparent; background: var(--hub-soft-surface); color: var(--hub-petrol); }
+
 /* Existing journey controls adopt the shared workspace finish without changing behaviour. */
 .hub-experiment .role-context,
 .hub-experiment .demo-material-note,
@@ -209,6 +241,7 @@
   .hub-experiment .experiment-progress li > span { flex-basis: 30px; }
   .hub-experiment .experiment-heading { margin: 20px 0 16px; }
   .hub-experiment .experiment-heading h1 { font-size: 30px; }
+  .hub-experiment .experiment-topline { align-items: flex-start; flex-direction: column; gap: 8px; }
   .hub-experiment-context-grid { gap: 10px; }
   .hub-experiment-responsibility-grid { grid-template-columns: 1fr; }
   .hub-experiment-responsibility,
