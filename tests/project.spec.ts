@@ -264,3 +264,49 @@ test('project entry explains the five work-sharing steps and keeps the prototype
   await page.keyboard.press('Enter');
   await expect(page).toHaveURL(workspace);
 });
+
+test('high fidelity workspace keeps all phases usable at the four review widths', async ({ page }, testInfo) => {
+  test.setTimeout(90000);
+  for (const width of [360, 768, 1024, 1440]) {
+    await page.setViewportSize({ width, height: 1000 });
+    await page.goto(workspace);
+    async function inspect(phase: string) {
+      await expect(page.locator('.pm-stage-context')).toContainText(phase);
+      await expect(page.locator('.pm-working-area h1')).toBeFocused();
+      await noOverflow(page);
+      for (const action of await page.locator('.hf-workspace button:visible, .hf-workspace a:visible, .hf-workspace summary:visible, .pm-source-row label, .pm-choice, .pm-risk-options label').all()) {
+        expect((await action.boundingBox())!.height).toBeGreaterThanOrEqual(44);
+      }
+      if (['Quellen', 'Einordnung', 'Status', 'Learning-Vorschau'].includes(phase)) {
+        await page.evaluate(() => scrollTo(0, 0));
+        await page.screenshot({ path: testInfo.outputPath(`workspace-${width}-${phase}.png`), fullPage: true });
+      }
+    }
+    await inspect('Quellen');
+    const firstPreview = page.locator('.pm-source-row').first().getByRole('button');
+    await firstPreview.focus();
+    expect(await firstPreview.evaluate((node) => getComputedStyle(node).outlineStyle)).not.toBe('none');
+    await page.keyboard.press('Enter');
+    await expect(page.getByRole('dialog')).toBeVisible();
+    await noOverflow(page);
+    await page.keyboard.press('Escape');
+    await expect(firstPreview).toBeFocused();
+    await page.getByRole('button', { name: 'Veränderungen erkennen', exact: true }).click();
+    await inspect('Veränderungen');
+    await page.getByRole('button', { name: 'Veränderungen einordnen', exact: true }).click();
+    await inspect('Einordnung');
+    await page.getByRole('radio', { name: 'hoch', exact: true }).check();
+    await page.getByLabel('Welcher Kontext fehlt?', { exact: true }).fill(addedContext);
+    await page.getByRole('button', { name: 'Statusentwurf erstellen', exact: true }).click();
+    await inspect('Status');
+    await page.getByRole('button', { name: 'Status finalisieren', exact: true }).click();
+    await inspect('Reflexion');
+    await page.getByRole('radio', { name: 'Keine erkennbare Entlastung', exact: true }).check();
+    await page.getByRole('checkbox', { name: 'Risiken bewerten', exact: true }).check();
+    await page.getByRole('button', { name: 'Learning teilen', exact: true }).click();
+    await inspect('Learning-Vorschau');
+    await page.getByRole('button', { name: 'Vorschau bestätigen', exact: true }).click();
+    await inspect('Abschluss');
+    await expect(page.locator('.pm-completion')).toContainText('nicht veröffentlicht');
+  }
+});
