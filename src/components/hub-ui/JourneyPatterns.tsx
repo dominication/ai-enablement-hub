@@ -40,6 +40,14 @@ type ContextNoticeProps = {
 type ExperimentResponsibilityProps = {
   aiDescription: string;
   humanDescription: string;
+  aiLabel?: string;
+  humanLabel?: string;
+};
+
+type ExperimentStepperStep = {
+  label: string;
+  disabled?: boolean;
+  onSelect?: () => void;
 };
 
 type JourneyMetaItem = {
@@ -90,15 +98,30 @@ export function JourneyContextNotice({ title, description, href, linkLabel, icon
   </aside>;
 }
 
-export function ExperimentResponsibility({ aiDescription, humanDescription }: ExperimentResponsibilityProps) {
+export function ExperimentResponsibility({ aiDescription, humanDescription, aiLabel = 'AI unterstützt', humanLabel = 'Du entscheidest' }: ExperimentResponsibilityProps) {
+  const humanMark = humanLabel.startsWith('Ihr') ? 'Ihr' : 'Du';
   return <section className="hub-experiment-responsibility" aria-labelledby="experiment-responsibility-title">
     <p className="eyebrow hub-eyebrow">ARBEITSTEILUNG</p>
-    <h2 className="hub-section-heading" id="experiment-responsibility-title">AI unterstützt. Du entscheidest.</h2>
+    <h2 className="hub-section-heading" id="experiment-responsibility-title">{aiLabel}. {humanLabel}.</h2>
     <div className="hub-experiment-responsibility-grid">
-      <div><span className="hub-experiment-responsibility-mark" aria-hidden="true">AI</span><p><strong>AI unterstützt</strong>{aiDescription}</p></div>
-      <div><span className="hub-experiment-responsibility-mark" aria-hidden="true">Du</span><p><strong>Du entscheidest</strong>{humanDescription}</p></div>
+      <div><span className="hub-experiment-responsibility-mark" aria-hidden="true">AI</span><p><strong>{aiLabel}</strong>{aiDescription}</p></div>
+      <div><span className="hub-experiment-responsibility-mark" aria-hidden="true">{humanMark}</span><p><strong>{humanLabel}</strong>{humanDescription}</p></div>
     </div>
   </section>;
+}
+
+export function ExperimentStepper({ steps, currentIndex, statusLabel, ariaLabel = 'Fortschritt' }: { steps: ExperimentStepperStep[]; currentIndex: number; statusLabel?: string; ariaLabel?: string }) {
+  return <nav className="hub-experiment-stepper" aria-label={ariaLabel}>
+    <p className="hub-experiment-stepper-status">{statusLabel ?? `${currentIndex + 1} von ${steps.length}`}</p>
+    <ol>{steps.map((step, index) => {
+      const current = index === currentIndex;
+      const content = <><span className="hub-experiment-step-number" aria-hidden="true">{String(index + 1).padStart(2, '0')}</span><span>{step.label}</span></>;
+      return <li className={index < currentIndex ? 'is-complete' : undefined} key={step.label}>{step.onSelect
+        ? <button className="hub-experiment-step" type="button" disabled={step.disabled} aria-current={current ? 'step' : undefined} onClick={step.onSelect}>{content}</button>
+        : <span className="hub-experiment-step" aria-current={current ? 'step' : undefined}>{content}</span>}
+      </li>;
+    })}</ol>
+  </nav>;
 }
 
 export function ExperimentTopline({ backHref, backLabel, category, context }: { backHref: string; backLabel: string; category: string; context?: ReactNode }) {

@@ -195,6 +195,10 @@ test('high fidelity library fits four widths with local visuals and accessible a
     await expect(page.locator('h1')).toHaveCount(1);
     await expect(page.locator('.library-featured .use-case-card')).toHaveCount(3);
     await expect(page.locator('.library-grid .use-case-card')).toHaveCount(9);
+    await expect(page.locator('.library-featured .use-case-card-visual-featured')).toHaveCount(3);
+    await expect(page.locator('.library-featured .use-case-card-visual-illustration img')).toHaveCount(3);
+    await expect(page.locator('.library-grid .use-case-card-visual-compact')).toHaveCount(9);
+    await expect(page.locator('.library-grid .use-case-card-visual-compact img')).toHaveCount(0);
     for (const link of await page.locator('.library-filters a, .uc-library .card-action, .library-text-link').all()) {
       expect((await link.boundingBox())!.height).toBeGreaterThanOrEqual(44);
     }

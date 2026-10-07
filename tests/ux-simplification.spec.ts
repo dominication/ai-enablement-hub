@@ -108,9 +108,9 @@ test('header and entry pages fit all requested widths with usable actions', asyn
 
 test('guided demos share the same responsive orientation shell while retaining their work areas', async ({ page }, testInfo) => {
   const demos = [
-    { route: '/use-cases/interview-vorbereiten/experiment', id: 'recruiting-demo' },
-    { route: '/use-cases/projektstatus-vorbereiten/experiment', id: 'project-demo' },
-    { route: '/team-lab/experiment', id: 'team-demo' },
+    { route: '/use-cases/interview-vorbereiten/experiment', id: 'recruiting-demo', steps: 4, responsibility: 'AI unterstützt. Du entscheidest.' },
+    { route: '/use-cases/projektstatus-vorbereiten/experiment', id: 'project-demo', steps: 4, responsibility: 'AI unterstützt. Du entscheidest.' },
+    { route: '/team-lab/experiment', id: 'team-demo', steps: 5, responsibility: 'AI kann unterstützen. Ihr entscheidet gemeinsam.' },
   ];
   for (const width of [360, 768, 1024, 1440]) {
     await page.setViewportSize({ width, height: 1000 });
@@ -122,8 +122,17 @@ test('guided demos share the same responsive orientation shell while retaining t
       await expect(page.locator('.experiment-demo')).toHaveText('Geführte Demo');
       await expect(page.locator('.experiment-heading')).toBeVisible();
       await expect(page.locator('.hub-experiment-stage-label')).toBeVisible();
+      await expect(page.locator('.hub-experiment-stepper')).toBeVisible();
+      await expect(page.locator('.hub-experiment-stepper li')).toHaveCount(demo.steps);
+      await expect(page.locator('.hub-experiment-stepper [aria-current="step"]')).toHaveCount(1);
       await expect(page.locator('.hub-experiment-context-grid')).toBeVisible();
-      await expect(page.getByRole('heading', { name: 'AI unterstützt. Du entscheidest.' })).toBeVisible();
+      await expect(page.getByRole('heading', { name: demo.responsibility, exact: true })).toBeVisible();
+      if (demo.id === 'team-demo') {
+        const responsibility = page.locator('.hub-experiment-responsibility');
+        await expect(responsibility).toContainText('AI kann unterstützen');
+        await expect(responsibility).toContainText('Ihr entscheidet gemeinsam');
+        await expect(responsibility).not.toContainText('Du entscheidest');
+      }
       await expect(page.locator('.hub-experiment-stage-panel')).toBeVisible();
       expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
       await page.screenshot({ path: testInfo.outputPath(`${demo.id}-${width}.png`), fullPage: true });

@@ -3,7 +3,7 @@
 import Link from 'next/link';
 import { useEffect, useRef, useState } from 'react';
 import { Icon } from '@/components/Icon';
-import { ExperimentResponsibility, ExperimentStageHeader, ExperimentTopline, JourneyContextNotice } from '@/components/hub-ui/JourneyPatterns';
+import { ExperimentResponsibility, ExperimentStageHeader, ExperimentStepper, ExperimentTopline, JourneyContextNotice } from '@/components/hub-ui/JourneyPatterns';
 import { availableChanges, project, projectSources, type ProjectChange, type RiskLevel, type SourceId, type SourceReference } from '@/data/project';
 import { createStatusDraft, type ChangeReview, type ChangeReviews, type StatusDraft, type StatusSectionId } from '@/data/project-status';
 import { SourcePicker } from './SourcePicker';
@@ -84,7 +84,7 @@ export function ProjectWorkspace() {
     <ExperimentTopline backHref="/use-cases/projektstatus-vorbereiten" backLabel="Zum Use Case" category="PROJEKTMANAGEMENT · PROJEKTSTATUS" context={<p className="pm-project-name">{project.name}</p>} />
     <header className="pm-project-header"><p>{project.description}</p><div className="pm-reporting-date"><span>Berichtsstand</span><strong>{project.period}</strong></div></header>
     <p className="pm-demo-note">Demo-Projekt – alle Inhalte und Projektdaten in diesem Prototyp sind fiktiv.</p>
-    <nav className="pm-stage-nav hub-experiment-stepper" aria-label="Projektworkflow">{stages.slice(0, 4).map((item, index) => <button key={item.id} disabled={index > furthest || (item.id === 'status' && dirty)} aria-current={stage === item.id ? 'step' : undefined} onClick={() => go(item.id)}><span aria-hidden="true">0{index + 1}</span>{item.label}</button>)}</nav>
+    <ExperimentStepper ariaLabel="Projektworkflow" currentIndex={Math.min(stages.findIndex((item) => item.id === stage), 3)} steps={stages.slice(0, 4).map((item, index) => ({ label: item.label, disabled: index > furthest || (item.id === 'status' && dirty), onSelect: () => go(item.id) }))} />
     <ExperimentStageHeader stageLabel={stageLabel} title={current.title} description={current.intro} headingRef={heading} className="pm-workspace-heading" />
     <div className="hub-experiment-context-grid">
       <ExperimentResponsibility aiDescription="Strukturiert ausgewählte Projektquellen und bereitet einen Statusentwurf vor." humanDescription="Ordnest Kontext und Risiken ein und verantwortest Freigabe und Kommunikation." />

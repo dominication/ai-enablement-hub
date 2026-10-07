@@ -3,7 +3,7 @@
 import Link from 'next/link';
 import { useEffect, useRef, useState } from 'react';
 import { Icon } from '@/components/Icon';
-import { ExperimentResponsibility, ExperimentStageHeader, ExperimentTopline, JourneyContextNotice } from '@/components/hub-ui/JourneyPatterns';
+import { ExperimentResponsibility, ExperimentStageHeader, ExperimentStepper, ExperimentTopline, JourneyContextNotice } from '@/components/hub-ui/JourneyPatterns';
 import { benefitOptions, defaultFocus, focusAreas, helpfulnessOptions, jobProfile, questionsForFocus, type DocumentId, type FocusId } from '@/data/recruiting';
 import { DocumentPicker } from './DocumentPicker';
 import { Preparation } from './Preparation';
@@ -89,7 +89,7 @@ export function RecruitingExperiment() {
 
   return <div className="page-container detail-page recruiting-experiment hub-experiment">
     <ExperimentTopline backHref="/use-cases/interview-vorbereiten" backLabel="Zum Use Case" category="RECRUITING · INTERVIEWVORBEREITUNG" />
-    {!['reflection', 'complete'].includes(screen) && <nav className="experiment-progress" aria-label="Fortschritt"><p>{info.step} von 4{screen === 'review' ? ' · Human Review' : ''}</p><ol>{['Interviewfokus', 'Demo-Unterlagen', 'Vorbereitung', 'Interviewfragen'].map((label, index) => <li key={label} aria-current={info.step === index + 1 ? 'step' : undefined} className={info.step > index + 1 ? 'step-complete' : ''}><span aria-hidden="true">{index + 1}</span>{label}</li>)}</ol></nav>}
+    {!['reflection', 'complete'].includes(screen) && <ExperimentStepper currentIndex={info.step - 1} statusLabel={`${info.step} von 4${screen === 'review' ? ' · Human Review' : ''}`} steps={['Interviewfokus', 'Demo-Unterlagen', 'Vorbereitung', 'Interviewfragen'].map((label) => ({ label }))} />}
     <ExperimentStageHeader stageLabel={stageLabel} title={info.title} description={info.description} headingRef={heading} />
     <div className="r-announcement" role="status" aria-live="polite">{announcement}</div>
 

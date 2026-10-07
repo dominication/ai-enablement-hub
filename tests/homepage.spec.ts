@@ -140,6 +140,8 @@ test('homepage orientation and existing elements fit desktop, tablet and narrow 
       expect(await page.locator('.hf-home').evaluate((element) => element.getBoundingClientRect().height)).toBeLessThan(1400);
     }
     await expect(page.locator('.use-case-card')).toHaveCount(3);
+    await expect(page.locator('.use-case-card > .use-case-card-visual-featured')).toHaveCount(3);
+    await expect(page.locator('.use-case-card-visual-featured img')).toHaveCount(3);
     await expect(page.locator('.hf-learning')).toHaveCount(3);
     await expect(page.locator('.guidelines-teaser')).toBeVisible();
     for (const image of await page.locator('.hf-home img').all()) {

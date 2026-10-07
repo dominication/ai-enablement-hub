@@ -16,7 +16,6 @@
 .hf-workspace .pm-reporting-date { border-radius: var(--hub-radius); padding: 12px 16px; background: var(--hub-sky); }
 .hf-workspace .pm-reporting-date strong { font-weight: 600; }
 .hf-workspace .pm-demo-note { margin-top: 12px; font-size: 12px; }
-.hf-workspace .pm-stage-nav { grid-template-columns: repeat(4,minmax(0,1fr)); }
 .hf-workspace .pm-workspace-grid { grid-template-columns: 220px minmax(0,1fr); gap: 28px; margin-top: 24px; align-items: start; }
 .hf-workspace .pm-project-sidebar { border: 0; padding: 18px; border-radius: var(--hub-radius); background: #f0f5f3; font-size: 13px; }
 .hf-workspace .pm-project-sidebar section + section { border: 0; margin-top: 22px; padding-top: 0; }
@@ -105,8 +104,6 @@
   .hf-workspace { padding: 12px 20px 28px; }
   .hf-workspace .pm-project-header { gap: 12px; }.hf-workspace .pm-project-name { font-size: 23px; }
   .hf-workspace .pm-reporting-date { padding: 10px 12px; flex-wrap: wrap; white-space: normal; }
-  .hf-workspace .pm-stage-nav { grid-template-columns: 1fr 1fr; gap: 6px; }
-  .hf-workspace .pm-stage-nav button { justify-content: flex-start; }
   .hf-workspace .pm-source-picker { grid-template-columns: 1fr; }
   .hf-workspace .pm-project-sidebar { grid-template-columns: 1fr; }
   .hf-workspace .pm-context-review, .hf-workspace .pm-status-document, .hf-workspace .pm-reflection { padding: 18px 16px; }

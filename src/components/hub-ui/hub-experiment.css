@@ -39,71 +39,24 @@
   font-weight: 650;
 }
 
-.hub-experiment .experiment-progress {
-  display: block;
-  margin-top: 14px;
-  padding: 16px 18px;
-  border: 0;
-  border-radius: var(--hub-radius);
-  background: var(--hub-soft-surface);
-}
-
-.hub-experiment .experiment-progress > p {
-  margin-bottom: 12px;
-  color: var(--hub-petrol);
-  font-size: 12px;
-}
-
-.hub-experiment .experiment-progress ol {
-  gap: 8px;
-}
-
-.hub-experiment .experiment-progress li {
-  flex: 1;
-  min-width: 0;
-  gap: 9px;
-  color: var(--hub-muted);
-  font-size: 13px;
-}
-
-.hub-experiment .experiment-progress li::after {
-  content: '';
-  height: 2px;
-  flex: 1;
-  min-width: 12px;
-  border-radius: 2px;
-  background: #d9e4e0;
-}
-
-.hub-experiment .experiment-progress li:last-child::after { display: none; }
-.hub-experiment .experiment-progress li > span {
-  width: 30px;
-  height: 30px;
-  border: 0;
-  background: var(--hub-surface);
-  box-shadow: var(--hub-shadow);
-  color: var(--hub-muted);
-  font-size: 12px;
-}
-.hub-experiment .experiment-progress li[aria-current="step"] > span { background: var(--hub-petrol); color: white; }
-.hub-experiment .experiment-progress .step-complete > span { background: var(--hub-mint-strong); color: var(--hub-petrol); }
-.hub-experiment .experiment-progress .step-complete::after { background: var(--hub-mint-strong); }
-
 .hub-experiment .hub-experiment-stepper {
-  display: grid;
-  gap: 8px;
   margin-top: 14px;
   padding: 8px;
   border: 0;
   border-radius: var(--hub-radius);
   background: var(--hub-soft-surface);
 }
-.hub-experiment .hub-experiment-stepper button { display: flex; align-items: center; justify-content: center; gap: 9px; min-height: var(--hub-touch-target); padding: 10px; border: 0; border-radius: 10px; background: transparent; color: var(--hub-muted); font-size: 13px; text-align: left; }
-.hub-experiment .hub-experiment-stepper button > span { display: grid; place-items: center; flex: 0 0 26px; height: 26px; border-radius: 50%; background: var(--hub-surface); color: var(--hub-muted); font-size: 11px; }
-.hub-experiment .hub-experiment-stepper button[aria-current="step"] { background: var(--hub-petrol); color: white; }
-.hub-experiment .hub-experiment-stepper button[aria-current="step"] > span { color: var(--hub-petrol); }
-.hub-experiment .hub-experiment-stepper button:disabled { opacity: 1; }
-.hub-experiment .hub-experiment-stepper button:not(:disabled):hover { background: var(--hub-mint-strong); color: var(--hub-ink); }
+.hub-experiment-stepper-status { margin: 2px 4px 8px; color: var(--hub-petrol); font-size: 12px; font-weight: 650; }
+.hub-experiment .hub-experiment-stepper ol { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 8px; margin: 0; padding: 0; list-style: none; }
+.hub-experiment .hub-experiment-stepper li { min-width: 0; }
+.hub-experiment .hub-experiment-step { display: flex; align-items: center; justify-content: center; gap: 9px; width: 100%; min-height: var(--hub-touch-target); padding: 9px 10px; border: 0; border-radius: 10px; background: transparent; color: var(--hub-muted); font: inherit; font-size: 13px; text-align: left; }
+.hub-experiment .hub-experiment-step-number { display: grid; place-items: center; flex: 0 0 26px; height: 26px; border-radius: 50%; background: var(--hub-surface); box-shadow: var(--hub-shadow); color: var(--hub-muted); font-size: 11px; }
+.hub-experiment .hub-experiment-step[aria-current="step"] { background: var(--hub-petrol); color: white; font-weight: 650; }
+.hub-experiment .hub-experiment-step[aria-current="step"] .hub-experiment-step-number { color: var(--hub-petrol); }
+.hub-experiment .hub-experiment-stepper .is-complete .hub-experiment-step { color: var(--hub-ink); }
+.hub-experiment .hub-experiment-stepper .is-complete .hub-experiment-step-number { background: var(--hub-mint-strong); color: var(--hub-petrol); }
+.hub-experiment .hub-experiment-step:disabled { opacity: 1; cursor: not-allowed; }
+.hub-experiment button.hub-experiment-step:not(:disabled):hover { background: var(--hub-mint-strong); color: var(--hub-ink); }
 
 .hub-experiment .experiment-heading {
   margin: 24px 0 18px;
@@ -229,16 +182,13 @@
 
 @media (max-width: 900px) {
   .hub-experiment-context-grid { grid-template-columns: 1fr; }
-  .hub-experiment .experiment-progress { padding: 15px; }
-  .hub-experiment .experiment-progress ol { display: grid; grid-template-columns: 1fr 1fr; }
-  .hub-experiment .experiment-progress li::after { display: none; }
+  .hub-experiment .hub-experiment-stepper ol { grid-template-columns: 1fr 1fr; }
 }
 
 @media (max-width: 640px) {
   .hub-experiment { padding-top: 12px; padding-bottom: 32px; }
-  .hub-experiment .experiment-progress ol { grid-template-columns: 1fr; gap: 6px; }
-  .hub-experiment .experiment-progress li { min-height: 38px; font-size: 12px; }
-  .hub-experiment .experiment-progress li > span { flex-basis: 30px; }
+  .hub-experiment .hub-experiment-stepper ol { grid-template-columns: 1fr; gap: 6px; }
+  .hub-experiment .hub-experiment-step { justify-content: flex-start; }
   .hub-experiment .experiment-heading { margin: 20px 0 16px; }
   .hub-experiment .experiment-heading h1 { font-size: 30px; }
   .hub-experiment .experiment-topline { align-items: flex-start; flex-direction: column; gap: 8px; }

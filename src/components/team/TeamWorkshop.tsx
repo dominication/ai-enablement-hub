@@ -3,7 +3,7 @@
 import Link from 'next/link';
 import { useEffect, useRef, useState } from 'react';
 import { Icon } from '@/components/Icon';
-import { ExperimentResponsibility, ExperimentStageHeader, ExperimentTopline, JourneyContextNotice } from '@/components/hub-ui/JourneyPatterns';
+import { ExperimentResponsibility, ExperimentStageHeader, ExperimentStepper, ExperimentTopline, JourneyContextNotice } from '@/components/hub-ui/JourneyPatterns';
 import { defaultNextSteps, defaultReflection, demoTeam, desiredEffects, initialAssignments, leadershipRole, possibleSideEffects, teamActivities, teamRequirements, type Activity, type Assignment, type Discussion, type Outcome, type TeamReflection } from '@/data/team';
 import { ActivityBoard } from './ActivityBoard';
 import { FocusBoard } from './FocusBoard';
@@ -22,7 +22,7 @@ const stageInfo: Record<Stage, { group: number; title: string; intro: string }> 
   needs: { group: 2, title: 'Was brauchen wir, damit wir das sinnvoll ausprobieren können?', intro: 'Unterschiedliche Voraussetzungen und Bedenken gehören zu einem Experiment dazu. Klärt sie, bevor ihr startet.' },
   experiment: { group: 3, title: 'Unser Experiment', intro: 'Beschreibt einen überschaubaren Versuch. Beobachtet gewünschte Wirkung und mögliche Nebenwirkungen gleich aufmerksam.' },
   summary: { group: 3, title: 'Euer Experiment auf einen Blick', intro: 'Prüft den Canvas gemeinsam. Er ist eine Vereinbarung für einen Versuch, keine Verpflichtung zur dauerhaften Nutzung.' },
-  prepared: { group: 3, title: 'Experiment vorbereitet', intro: 'Im realen Einsatz würde das Team diesen Ansatz nun im vereinbarten Zeitraum testen. Für den Prototyp kannst du direkt eine vorbereitete Demo-Retrospektive ansehen.' },
+  prepared: { group: 3, title: 'Experiment vorbereitet', intro: 'Im realen Einsatz würde das Team diesen Ansatz nun im vereinbarten Zeitraum testen. Für den Prototyp könnt ihr direkt eine vorbereitete Demo-Retrospektive ansehen.' },
   retro: { group: 4, title: 'Aus dem Versuch lernen', intro: 'Auch zusätzlicher Aufwand und Grenzen gehören zum Ergebnis. Entscheidet gemeinsam, wie es weitergeht.' },
   preview: { group: 4, title: 'Vorschau des Team-Learnings', intro: 'Prüft, was andere Teams aus dieser Erfahrung mitnehmen könnten.' },
   complete: { group: 4, title: 'Team Experiment abgeschlossen', intro: 'Das Demo-Learning wurde nur in dieser Sitzung gespeichert und nicht veröffentlicht. In einem realen AI Enablement Hub könnten solche Erfahrungen anderen Teams helfen, geeignete Experimente schneller einzuschätzen und wiederkehrende Hindernisse sichtbar zu machen.' },
@@ -79,11 +79,11 @@ export function TeamWorkshop() {
   }
   return <div className="page-container tl-workshop hub-experiment hub-team-workshop">
     <ExperimentTopline backHref="/team-lab" backLabel="Zum Team Lab" category="TEAM LAB · GEMEINSAM ARBEIT GESTALTEN" context={<p>{demoTeam.name} · 45 Minuten Teamgespräch</p>} />
-    <nav className="tl-nav hub-experiment-stepper" aria-label="Workshop-Phasen">{groups.map((group, index) => <button key={group.title} disabled={index > info.group} aria-current={info.group === index ? 'step' : undefined} onClick={() => go(group.stage)}><span aria-hidden="true">0{index + 1}</span>{group.title}</button>)}</nav>
+    <ExperimentStepper ariaLabel="Workshop-Phasen" currentIndex={info.group} steps={groups.map((group, index) => ({ label: group.title, disabled: index > info.group, onSelect: () => go(group.stage) }))} />
     <ExperimentStageHeader stageLabel={`Phase ${info.group + 1} von 5 · ${groups[info.group].title}`} title={info.title} description={info.intro} headingRef={heading} className="tl-stage-heading" />
     <div className="hub-experiment-context-grid">
-      <ExperimentResponsibility aiDescription="Hilft, Material und Beobachtungen für das Experiment zu strukturieren." humanDescription="Wählt die Aufgabe, klärt Verantwortung und entscheidet über Weiterführen, Anpassen oder Stoppen." />
-      <JourneyContextNotice title="Fiktive Team-Demo" description={`Demo-Team – alle Rollen, Beiträge und Inhalte sind fiktiv. ${demoTeam.situation} Du erkundest eine lokale Demo; es sind keine anderen Personen verbunden.`} icon={<span className="hub-icon-badge"><Icon name="team" /></span>} variant="guideline" />
+      <ExperimentResponsibility aiLabel="AI kann unterstützen" humanLabel="Ihr entscheidet gemeinsam" aiDescription="Hilft, Material und Beobachtungen für das Experiment zu strukturieren." humanDescription="Wählt die Aufgabe, klärt Verantwortung und entscheidet über Weiterführen, Anpassen oder Stoppen." />
+      <JourneyContextNotice title="Fiktive Team-Demo" description={`Demo-Team – alle Rollen, Beiträge und Inhalte sind fiktiv. ${demoTeam.situation} Ihr erkundet eine lokale Demo; es sind keine anderen Personen verbunden.`} icon={<span className="hub-icon-badge"><Icon name="team" /></span>} variant="guideline" />
     </div>
     {notice && <p className="tl-insight" role="status">{notice}</p>}
     {activity && stage !== 'work' && stage !== 'focus' && stage !== 'complete' && <p className="tl-focus-strip"><strong>Euer Fokus:</strong> {activity.title}</p>}

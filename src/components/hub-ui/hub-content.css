@@ -526,7 +526,6 @@
   .hub-use-case-orientation .uc-overview-roles { grid-template-columns: 1fr; }
   .hub-use-case-orientation .uc-overview-roles section,
   .hub-use-case-orientation .uc-overview-considerations { padding: 20px 18px; }
-  .hub-team-workshop .tl-nav { grid-template-columns: 1fr 1fr; }
   .hub-community .community-hero,
   .hub-organisation .organisation-hero {
     grid-template-columns: 1fr;
@@ -547,5 +546,4 @@
 }
 
 @media (max-width: 420px) {
-  .hub-team-workshop .tl-nav { grid-template-columns: 1fr; }
 }

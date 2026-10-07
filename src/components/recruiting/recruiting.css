@@ -27,14 +27,6 @@
 .experiment-topline { display: flex; justify-content: space-between; align-items: center; gap: 20px; }
 .experiment-topline .eyebrow { font-size: 10px; }
 .experiment-demo { color: #667565; font-size: 11px; }
-.experiment-progress { margin-top: 25px; padding: 23px 0; border-block: 1px solid var(--line); display: flex; align-items: center; gap: 35px; }
-.experiment-progress > p { white-space: nowrap; font-size: 13px; font-weight: 600; }
-.experiment-progress ol { list-style: none; display: flex; flex: 1; justify-content: space-between; gap: 12px; margin: 0; padding: 0; }
-.experiment-progress li { display: flex; gap: 7px; align-items: center; font-size: 12px; color: var(--muted); }
-.experiment-progress li > span { display: inline-grid; place-items: center; width: 25px; height: 25px; border: 1px solid #c4cec4; border-radius: 50%; font-size: 11px; }
-.experiment-progress li[aria-current="step"] { color: var(--ink); font-weight: 600; }
-.experiment-progress li[aria-current="step"] > span { background: var(--accent); border-color: var(--accent); color: white; }
-.experiment-progress .step-complete > span { background: #e4ede2; }
 .experiment-heading { margin: 36px 0 28px; }
 .experiment-heading h1 { font-size: clamp(28px, 3.2vw, 39px); max-width: 790px; scroll-margin-top: 24px; }
 .experiment-heading h1:focus:not(:focus-visible) { outline: none; }
@@ -131,7 +123,6 @@
 .completed-questions ol { padding-left: 24px; list-style: decimal; }
 .completed-questions li { padding-left: 8px; margin-top: 18px; font-size: 14px; overflow-wrap: anywhere; }
 @media (max-width: 900px) {
-  .experiment-progress { flex-direction: column; align-items: stretch; gap: 15px; }
   .document-grid { gap: 12px; }.document-card { padding: 17px; }
   .evidence-grid { grid-template-columns: 1fr; gap: 23px; }
   .evidence-grid article + article { padding-top: 22px; border-top: 1px solid var(--line); }
@@ -144,8 +135,6 @@
   .support-section { margin-top: 38px; }.support-section > .eyebrow { font-size: 9px; }
   .responsibility-card { padding: 23px; }.responsibility-card h3 { font-size: 22px; }
   .experiment-topline { gap: 12px; flex-wrap: wrap; }
-  .experiment-progress ol { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
-  .experiment-progress li { font-size: 11px; }
   .experiment-heading { margin-top: 27px; }.experiment-heading p { font-size: 14px; }
   .r-fieldset legend span { display: block; margin-top: 4px; }
   .role-context { padding: 18px; }.role-context > div > p:last-child { font-size: 14px; }
