@@ -6,7 +6,7 @@ export const demoTeam = {
 };
 export type Assignment = 'ai' | 'together' | 'human';
 export const assignmentColumns: { id: Assignment; title: string }[] = [
-  { id: 'ai', title: 'AI kann unterstützen' }, { id: 'together', title: 'Gemeinsam prüfen' }, { id: 'human', title: 'Mensch bleibt entscheidend' },
+  { id: 'ai', title: 'KI kann unterstützen' }, { id: 'together', title: 'Gemeinsam prüfen' }, { id: 'human', title: 'Mensch bleibt entscheidend' },
 ];
 export type Subtask = { id: string; title: string; defaultAssignment: Assignment; judgement?: boolean };
 export type Discussion = { recurring: string; effort: string; information: string; judgement: string };
@@ -35,9 +35,9 @@ export const discussionQuestions: { id: keyof Discussion; question: string; opti
   { id: 'judgement', question: 'Wie viel menschliche Urteilskraft braucht sie?', options: ['wenig', 'mittel', 'hoch', 'sehr hoch', 'noch offen'] },
 ];
 const baseDiscussion: Discussion = { recurring: 'ja', effort: 'hoch', information: 'ja', judgement: 'mittel' };
-const genericHypothesis = 'Wenn AI uns beim Strukturieren freigegebener Informationen unterstützt, können wir uns stärker auf die fachliche Einordnung konzentrieren. Ob das ohne zusätzliche Nachteile gelingt, prüfen wir im Experiment.';
+const genericHypothesis = 'Wenn KI uns beim Strukturieren freigegebener Informationen unterstützt, können wir uns stärker auf die fachliche Einordnung konzentrieren. Ob das ohne zusätzliche Nachteile gelingt, prüfen wir im Experiment.';
 export const teamActivities: Activity[] = [
-  { id: 'status', title: 'Wöchentlichen Service-Status erstellen', description: 'Informationen aus mehreren Quellen zusammentragen und verdichten.', role: 'Operations', discussion: { ...baseDiscussion }, subtasks: statusTasks, hypothesis: 'Wenn AI Informationen aus unseren Statusquellen strukturiert und Veränderungen hervorhebt, verbringen wir weniger Aufmerksamkeit mit dem Zusammentragen und können uns stärker auf Einordnung und Prioritäten konzentrieren.' },
+  { id: 'status', title: 'Wöchentlichen Service-Status erstellen', description: 'Informationen aus mehreren Quellen zusammentragen und verdichten.', role: 'Operations', discussion: { ...baseDiscussion }, subtasks: statusTasks, hypothesis: 'Wenn KI Informationen aus unseren Statusquellen strukturiert und Veränderungen hervorhebt, verbringen wir weniger Aufmerksamkeit mit dem Zusammentragen und können uns stärker auf Einordnung und Prioritäten konzentrieren.' },
   { id: 'requests', title: 'Wiederkehrende Kundenanfragen sortieren', description: 'Ähnliche Anfragen manuell erkennen und weiterleiten.', role: 'Service Specialist', discussion: { ...baseDiscussion, judgement: 'hoch' }, subtasks: genericTasks, hypothesis: genericHypothesis },
   { id: 'meetings', title: 'Meetings dokumentieren', description: 'Entscheidungen und offene Punkte nach jedem Meeting aufbereiten.', role: 'Fachvertretung', discussion: { ...baseDiscussion }, subtasks: genericTasks, hypothesis: genericHypothesis },
   { id: 'processes', title: 'Prozessinformationen aktuell halten', description: 'Änderungen aus verschiedenen Teams zusammenführen.', role: 'Prozessverantwortung', discussion: { ...baseDiscussion, information: 'teilweise' }, subtasks: genericTasks, hypothesis: genericHypothesis },
@@ -56,7 +56,7 @@ export const teamRequirements = [
 ];
 export const desiredEffects = ['weniger manuelle Sammelarbeit', 'bessere Übersicht', 'weniger Informationsverlust', 'relevante Veränderungen werden schneller sichtbar', 'Qualität bleibt mindestens gleich', 'Zusammenarbeit wird klarer'];
 export const possibleSideEffects = ['zusätzliche Kontrollarbeit', 'Fehler oder falsche Zusammenfassungen', 'Informationsverlust', 'unklare Verantwortlichkeiten', 'Abhängigkeit vom Tool', 'mehr statt weniger Arbeitsaufwand', 'schlechtere Diskussionen im Team', 'sensible Daten oder Governance-Probleme'];
-export const agreement = ['AI-Ergebnisse werden geprüft', 'Entscheidungen bleiben beim Team', 'Probleme dürfen offen angesprochen werden', 'das Experiment kann jederzeit angepasst oder beendet werden'];
+export const agreement = ['KI-Ergebnisse werden geprüft', 'Entscheidungen bleiben beim Team', 'Probleme dürfen offen angesprochen werden', 'das Experiment kann jederzeit angepasst oder beendet werden'];
 export const leadershipRole = ['Zeit und Raum für den Versuch schaffen', 'Erwartungen klären', 'unterschiedliche Perspektiven zulassen', 'nicht nur Geschwindigkeit bewerten', 'Reflexion ermöglichen'];
 export const reviewQuestions = ['Was wurde besser – und für wen?', 'Welche zusätzliche Arbeit oder neuen Risiken sind entstanden?', 'Wo war menschliche Einordnung entscheidend?', 'Führen wir weiter, passen wir an oder stoppen wir?'];
 export const retrospectiveFindings = [
@@ -74,7 +74,7 @@ export const outcomeOptions = [
 export type Outcome = (typeof outcomeOptions)[number]['id'];
 export const reflectionPrompts = [
   { id: 'work', title: 'Was haben wir über unsere Arbeit gelernt?' },
-  { id: 'ai', title: 'Was haben wir über die Zusammenarbeit mit AI gelernt?' },
+  { id: 'ai', title: 'Was haben wir über die Zusammenarbeit mit KI gelernt?' },
   { id: 'others', title: 'Was sollten andere Teams wissen?' },
 ] as const;
 export type TeamReflection = Record<(typeof reflectionPrompts)[number]['id'], string>;
@@ -85,6 +85,6 @@ export const defaultReflection: TeamReflection = {
 };
 export const defaultNextSteps: Record<Outcome, string> = {
   continue: 'Datenfreigaben, Ergebnisprüfung und menschliche Verantwortung regelmässig im Team klären.',
-  adapt: 'AI nur für die Strukturierung von Informationen verwenden. Priorisierung bleibt vollständig beim Team.',
-  stop: 'Den AI-Versuch beenden, zur bisherigen Arbeitsweise zurückkehren und die beobachteten Grenzen im Team festhalten.',
+  adapt: 'KI nur für die Strukturierung von Informationen verwenden. Priorisierung bleibt vollständig beim Team.',
+  stop: 'Den KI-Versuch beenden, zur bisherigen Arbeitsweise zurückkehren und die beobachteten Grenzen im Team festhalten.',
 };

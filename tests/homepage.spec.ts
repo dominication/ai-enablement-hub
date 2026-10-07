@@ -1,11 +1,11 @@
 import { expect, test, type Page } from '@playwright/test';
 import { homepageLearnings } from '../src/data/homepage';
 
-const headline = 'Finde heraus, wie AI deine Arbeit unterstützen kann.';
+const headline = 'Finde heraus, wie KI deine Arbeit unterstützen kann.';
 const featured = [
-  ['Interview mit AI vorbereiten', '/use-cases/interview-vorbereiten'],
-  ['Projektstatus mit AI vorbereiten', '/use-cases/projektstatus-vorbereiten'],
-  ['AI Team Experiment', '/team-lab'],
+  ['Interview mit KI vorbereiten', '/use-cases/interview-vorbereiten'],
+  ['Projektstatus mit KI vorbereiten', '/use-cases/projektstatus-vorbereiten'],
+  ['KI Team Experiment', '/team-lab'],
 ];
 async function noOverflow(page: Page) {
   expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
@@ -16,7 +16,7 @@ test('homepage explains the product in order and keeps work search as its primar
   expect(response?.status()).toBe(200);
   await expect(page.getByRole('heading', { level: 1 })).toHaveText(headline);
   const hero = page.locator('.hero');
-  await expect(hero.locator('.hero-description')).toHaveText('Praxisnahe Use Cases, Erfahrungen aus der Community und klare Orientierung für deine Arbeit mit AI.');
+  await expect(hero.locator('.hero-description')).toHaveText('Praxisnahe Use Cases, Erfahrungen aus der Community und klare Orientierung für deine Arbeit mit KI.');
   await expect(hero.getByRole('search')).toHaveCount(1);
   await expect(hero.getByRole('searchbox', { name: 'Was möchtest du erreichen?', exact: true })).toHaveAttribute('placeholder', 'z. B. Projektstatus vorbereiten, Meetingnotizen strukturieren …');
   await expect(hero.getByRole('button')).toHaveCount(1);
@@ -29,24 +29,24 @@ test('homepage explains the product in order and keeps work search as its primar
   await expect(page.locator('main')).not.toContainText(/Neue Perspektiven|Gemeinsam weiterdenken/);
 });
 
-test('homepage follows the approved hierarchy and qualitative signals link to Standortbild', async ({ page }) => {
+test('homepage follows the approved hierarchy and qualitative signals link to KI-Kompass', async ({ page }) => {
   await page.goto('/');
-  const status = page.getByRole('region', { name: 'Wo stehen wir mit AI?', exact: true });
+  const status = page.getByRole('region', { name: 'Wo stehen wir mit KI?', exact: true });
   await expect(status.locator('article')).toHaveCount(3);
   await expect(status.getByRole('heading', { level: 3 })).toHaveText(['Schon nutzbar', 'In Erprobung', 'Nächster Fokus']);
   await expect(status).not.toContainText(/\d|%|Score|Reifegradstufe|Ranking/);
   await expect(status.locator('progress, meter, [role="progressbar"]')).toHaveCount(0);
   expect(await page.locator('.home-sections > section').evaluateAll((sections) => sections.map((section) => section.getAttribute('aria-labelledby')))).toEqual(['featured-title', 'status-title', 'learning-title', 'guidelines-title']);
-  await expect(page.locator('main h2')).toHaveText(['Beliebte Einstiege in deinen Arbeitsalltag', 'Wo stehen wir mit AI?', 'Was andere gerade lernen', 'Guidelines']);
-  await status.getByRole('link', { name: 'Zum AI Standortbild' }).click();
+  await expect(page.locator('main h2')).toHaveText(['Beliebte Einstiege in deinen Arbeitsalltag', 'Wo stehen wir mit KI?', 'Was andere gerade lernen', 'Guidelines']);
+  await status.getByRole('link', { name: 'Zum KI-Kompass' }).click();
   await expect(page).toHaveURL('/organisation');
-  await expect(page.getByRole('heading', { level: 1 })).toHaveText('AI Standortbild');
+  await expect(page.getByRole('heading', { level: 1 })).toHaveText('KI-Kompass');
 });
 
 test('all four homepage example searches lead to the reviewed library results', async ({ page }) => {
   const examples = [
-    { term: 'Projektstatus', titles: ['Projektstatus mit AI vorbereiten'] },
-    { term: 'Interviews', titles: ['Interview mit AI vorbereiten', 'Interviewnotizen strukturieren'] },
+    { term: 'Projektstatus', titles: ['Projektstatus mit KI vorbereiten'] },
+    { term: 'Interviews', titles: ['Interview mit KI vorbereiten', 'Interviewnotizen strukturieren'] },
     { term: 'Meetings', titles: ['Meeting-Ergebnisse aufbereiten'] },
     { term: 'Recherche', titles: ['Recherche strukturieren und verdichten'] },
   ];
@@ -56,7 +56,7 @@ test('all four homepage example searches lead to the reviewed library results', 
     await link.focus(); await page.keyboard.press('Enter');
     await expect(page).toHaveURL(`/use-cases?q=${encodeURIComponent(example.term)}`);
     await expect(page.locator('.use-case-card h3')).toHaveText(example.titles);
-    await expect(page.locator('.use-case-card').filter({ hasText: 'AI Team Experiment' })).toHaveCount(0);
+    await expect(page.locator('.use-case-card').filter({ hasText: 'KI Team Experiment' })).toHaveCount(0);
   }
 });
 
@@ -105,7 +105,7 @@ test('keyboard search and Guidelines navigation work without external requests o
   const submit = page.getByRole('button', { name: 'Use Case finden', exact: true });
   await expect(submit).toBeFocused();
   await page.keyboard.press('Enter');
-  await expect(page.locator('.use-case-card h3')).toHaveText(['Projektstatus mit AI vorbereiten']);
+  await expect(page.locator('.use-case-card h3')).toHaveText(['Projektstatus mit KI vorbereiten']);
   await page.goto('/');
   const guidelines = page.getByRole('region', { name: 'Guidelines', exact: true });
   await expect(guidelines).toContainText('sicheren und verantwortungsvollen Einsatz');

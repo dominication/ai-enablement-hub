@@ -35,7 +35,7 @@ export const featuredCommunityLearning: CommunityLearning = {
   id: 'projektstatus-kontext',
   useCase: findUseCase('projektstatus-vorbereiten'),
   attribution: 'Ein fiktives Projektteam',
-  summary: 'AI konnte Veränderungen zwischen mehreren Projektständen gut sichtbar machen. Ob eine Terminverschiebung tatsächlich kritisch war, wurde erst durch Abhängigkeiten und Stakeholder-Kontext klar.',
+  summary: 'KI konnte Veränderungen zwischen mehreren Projektständen gut sichtbar machen. Ob eine Terminverschiebung tatsächlich kritisch war, wurde erst durch Abhängigkeiten und Stakeholder-Kontext klar.',
   whatHelped: [
     'Informationen aus mehreren Projektständen zusammenführen.',
     'Terminänderungen sichtbar machen und offene Punkte strukturieren.',
@@ -47,7 +47,7 @@ export const featuredCommunityLearning: CommunityLearning = {
   whatDidNotWork: [
     'Aus einer erkannten Terminänderung liess sich ohne zusätzlichen Projektkontext noch keine belastbare Risikobewertung ableiten.',
   ],
-  nextStep: 'AI bleibt Teil der Vorbereitung. Das Projektteam prüft weiterhin die Quellen und verantwortet die Einordnung von Kontext, Risiken und Eskalationsbedarf.',
+  nextStep: 'KI bleibt Teil der Vorbereitung. Das Projektteam prüft weiterhin die Quellen und verantwortet die Einordnung von Kontext, Risiken und Eskalationsbedarf.',
   outcome: 'Weiterführen',
   takeaway: 'Informationen erkennen ist nicht dasselbe wie ihre Bedeutung verstehen.',
 };
@@ -73,7 +73,7 @@ export const communityLearnings: readonly CommunityLearning[] = [
     ],
     nextStep: 'Das Recruiting-Team gleicht jede Frage vor der Nutzung mit den Originalunterlagen ab. Unbelegte Annahmen werden entfernt oder als offene, faire Rückfragen formuliert.',
     outcome: 'Anpassen',
-    takeaway: 'Ein plausibler AI-Vorschlag ist noch keine faire oder belegte Interviewfrage.',
+    takeaway: 'Ein plausibler KI-Vorschlag ist noch keine faire oder belegte Interviewfrage.',
   },
   {
     id: 'team-einsatz-eingrenzen',
@@ -92,15 +92,15 @@ export const communityLearnings: readonly CommunityLearning[] = [
       'Die zusätzliche Kontrollarbeit war höher als erwartet.',
       'Der Einsatzbereich war im ersten Versuch zu breit; Strukturierung und Priorisierung waren nicht klar getrennt.',
     ],
-    nextStep: 'Das Team begrenzt AI auf Informationsstrukturierung und Veränderungshinweise. Priorisierung bleibt vollständig beim Team; den Prüfaufwand beobachtet es im nächsten Versuch ausdrücklich mit.',
+    nextStep: 'Das Team begrenzt KI auf Informationsstrukturierung und Veränderungshinweise. Priorisierung bleibt vollständig beim Team; den Prüfaufwand beobachtet es im nächsten Versuch ausdrücklich mit.',
     outcome: 'Anpassen',
-    takeaway: 'Ein kleinerer Einsatzbereich kann sinnvoller sein als möglichst viel AI.',
+    takeaway: 'Ein kleinerer Einsatzbereich kann sinnvoller sein als möglichst viel KI.',
   },
   {
     id: 'team-versuch-beenden',
     useCase: findUseCase('team-experiment'),
     attribution: 'Ein fiktives Koordinationsteam',
-    summary: 'In diesem fiktiven Beispiel testete ein Team drei Wochen lang AI-Unterstützung für die Abstimmung von Übergaben. Die vorbereiteten Ergebnisse mussten so intensiv geprüft werden, dass der erwartete Nutzen im Arbeitsalltag nicht entstand.',
+    summary: 'In diesem fiktiven Beispiel testete ein Team drei Wochen lang KI-Unterstützung für die Abstimmung von Übergaben. Die vorbereiteten Ergebnisse mussten so intensiv geprüft werden, dass der erwartete Nutzen im Arbeitsalltag nicht entstand.',
     whatHelped: [
       'Die erste Gliederung half, vorhandene Informationen zu überblicken.',
     ],

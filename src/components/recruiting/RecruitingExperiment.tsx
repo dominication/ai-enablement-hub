@@ -20,7 +20,7 @@ const screenInfo: Record<Screen, { step: number; title: string; description: str
   questions: { step: 4, title: 'Vorgeschlagene Interviewfragen', description: 'Wähle passende Fragen aus. Passe die Formulierungen an deinen Gesprächskontext an oder prüfe eine Alternative.' },
   review: { step: 4, title: 'Deine Auswahl', description: 'Dein Interview, deine Fragen. Nimm dir einen Moment, um deine Auswahl bewusst zu prüfen.' },
   reflection: { step: 4, title: 'Wie hilfreich war die Unterstützung?', description: 'Auch wenn wenig hilfreich war: Deine Einordnung gehört zum Experiment.' },
-  complete: { step: 4, title: 'Erfahrung gespeichert', description: 'Dein Feedback hilft dabei zu verstehen, wo AI im Recruiting sinnvoll unterstützt – und wo menschliche Einschätzung entscheidend bleibt.' },
+  complete: { step: 4, title: 'Erfahrung gespeichert', description: 'Dein Feedback hilft dabei zu verstehen, wo KI im Recruiting sinnvoll unterstützt – und wo menschliche Einschätzung entscheidend bleibt.' },
 };
 function buildQuestions(focus: FocusId[]): QuestionState[] {
   return questionsForFocus(focus).map((question) => ({ ...question, text: question.variants[0], variant: 0 }));
@@ -100,7 +100,7 @@ export function RecruitingExperiment() {
       />
       <JourneyContextNotice
         title="Dieser Use Case verarbeitet Personendaten"
-        description="Verwende für Bewerbungsunterlagen ausschliesslich dafür freigegebene Unternehmenslösungen. AI kann die Vorbereitung unterstützen, trifft aber keine Personalentscheidung."
+        description="Verwende für Bewerbungsunterlagen ausschliesslich dafür freigegebene Unternehmenslösungen. KI kann die Vorbereitung unterstützen, trifft aber keine Personalentscheidung."
         href="/guidelines#4"
         linkLabel="Mehr zu Personendaten"
         icon={<span className="hub-icon-badge"><Icon name="shield" /></span>}
@@ -120,7 +120,7 @@ export function RecruitingExperiment() {
     {screen === 'documents' && <>
       <p className="demo-material-note">Demo-Unterlagen – alle Personen und Inhalte in diesem Prototyp sind fiktiv.</p>
       <DocumentPicker selected={documents} onToggle={toggleDocument} />
-      <p className="local-note">Vorgefertigte Demo-Auswertung, keine echte AI-Analyse. Eine geänderte Dokumentauswahl setzt die Fragen und deine bisherige Fragenauswahl zurück.</p>
+      <p className="local-note">Vorgefertigte Demo-Auswertung, keine echte KI-Analyse. Eine geänderte Dokumentauswahl setzt die Fragen und deine bisherige Fragenauswahl zurück.</p>
       {!documents.length && <p className="r-validation" role="status">Wähle mindestens eine Demo-Unterlage aus.</p>}
       <div className="step-actions"><button className="r-button r-secondary" onClick={() => go('focus')}>Zurück</button><button className="r-button r-primary" disabled={!documents.length} onClick={() => go('preparation')}>Unterlagen analysieren<Icon name="arrow" /></button></div>
     </>}
@@ -140,7 +140,7 @@ export function RecruitingExperiment() {
     </>}
 
     {screen === 'review' && <>
-      <aside className="review-reminder"><Icon name="shield" /><p>Prüfe Fragen immer auf Relevanz, Fairness und Kontext. AI-Vorschläge ersetzen keine professionelle Beurteilung.</p></aside>
+      <aside className="review-reminder"><Icon name="shield" /><p>Prüfe Fragen immer auf Relevanz, Fairness und Kontext. KI-Vorschläge ersetzen keine professionelle Beurteilung.</p></aside>
       <div className="question-list">{selectedQuestions.map((question, index) => <QuestionCard key={question.id} question={question} selected review position={index} total={selectedIds.length} onSelect={() => toggleSelection(question.id)} onEdit={(text) => editQuestion(question.id, text)} onMove={(direction) => moveQuestion(question.id, direction)} />)}</div>
       {!selectedIds.length && <p className="r-validation" role="status">Deine Auswahl ist leer. Gehe zurück zu den Vorschlägen und übernimm mindestens eine Frage.</p>}
       <div className="step-actions"><button className="r-button r-secondary" onClick={() => go('questions')}>Zurück zu den Vorschlägen</button><button className="r-button r-primary" disabled={!selectedIds.length} onClick={() => go('reflection')}>Vorbereitung abschliessen<Icon name="arrow" /></button></div>
@@ -168,7 +168,7 @@ export function RecruitingExperiment() {
     </>}
     </section>
 
-    {reportedQuestion && <ReportDialog title={reportedQuestion.title} onClose={() => setReportId(null)} onSubmit={(reason) => { setReports((current) => [...current, { id: reportedQuestion.id, text: reportedQuestion.text, reason }]); setReportId(null); setAnnouncement('Danke. Kritisches Feedback hilft, AI-Unterstützung besser einzuordnen.'); }} />}
-    <p className="experiment-footnote">Fiktive Demo · Keine echte AI-Verarbeitung · Deine Änderungen bleiben nur bis zum Neuladen oder Verlassen dieses Ablaufs erhalten.</p>
+    {reportedQuestion && <ReportDialog title={reportedQuestion.title} onClose={() => setReportId(null)} onSubmit={(reason) => { setReports((current) => [...current, { id: reportedQuestion.id, text: reportedQuestion.text, reason }]); setReportId(null); setAnnouncement('Danke. Kritisches Feedback hilft, KI-Unterstützung besser einzuordnen.'); }} />}
+    <p className="experiment-footnote">Fiktive Demo · Keine echte KI-Verarbeitung · Deine Änderungen bleiben nur bis zum Neuladen oder Verlassen dieses Ablaufs erhalten.</p>
   </div>;
 }

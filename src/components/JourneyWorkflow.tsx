@@ -11,7 +11,7 @@ type WorkflowStep = {
 // A semantic, static work-sharing pattern, independent of the experiment's state.
 const defaultSteps: WorkflowStep[] = [
   { title: 'Informationen sammeln', detail: 'Du wählst die Quellen aus.', icon: 'book', role: 'human' },
-  { title: 'AI strukturiert', detail: 'AI bereitet den Entwurf vor.', icon: 'project', role: 'ai' },
+  { title: 'KI strukturiert', detail: 'KI bereitet den Entwurf vor.', icon: 'project', role: 'ai' },
   { title: 'Kontext ergänzen', detail: 'Du ordnest Auswirkungen ein.', icon: 'team', role: 'human' },
   { title: 'Prüfen', detail: 'Du passt an und gibst frei.', icon: 'shield', role: 'human' },
   { title: 'Kommunizieren', detail: 'Du verantwortest den Status.', icon: 'interview', role: 'human' },

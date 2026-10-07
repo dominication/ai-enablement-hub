@@ -100,7 +100,7 @@ test('complete workspace: evidence, keyboard risk judgement, editable status and
   await page.getByRole('button', { name: 'Learning teilen', exact: true }).click();
   await expect(page.getByRole('heading', { level: 1 })).toHaveText('Vorschau deines Learnings');
   const learning = page.getByRole('article', { name: 'Learning-Vorschau' });
-  await expect(learning).toContainText('AI hat vor allem beim Zusammentragen von Informationen unterstützt.');
+  await expect(learning).toContainText('KI hat vor allem beim Zusammentragen von Informationen unterstützt.');
   await expect(learning).toContainText('bei der Bewertung von Risiken und der Einordnung des Stakeholder-Kontexts wichtig.');
   await expect(learning).toContainText('Pilotabhängigkeiten früher abstimmen.');
   await expect(page.getByText('So könnte dieses Learning mit anderen Teams geteilt werden. Im Prototyp wird nichts veröffentlicht.')).toBeVisible();
@@ -113,7 +113,7 @@ test('complete workspace: evidence, keyboard risk judgement, editable status and
   await page.getByRole('checkbox', { name: 'Prioritäten', exact: true }).check();
   await page.getByLabel('Was würdest du beim nächsten Mal anders machen?', { exact: false }).fill('Prioritäten früher abstimmen.');
   await page.getByRole('button', { name: 'Learning teilen', exact: true }).click();
-  await expect(learning).toContainText('AI hat vor allem beim Strukturieren des Status unterstützt.');
+  await expect(learning).toContainText('KI hat vor allem beim Strukturieren des Status unterstützt.');
   await expect(learning).toContainText('bei der Bewertung von Risiken und der Priorisierung wichtig.');
   await expect(learning).not.toContainText('Stakeholder-Kontext');
   await expect(learning).toContainText('Prioritäten früher abstimmen.');
@@ -239,7 +239,7 @@ test('learning preview preserves a negative outcome without inventing benefits o
   await page.getByRole('checkbox', { name: 'Kommunikation', exact: true }).check();
   await page.getByRole('button', { name: 'Learning teilen', exact: true }).click();
   const preview = page.getByRole('article', { name: 'Learning-Vorschau' });
-  await expect(preview).toContainText('In diesem Experiment war keine Entlastung durch AI erkennbar.');
+  await expect(preview).toContainText('In diesem Experiment war keine Entlastung durch KI erkennbar.');
   await expect(preview).toContainText('Menschliche Einschätzung war besonders bei der Kommunikation wichtig.');
   await expect(preview.getByRole('heading', { name: 'Beim nächsten Mal' })).toHaveCount(0);
   await expect(page.getByRole('heading', { name: 'Erfahrung gespeichert', exact: true })).toHaveCount(0);
@@ -253,7 +253,7 @@ test('learning preview preserves a negative outcome without inventing benefits o
 test('project entry explains the five work-sharing steps and keeps the prototype boundary', async ({ page }) => {
   await page.goto(detail);
   const workflow = page.getByRole('region', { name: 'Veränderte Arbeitsweise' });
-  await expect(workflow.locator('ol > li h3')).toHaveText(['Informationen sammeln', 'AI strukturiert', 'Kontext ergänzen', 'Prüfen', 'Kommunizieren']);
+  await expect(workflow.locator('ol > li h3')).toHaveText(['Informationen sammeln', 'KI strukturiert', 'Kontext ergänzen', 'Prüfen', 'Kommunizieren']);
   await expect(workflow).toContainText('Du passt an und gibst frei.');
   await expect(workflow).toContainText('Du verantwortest den Status.');
   await expect(page.locator('.pm-start')).toContainText('vollständig fiktiven Projektdaten');

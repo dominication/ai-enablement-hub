@@ -9,7 +9,7 @@ const journeyPresentation: Record<string, { benefit: string; image: string; tone
 export const homepageJourneys = featuredUseCases.map((item) => ({ item, ...journeyPresentation[item.slug] }));
 
 export const homepageSignals = [
-  { title: 'Schon nutzbar', description: 'Erste konkrete Use Cases zeigen, wo AI heute unterstützen kann.', icon: 'shield', tone: 'mint' },
+  { title: 'Schon nutzbar', description: 'Erste konkrete Use Cases zeigen, wo KI heute unterstützen kann.', icon: 'shield', tone: 'mint' },
   { title: 'In Erprobung', description: 'Team Lab und fiktive Beispiele zeigen, wie Teams neue Arbeitsweisen erproben können.', icon: 'project', tone: 'sky' },
   { title: 'Nächster Fokus', description: 'Learnings verbinden, geeignete Anwendungen erproben und Leitplanken konkretisieren.', icon: 'search', tone: 'apricot' },
 ] as const;

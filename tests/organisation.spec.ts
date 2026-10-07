@@ -17,11 +17,11 @@ async function fitsWithoutOverlap(items: Locator, width: number) {
   return boxes;
 }
 
-test('Standortbild gives qualitative fictional orientation with three observations, five perspectives and three attention areas', async ({ page }) => {
+test('KI-Kompass gives qualitative fictional orientation with three observations, five perspectives and three attention areas', async ({ page }) => {
   const response = await page.goto('/organisation');
   expect(response?.status()).toBe(200);
-  await expect(page).toHaveTitle('AI Standortbild | AI Enablement Hub');
-  await expect(page.getByRole('heading', { level: 1 })).toHaveText('AI Standortbild');
+  await expect(page).toHaveTitle('KI-Kompass | AI Enablement Hub');
+  await expect(page.getByRole('heading', { level: 1 })).toHaveText('KI-Kompass');
   await expect(page.getByText('Stand: Oktober 2026 · Fiktive Beispieldaten', { exact: true })).toBeVisible();
   await expect(page.locator('main')).toContainText('Es ist keine vollständige Reifegradmessung, sondern eine qualitative Orientierung.');
   await expect(page.locator('main h2')).toHaveText(['Wo stehen wir gerade?', 'Was wir aktuell sehen', 'Fünf Perspektiven auf unsere aktuelle Situation', 'Was braucht jetzt Aufmerksamkeit?']);
@@ -46,21 +46,21 @@ test('Standortbild gives qualitative fictional orientation with three observatio
   await expect(page.locator('main')).not.toContainText(/%|Score|Reifegradstufe|Priorität|Rangliste|Schweregrad|Produktivitätssteigerung/);
 });
 
-test('Community and homepage link to Standortbild without adding it to primary navigation', async ({ page }) => {
+test('Community and homepage link to KI-Kompass and primary navigation exposes it', async ({ page }) => {
   await page.goto('/community');
   await expect(page.locator('.community-card')).toHaveCount(7);
   const entry = page.getByRole('region', { name: 'Was lernen wir daraus als Organisation?' });
   await expect(entry.locator('.eyebrow')).toHaveText('ORGANISATION');
   expect(await entry.evaluate((element) => element.previousElementSibling?.className)).toBe('community-pattern');
-  const link = entry.getByRole('link', { name: 'Standortbild ansehen', exact: true });
+  const link = entry.getByRole('link', { name: 'KI-Kompass ansehen', exact: true });
   await expect(link).toHaveAttribute('href', '/organisation');
   await link.focus(); await page.keyboard.press('Enter');
   await expect(page).toHaveURL('/organisation');
-  await expect(page.getByRole('navigation', { name: 'Hauptnavigation' }).getByRole('link')).toHaveText(['Use Cases', 'Team Lab', 'Community', 'Guidelines']);
+  await expect(page.getByRole('navigation', { name: 'Hauptnavigation' }).getByRole('link')).toHaveText(['Use Cases', 'KI-Kompass', 'Team Lab', 'Community', 'Guidelines']);
   await expect(page.getByRole('banner').getByRole('link', { name: 'Hilfe', exact: true })).toHaveAttribute('href', '/help');
-  await expect(page.getByRole('banner').locator('a[href="/organisation"]')).toHaveCount(0);
+  await expect(page.getByRole('banner').getByRole('link', { name: 'KI-Kompass', exact: true })).toHaveAttribute('aria-current', 'page');
   await page.goto('/');
-  await expect(page.getByRole('region', { name: 'Wo stehen wir mit AI?' }).getByRole('link', { name: 'Zum AI Standortbild' })).toHaveAttribute('href', '/organisation');
+  await expect(page.getByRole('region', { name: 'Wo stehen wir mit KI?' }).getByRole('link', { name: 'Zum KI-Kompass' })).toHaveAttribute('href', '/organisation');
   await expect(page.locator('.use-case-card')).toHaveCount(3);
 });
 
@@ -90,7 +90,7 @@ test('evidence disclosures work by keyboard and reference existing Hub objects w
   }
 });
 
-test('Standortbild fits all requested widths with native disclosures and no overlap', async ({ page }, testInfo) => {
+test('KI-Kompass fits all requested widths with native disclosures and no overlap', async ({ page }, testInfo) => {
   for (const width of [360, 768, 1024, 1440]) {
     await page.setViewportSize({ width, height: 1000 });
     await page.goto('/organisation');
@@ -112,7 +112,7 @@ test('Standortbild fits all requested widths with native disclosures and no over
     await page.goto('/community');
     const entry = page.locator('.community-organisation');
     await entry.scrollIntoViewIfNeeded();
-    await expect(entry.getByRole('link', { name: 'Standortbild ansehen' })).toBeInViewport();
+    await expect(entry.getByRole('link', { name: 'KI-Kompass ansehen' })).toBeInViewport();
     expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
   }
 });

@@ -6,14 +6,14 @@ async function noOverflow(page: Page) {
 
 test('natural-language task intent wins over generic questions and team context', async ({ page }) => {
   const research = ['Recherche strukturieren und verdichten'];
-  const team = ['AI Team Experiment'];
+  const team = ['KI Team Experiment'];
   const cases: [string, string[]][] = [
     ['Welche Fragen sind für meine Recherche noch offen?', research],
     ['Ich möchte für mein Team recherchieren.', research],
     ['Ich möchte einen Urlaubsplan für mein Team erstellen.', []],
     ['Ich möchte unser nächstes Team Experiment vorbereiten.', team],
-    ['Wie können wir unsere Zusammenarbeit mit AI ausprobieren?', team],
-    ['Ich muss Fragen für ein Interview vorbereiten.', ['Interview mit AI vorbereiten', 'Interviewnotizen strukturieren']],
+    ['Wie können wir unsere Zusammenarbeit mit KI ausprobieren?', team],
+    ['Ich muss Fragen für ein Interview vorbereiten.', ['Interview mit KI vorbereiten', 'Interviewnotizen strukturieren']],
     ['Ich möchte offene Fragen aus einem Meeting strukturieren.', ['Meeting-Ergebnisse aufbereiten']],
     ['Ich möchte die Notizen unseres Teams aus einem Meeting aufbereiten.', ['Meeting-Ergebnisse aufbereiten']],
   ];
@@ -34,7 +34,7 @@ test('natural-language task intent wins over generic questions and team context'
 test('context terms still work alone but cannot guess an unsupported task in a longer query', async ({ page }) => {
   for (const query of ['team', 'teams', ' TEAM! ', 'Teams?', 'fragen']) {
     await page.goto(`/use-cases?q=${encodeURIComponent(query)}`);
-    await expect(page.locator('.use-case-card h3')).toHaveText([query === 'fragen' ? 'Interview mit AI vorbereiten' : 'AI Team Experiment']);
+    await expect(page.locator('.use-case-card h3')).toHaveText([query === 'fragen' ? 'Interview mit KI vorbereiten' : 'KI Team Experiment']);
   }
   for (const query of ['Ich habe Fragen zur Urlaubsplanung.', 'Ich möchte einen Urlaubsplan für unsere Teams erstellen.', 'Urlaubsplan team', 'Team Fragen']) {
     await page.goto(`/use-cases?q=${encodeURIComponent(query)}`);
@@ -51,13 +51,13 @@ test('Help describes the reviewed scope and preserves the prototype limits', asy
   await expect(main).not.toContainText(/einen der drei Use Cases|eine Beispielerfahrung/);
   await expect(main).toContainText('passende Use Cases in der Bibliothek');
   await expect(main).toContainText('geführte Beispiele für Recruiting und Projektmanagement');
-  await expect(main).toContainText('im Team Lab ein gemeinsames AI-Experiment vorbereiten');
+  await expect(main).toContainText('im Team Lab ein gemeinsames KI-Experiment vorbereiten');
   await expect(main).toContainText('In der Community findest du mehrere fiktive Erfahrungen');
   await expect(main).toContainText('angepassten oder bewusst beendeten Experimenten');
   await expect(main).toContainText('nicht dauerhaft gespeichert oder veröffentlicht');
   await expect(main).toContainText('Alle Inhalte und Personenbezüge sind fiktiv');
   await expect(main).toContainText('Es sind keine weiteren Personen verbunden');
-  await expect(main).toContainText('keine Verbindung zu einem AI-Dienst');
+  await expect(main).toContainText('keine Verbindung zu einem KI-Dienst');
   await expect(main).toContainText('ohne persönliche oder vertrauliche Informationen');
   for (const width of [360, 768, 1024, 1440]) {
     await page.setViewportSize({ width, height: 1000 });

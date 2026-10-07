@@ -10,9 +10,9 @@ export default function Home() {
     <section className="hero hf-hero" aria-labelledby="home-title">
       <div className="hf-hero-inner">
         <div className="hero-content">
-          <p className="eyebrow hero-eyebrow hub-eyebrow">AI IM ARBEITSALLTAG</p>
-          <h1 id="home-title">Finde heraus, wie AI<br className="hf-headline-break" /> deine Arbeit unterstützen kann.</h1>
-          <p className="hero-description">Praxisnahe Use Cases, Erfahrungen aus der Community<br className="hf-copy-break" /> und klare Orientierung für deine Arbeit mit AI.</p>
+          <p className="eyebrow hero-eyebrow hub-eyebrow">KI IM ARBEITSALLTAG</p>
+          <h1 id="home-title">Finde heraus, wie KI<br className="hf-headline-break" /> deine Arbeit unterstützen kann.</h1>
+          <p className="hero-description">Praxisnahe Use Cases, Erfahrungen aus der Community<br className="hf-copy-break" /> und klare Orientierung für deine Arbeit mit KI.</p>
           <HeroSearch />
         </div>
         <div className="hf-hero-image" aria-hidden="true"><Image src="/images/home/team-hero.webp" alt="" width={1400} height={933} priority sizes="(max-width: 760px) 100vw, 52vw" /></div>
@@ -29,7 +29,7 @@ export default function Home() {
       </section>
 
       <section className="hf-status-section" aria-labelledby="status-title">
-        <div className="section-header"><h2 className="hub-section-heading" id="status-title">Wo stehen wir mit AI?</h2><Link href="/organisation" className="text-link">Zum AI Standortbild<Icon name="arrow" /></Link></div>
+        <div className="section-header"><h2 className="hub-section-heading" id="status-title">Wo stehen wir mit KI?</h2><Link href="/organisation" className="text-link">Zum KI-Kompass<Icon name="arrow" /></Link></div>
         <div className="hf-status-grid">{homepageSignals.map((signal) => <article className={`hf-status hf-status-${signal.tone}`} key={signal.title}><span className={`hf-signal-icon hf-${signal.tone}`}><Icon name={signal.icon} /></span><div><h3>{signal.title}</h3><p>{signal.description}</p></div></article>)}</div>
       </section>
 
@@ -39,7 +39,7 @@ export default function Home() {
       </section>
 
       <section className="guidelines-teaser hf-guidelines" aria-labelledby="guidelines-title">
-        <span className="hf-guidelines-icon"><Icon name="book" /></span><div><h2 id="guidelines-title">Guidelines</h2><p>Orientierung für den sicheren und verantwortungsvollen Einsatz von AI.</p></div><Link className="text-link" href="/guidelines">Zu den Guidelines<Icon name="arrow" /></Link><span className="hf-guidelines-art" aria-hidden="true"><Icon name="shield" /></span>
+        <span className="hf-guidelines-icon"><Icon name="book" /></span><div><h2 id="guidelines-title">Guidelines</h2><p>Orientierung für den sicheren und verantwortungsvollen Einsatz von KI.</p></div><Link className="text-link" href="/guidelines">Zu den Guidelines<Icon name="arrow" /></Link><span className="hf-guidelines-art" aria-hidden="true"><Icon name="shield" /></span>
       </section>
     </div>
   </div>;

@@ -1,6 +1,6 @@
 import { expect, test, type Page } from '@playwright/test';
 
-const featured = ['Interview mit AI vorbereiten', 'Projektstatus mit AI vorbereiten', 'AI Team Experiment'];
+const featured = ['Interview mit KI vorbereiten', 'Projektstatus mit KI vorbereiten', 'KI Team Experiment'];
 const resources = [
   ['interviewnotizen-strukturieren', 'Interviewnotizen strukturieren', 'Recruiting', 'Personendaten'],
   ['projektrisiken-strukturieren', 'Projektrisiken strukturieren', 'Projektmanagement', 'Workflow'],
@@ -60,7 +60,7 @@ test('all nine orientation pages offer concrete guidance without placeholder wor
     await expect(content.getByRole('heading', { level: 1 })).toHaveText(title);
     await expect(content.locator('.eyebrow')).toHaveText(category);
     await expect(content.locator('.uc-overview-meta')).toContainText(context);
-    await expect(content.getByRole('region', { name: 'Wobei AI unterstützen kann' }).getByRole('listitem')).toHaveCount(3);
+    await expect(content.getByRole('region', { name: 'Wobei KI unterstützen kann' }).getByRole('listitem')).toHaveCount(3);
     await expect(content.getByRole('region', { name: 'Was bei dir bleibt' }).getByRole('listitem')).toHaveCount(3);
     await expect(content.getByRole('region', { name: 'So könntest du vorgehen' }).getByRole('listitem')).toHaveCount(3);
     await expect(content.getByRole('region', { name: 'Worauf du achten solltest' }).getByRole('listitem')).toHaveCount(3);
@@ -132,16 +132,16 @@ test('guidance makes responsibility specific to personal data, sources and decis
   await page.goto('/use-cases/interviewnotizen-strukturieren');
   await expect(page.getByRole('region', { name: 'Worauf du achten solltest' })).toContainText('Personendaten');
   await expect(page.getByRole('region', { name: 'So könntest du vorgehen' })).toContainText('fiktive Notizen');
-  await expect(page.getByRole('region', { name: 'Was bei dir bleibt' })).toContainText('AI bewertet oder rankt keine Kandidat:innen');
+  await expect(page.getByRole('region', { name: 'Was bei dir bleibt' })).toContainText('KI bewertet oder rankt keine Kandidat:innen');
   await page.goto('/use-cases/recherche-strukturieren');
-  await expect(page.getByRole('region', { name: 'Worauf du achten solltest' })).toContainText('AI-Zusammenfassungen sind keine Belege');
+  await expect(page.getByRole('region', { name: 'Worauf du achten solltest' })).toContainText('KI-Zusammenfassungen sind keine Belege');
   await expect(page.getByRole('region', { name: 'So könntest du vorgehen' })).toContainText('Originalquellen');
   await page.goto('/use-cases/entscheidungsoptionen-strukturieren');
   await expect(page.getByRole('region', { name: 'Was bei dir bleibt' })).toContainText('Die Entscheidung selbst treffen');
   await expect(page.getByRole('region', { name: 'So könntest du vorgehen' })).toContainText('Verzichte auf Punktwerte und Rangfolgen');
   await expect(page.locator('.uc-overview input, .uc-overview button, .uc-overview [role="meter"]')).toHaveCount(0);
   await page.goto('/use-cases/meeting-ergebnisse-aufbereiten');
-  await expect(page.getByRole('region', { name: 'Worauf du achten solltest' })).toContainText('AI weiss nicht automatisch, ob ein Diskussionspunkt eine endgültige Entscheidung ist');
+  await expect(page.getByRole('region', { name: 'Worauf du achten solltest' })).toContainText('KI weiss nicht automatisch, ob ein Diskussionspunkt eine endgültige Entscheidung ist');
 });
 
 test('library metadata and detail pages fit intermediate screen widths', async ({ page }) => {
