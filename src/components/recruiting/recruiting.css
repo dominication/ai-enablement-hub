@@ -1,5 +1,5 @@
 /* Recruiting builds on the shared application colours, type and spacing. */
-.recruiting-detail, .recruiting-experiment { max-width: 1120px; }
+.recruiting-experiment { max-width: 1120px; }
 .recruiting-heading { display: flex; gap: 14px; align-items: center; margin-bottom: 23px; }
 .recruiting-detail > h1 { max-width: 850px; }
 .recruiting-meta { display: flex; flex-wrap: wrap; gap: 12px 24px; margin-top: 25px; color: var(--muted); font-size: 13px; }
