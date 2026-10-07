@@ -3,7 +3,7 @@ import { expect, test, type Locator } from '@playwright/test';
 const entries = [
   { route: '/use-cases/interview-vorbereiten', task: 'Was du hier machst', result: 'Was du am Ende hast', ai: 'AI unterstützt', human: 'Du entscheidest', cta: 'Experiment starten', guard: 'Dieser Use Case verarbeitet Personendaten', metadata: '.recruiting-meta', note: '.recruiting-start p', items: 8 },
   { route: '/use-cases/projektstatus-vorbereiten', task: 'Was du hier machst', result: 'Was du am Ende hast', ai: 'AI unterstützt', human: 'Du entscheidest', cta: 'Workflow ausprobieren', guard: 'Projektinformationen bewusst verwenden', metadata: '.pm-metadata', note: '.pm-start p', items: 9 },
-  { route: '/team-lab', task: 'Was ihr hier macht', result: 'Was ihr am Ende habt', ai: 'AI kann unterstützen bei', human: 'Ihr entscheidet gemeinsam', cta: 'Team Lab starten', guard: 'Nicht das Tool steht am Anfang', metadata: '.tl-meta', note: '.tl-detail > .tl-small', items: 6 },
+  { route: '/team-lab', task: 'Was ihr hier macht', result: 'Was ihr am Ende habt', ai: 'AI kann unterstützen bei', human: 'Ihr entscheidet gemeinsam', cta: 'Team Lab starten', guard: 'Nicht das Tool steht am Anfang', metadata: '.tl-meta', note: '.hub-journey-start > .tl-small', items: 6 },
 ];
 
 async function expectBefore(first: Locator, second: Locator) {
