@@ -181,19 +181,51 @@ blockquote { margin: 0; font-size: 19px; line-height: 1.65; letter-spacing: -.02
   --hub-muted: #50616b;
   --hub-petrol: #086474;
   --hub-petrol-hover: #064d59;
+  --hub-legacy-action: #285b4e;
+  --hub-legacy-action-hover: #1c493d;
   --hub-mint: #edf7f3;
   --hub-sky: #edf7fc;
   --hub-apricot: #fff0e1;
   --hub-surface: #ffffff;
+  --hub-hero-surface: #fcf9f5;
+  --hub-soft-surface: #f0f4f3;
+  --hub-border-soft: #e8e9e5;
+  --hub-mint-strong: #dceee2;
+  --hub-sky-strong: #dceef8;
+  --hub-apricot-strong: #f8dfc2;
   --hub-radius: 14px;
   --hub-button-radius: 12px;
+  --hub-control-radius: 5px;
+  --hub-pill-radius: 999px;
+  --hub-touch-target: 44px;
   --hub-shadow: 0 3px 16px rgb(27 53 59 / 5%);
   --hub-section-gap: 28px;
+  --hub-page-gutter: 24px;
   --hub-font: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
   --hub-container: 1280px;
   --hub-title-size: clamp(32px, 3.2vw, 46px);
   --hub-section-title-size: 18px;
+  --hub-eyebrow-size: 10px;
 }
+
+/* Hub UI primitives: shared by the approved surfaces without prescribing page layout. */
+.hub-button, .r-button, .pm-button, .tl-button { display: inline-flex; justify-content: center; align-items: center; gap: 12px; min-height: var(--hub-touch-target); padding: 12px 18px; border: 1px solid transparent; font-size: 13px; font-weight: 600; line-height: 1.5; text-align: center; }
+.hub-button { border-radius: var(--hub-button-radius); }
+.hub-button svg, .r-button svg, .pm-button svg, .tl-button svg { width: 18px; height: 18px; flex-shrink: 0; }
+.hub-button-primary { background: var(--hub-petrol); color: white; }
+.hub-button-primary:hover:not(:disabled) { background: var(--hub-petrol-hover); }
+.r-primary, .pm-primary, .tl-primary { background: var(--hub-legacy-action); color: white; }
+.r-primary:hover:not(:disabled), .pm-primary:hover:not(:disabled), .tl-primary:hover:not(:disabled) { background: var(--hub-legacy-action-hover); }
+.hub-button-secondary, .r-secondary, .pm-secondary, .tl-secondary { background: white; color: var(--ink); border-color: #c4d0c6; }
+.hub-button-secondary:hover:not(:disabled), .r-secondary:hover:not(:disabled), .pm-secondary:hover:not(:disabled), .tl-secondary:hover:not(:disabled) { background: #eff4ee; }
+.hub-button:disabled, .r-button:disabled, .pm-button:disabled, .tl-button:disabled { opacity: .55; cursor: not-allowed; }
+.hub-icon-button { display: flex; align-items: center; justify-content: center; width: var(--hub-touch-target); height: var(--hub-touch-target); min-width: var(--hub-touch-target); min-height: var(--hub-touch-target); margin: 0; padding: 0; gap: 0; line-height: 0; }
+.hub-icon-button > svg { display: block; flex: 0 0 20px; width: 20px; height: 20px; margin: 0; padding: 0; }
+.hub-eyebrow { font-size: var(--hub-eyebrow-size); text-transform: uppercase; }
+.hub-meta { color: var(--hub-muted); }
+.hub-section-heading { font-size: var(--hub-section-title-size); font-weight: 700; letter-spacing: -.025em; }
+.hub-icon-badge { display: grid; place-items: center; width: var(--hub-touch-target); height: var(--hub-touch-target); border-radius: 50%; }
+.hub-context-notice { border-radius: var(--hub-radius); }
 .app-header { background: var(--hub-surface); border-bottom: 0; color: var(--hub-ink); }
 .header-inner { max-width: var(--hub-container); min-height: 76px; padding: 0 24px; gap: 32px; }
 .brand { font-size: 17px; letter-spacing: -.6px; gap: 12px; }

@@ -1,15 +1,15 @@
 /* Homepage treatment follows the approved composition; journey screens retain their styles. */
 .hf-home { font-family: var(--hub-font); background: var(--hub-page); color: var(--hub-ink); }
 .hf-home .eyebrow { letter-spacing: .17em; text-transform: uppercase; }
-.hf-home .hf-hero { max-width: none; padding: 0; background: #fcf9f5; border: 0; display: block; overflow: hidden; }
-.hf-hero-inner { position: relative; max-width: var(--hub-container); margin: auto; padding: 28px 24px 18px; min-height: 340px; }
+.hf-home .hf-hero { max-width: none; padding: 0; background: var(--hub-hero-surface); border: 0; display: block; overflow: hidden; }
+.hf-hero-inner { position: relative; max-width: var(--hub-container); margin: auto; padding: 28px var(--hub-page-gutter) 18px; min-height: 340px; }
 .hf-home .hero-content { position: relative; width: 58%; max-width: none; z-index: 2; }
 .hf-home .hero-eyebrow { margin-bottom: 13px; color: var(--hub-muted); font-size: 10px; letter-spacing: .34em; }
 .hf-home .hero h1 { font-size: var(--hub-title-size); font-weight: 750; line-height: 1.07; letter-spacing: -.045em; }
 .hf-home .hero-description { color: var(--hub-muted); font-size: 16px; line-height: 1.55; margin-top: 13px; max-width: 600px; }
 .hf-home .hero-search { margin-top: 18px; max-width: 680px; }
 .hf-home .hero-search label { color: var(--hub-ink); font-size: 14px; margin-bottom: 7px; }
-.hf-home .search-field { gap: 10px; padding: 4px 4px 4px 16px; border: 1px solid #e8e9e5; border-radius: 30px; box-shadow: 0 3px 10px rgb(27 53 59 / 8%); }
+.hf-home .search-field { gap: 10px; padding: 4px 4px 4px 16px; border: 1px solid var(--hub-border-soft); border-radius: var(--hub-pill-radius); box-shadow: 0 3px 10px rgb(27 53 59 / 8%); }
 .hf-home .search-field input { font-size: 14px; padding: 10px 0; }
 .hf-home .search-field input::placeholder { color: var(--hub-muted); }
 .hf-home .search-field:focus-within { outline: 2px solid var(--hub-petrol); outline-offset: 3px; }
@@ -22,7 +22,7 @@
 .hf-home .search-examples a:hover::before { background: #dcebe9; }
 .hf-hero-image { position: absolute; right: -12px; bottom: 0; width: 52%; height: 100%; }
 .hf-hero-image img { display: block; width: 100%; height: 100%; object-fit: cover; object-position: center 60%; mix-blend-mode: multiply; }
-.hf-home .home-sections { max-width: var(--hub-container); margin: auto; padding: 24px 24px 28px; }
+.hf-home .home-sections { max-width: var(--hub-container); margin: auto; padding: 24px var(--hub-page-gutter) 28px; }
 .hf-home .home-sections > section + section { margin-top: var(--hub-section-gap); }
 .hf-home .section-header { gap: 16px; margin-bottom: 9px; align-items: center; }
 .hf-home h2 { font-size: var(--hub-section-title-size); font-weight: 700; line-height: 1.4; letter-spacing: -.025em; }
@@ -38,13 +38,12 @@
 .hf-home .hf-apricot .eyebrow { color: #895136; }
 .hf-home .hf-journey h3 { font-size: 22px; font-weight: 700; line-height: 1.17; max-width: 225px; margin: 0 0 10px; letter-spacing: -.04em; }
 .hf-home .hf-benefit { font-size: 14px; line-height: 1.55; color: var(--hub-muted); margin-bottom: 15px; }
-.hf-primary { display: inline-flex; align-items: center; justify-content: space-between; min-height: 44px; gap: 12px; padding: 10px 15px; background: var(--hub-petrol); color: #fff; border-radius: var(--hub-button-radius); font-size: 13px; font-weight: 600; white-space: nowrap; }
-.hf-primary:hover { background: var(--hub-petrol-hover); }
+.hf-primary { justify-content: space-between; padding: 10px 15px; white-space: nowrap; }
 .hf-primary svg { width: 17px; height: 17px; }
 .hf-journey-art { position: absolute; width: 40%; height: 96%; right: -3px; bottom: -5px; object-fit: contain; object-position: right bottom; }
 .hf-status-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
 .hf-status { display: flex; gap: 16px; padding: 18px 16px; background: var(--hub-surface); border-radius: var(--hub-radius); box-shadow: var(--hub-shadow); }
-.hf-signal-icon { display: grid; place-items: center; flex: 0 0 44px; height: 44px; border-radius: 50%; color: var(--hub-petrol); }
+.hf-signal-icon { display: grid; place-items: center; flex: 0 0 var(--hub-touch-target); height: var(--hub-touch-target); border-radius: 50%; color: var(--hub-petrol); }
 .hf-signal-icon.hf-sky { color: #3e7590; }
 .hf-signal-icon.hf-apricot { color: #a36131; }
 .hf-status h3 { font-size: 13px; font-weight: 700; line-height: 1.35; letter-spacing: -.01em; }
