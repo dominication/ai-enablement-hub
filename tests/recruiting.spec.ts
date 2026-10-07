@@ -19,6 +19,12 @@ test('full recruiting journey: source preview, edit, alternative, report, human 
   await page.goto(entry);
   await expect(page.getByRole('heading', { name: 'Interview mit AI vorbereiten', exact: true })).toBeVisible();
   await expect(page.getByRole('heading', { name: 'Du entscheidest' })).toBeVisible();
+  for (const statement of ['die Vorbereitung strukturieren', 'mögliche Interviewfragen ableiten', 'relevante Themen sichtbar machen', 'Fragen formulieren und ordnen', 'Kandidat:innen bewerten', 'Personalentscheidungen treffen', 'das Gespräch führen']) await expect(page.locator('.entry-responsibility')).toContainText(statement);
+  await expect(page.locator('main')).not.toContainText(/objektiver|objektivere Bewertung/i);
+  await expect(page.getByRole('region', { name: 'Veränderte Arbeitsweise' }).getByRole('listitem')).toHaveCount(5);
+  const personalData = page.getByRole('complementary').filter({ hasText: 'Dieser Use Case verarbeitet Personendaten' });
+  await expect(personalData).toContainText('Verwende für Bewerbungsunterlagen ausschliesslich dafür freigegebene Unternehmenslösungen. AI kann die Vorbereitung unterstützen, trifft aber keine Personalentscheidung.');
+  await expect(personalData.getByRole('link', { name: 'Mehr zu Personendaten' })).toHaveAttribute('href', '/guidelines#4');
   await noOverflow(page);
   await page.screenshot({ path: testInfo.outputPath('recruiting-detail.png'), fullPage: true });
   await page.getByRole('link', { name: 'Experiment starten' }).click();
