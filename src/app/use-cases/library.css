@@ -1,8 +1,8 @@
 .uc-library { background: var(--hub-page); color: var(--hub-ink); font-family: var(--hub-font); }
 .uc-library h2 { font-size: 19px; font-weight: 700; letter-spacing: -.025em; }
 .uc-library .eyebrow { font-size: 10px; letter-spacing: .16em; text-transform: uppercase; color: var(--hub-petrol); }
-.library-hero { background: #fcf9f5; overflow: hidden; }
-.library-hero-inner { position: relative; max-width: var(--hub-container); margin: auto; padding: 26px 24px 24px; }
+.library-hero { background: var(--hub-hero-surface); overflow: hidden; }
+.library-hero-inner { position: relative; max-width: var(--hub-container); margin: auto; padding: 26px var(--hub-page-gutter) 24px; }
 .library-hero-copy { position: relative; z-index: 1; width: 63%; }
 .library-hero-copy > .eyebrow { letter-spacing: .3em; margin-bottom: 10px; }
 .uc-library h1 { font-size: clamp(30px, 3vw, 42px); font-weight: 750; line-height: 1.12; letter-spacing: -.045em; }
@@ -10,14 +10,14 @@
 .library-hero-art { position: absolute; right: 0; bottom: 0; width: 40%; height: 100%; object-fit: contain; object-position: center bottom; mix-blend-mode: multiply; }
 .uc-library .hero-search { max-width: none; margin-top: 16px; }
 .uc-library .hero-search label { font-size: 13px; color: var(--hub-ink); margin-bottom: 6px; }
-.uc-library .search-field { border: 1px solid #e8e9e5; border-radius: 30px; padding: 4px 4px 4px 16px; box-shadow: var(--hub-shadow); gap: 10px; }
+.uc-library .search-field { border: 1px solid var(--hub-border-soft); border-radius: var(--hub-pill-radius); padding: 4px 4px 4px 16px; box-shadow: var(--hub-shadow); gap: 10px; }
 .uc-library .search-field input { font-size: 14px; padding-block: 10px; }
 .uc-library .search-field input::placeholder { color: var(--hub-muted); }
 .uc-library .search-field button { min-height: 44px; background: var(--hub-petrol); border-radius: 24px; padding: 10px 18px; font-size: 13px; }
 .uc-library .search-field:focus-within { outline: 2px solid var(--hub-petrol); outline-offset: 3px; }
-.library-content { max-width: var(--hub-container); margin: auto; padding: 12px 24px 28px; }
+.library-content { max-width: var(--hub-container); margin: auto; padding: 12px var(--hub-page-gutter) 28px; }
 .library-filters { display: flex; flex-wrap: wrap; gap: 6px 10px; }
-.library-filters a { display: inline-flex; align-items: center; justify-content: center; min-height: 44px; padding: 8px 20px; border-radius: 24px; background: #f0f4f3; color: var(--hub-muted); font-size: 13px; }
+.library-filters a { display: inline-flex; align-items: center; justify-content: center; min-height: var(--hub-touch-target); padding: 8px 20px; border-radius: var(--hub-pill-radius); background: var(--hub-soft-surface); color: var(--hub-muted); font-size: 13px; }
 .library-filters a[aria-current] { background: var(--hub-petrol); color: white; }
 .library-filters a:hover { box-shadow: var(--hub-shadow); text-decoration: underline; text-underline-offset: 4px; }
 .library-results { color: var(--hub-muted); font-size: 12px; margin: 8px 0 4px; }
@@ -36,7 +36,7 @@
 .uc-library .library-featured-card .card-meta { position: relative; z-index: 1; margin-top: auto; padding-right: 38px; font-size: 11px; gap: 6px 12px; flex-wrap: wrap; }
 .uc-library .card-meta svg { width: 15px; height: 15px; flex-shrink: 0; }
 .uc-library .library-featured-card .card-meta > span { width: auto; background: rgb(255 255 255 / 80%); border-radius: 12px; padding: 2px 6px; }
-.uc-library .library-featured-card .card-action { position: absolute; bottom: 14px; right: 14px; padding: 0; width: 44px; height: 44px; min-height: 44px; border: 0; border-radius: 50%; background: var(--hub-petrol); color: white; display: grid; place-items: center; z-index: 2; }
+.uc-library .library-featured-card .card-action { position: absolute; bottom: 14px; right: 14px; border: 0; border-radius: 50%; background: var(--hub-petrol); color: white; z-index: 2; }
 #all-use-cases { scroll-margin-top: 24px; margin-top: var(--hub-section-gap); }
 #all-title { margin-bottom: 14px; }
 .library-grid { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 14px; }
@@ -52,7 +52,7 @@
 .uc-library .library-grid .card-meta { margin-top: auto; font-size: 11px; gap: 6px; flex-wrap: wrap; }
 .uc-library .library-grid .meta-divider { display: none; }
 .uc-library .library-grid .card-meta > span { width: auto; }
-.uc-library .library-grid .card-action { border: 0; min-height: 44px; padding: 10px 0 0; font-size: 13px; color: var(--hub-petrol); }
+.uc-library .library-grid .card-action { border: 0; min-height: var(--hub-touch-target); padding: 0; font-size: 13px; color: var(--hub-petrol); }
 .library-guidance { margin-top: var(--hub-section-gap); display: flex; align-items: center; gap: 20px; background: #fcf0e3; border-radius: var(--hub-radius); overflow: hidden; padding: 12px 20px 12px 0; }
 .library-guidance > img { width: 125px; height: 94px; object-fit: cover; flex-shrink: 0; }
 .library-guidance > div { flex: 1; }
@@ -93,32 +93,12 @@
 .uc-library .hero-search.compact { margin-bottom: 0; }
 .uc-library .card-meta { color: var(--hub-muted); }
 .uc-library .library-grid .use-case-card { position: relative; padding-bottom: 18px; }
-.uc-library .library-grid .card-meta { min-height: 44px; margin-bottom: 0; padding-right: 38px; }
+.uc-library .library-grid .card-meta { min-height: var(--hub-touch-target); margin-bottom: 0; padding-right: 38px; }
 .uc-library .library-grid .card-meta > span { white-space: normal; }
-.uc-library .library-grid .card-action { position: absolute; bottom: 14px; right: 10px; width: 44px; height: 44px; padding: 0; display: grid; place-items: center; border-radius: 50%; background: #f4f7f6; }
+.uc-library .library-grid .card-action { position: absolute; bottom: 14px; right: 10px; border-radius: 50%; background: #f4f7f6; }
 .uc-library .library-featured-card .card-meta { margin-bottom: 0; }
 
-/* Reset shared card-action alignment; center the arrow's visible 4–19 viewBox extent. */
-.uc-library .library-featured-card .card-action,
-.uc-library .library-grid .card-action {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 44px;
-  height: 44px;
-  min-width: 44px;
-  min-height: 44px;
-  margin: 0;
-  padding: 0;
-  gap: 0;
-  line-height: 0;
-}
-.uc-library .card-action > svg {
-  display: block;
-  flex: 0 0 20px;
-  width: 20px;
-  height: 20px;
-  margin: 0;
-  padding: 0;
+/* Center the arrow's visible 4–19 viewBox extent, not only its SVG box. */
+.uc-library .hub-icon-button > svg {
   transform: translateX(.4167px);
 }

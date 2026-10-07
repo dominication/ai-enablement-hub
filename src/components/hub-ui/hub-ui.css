@@ -1,0 +1,16 @@
+.hub-journey-hero { background: var(--hub-hero-surface); overflow: hidden; }
+.hub-journey-hero-inner { position: relative; max-width: var(--hub-container); margin: auto; padding: 8px var(--hub-page-gutter) 20px; }
+.hub-journey-hero .back-link { display: inline-flex; align-items: center; min-height: var(--hub-touch-target); margin: 0 0 12px; font-size: 13px; color: var(--hub-petrol); position: relative; z-index: 1; }
+.hub-journey-hero-copy { position: relative; z-index: 1; width: 61%; }
+.hub-journey-hero .hub-eyebrow { color: var(--hub-petrol); letter-spacing: .3em; margin-bottom: 12px; }
+.hub-journey-hero h1 { font-size: clamp(30px,3vw,42px); font-weight: 750; letter-spacing: -.045em; line-height: 1.12; }
+.hub-journey-benefit { max-width: 570px; color: var(--hub-muted); font-size: 17px; line-height: 1.5; margin-top: 12px; }
+
+@media(max-width:1100px) {
+  .hub-journey-hero-copy { width: 54%; }
+}
+@media(max-width:760px) {
+  .hub-journey-hero-inner { padding-inline: 20px; }
+  .hub-journey-hero-copy { width: 100%; }
+  .hub-journey-benefit { font-size: 15px; }
+}
