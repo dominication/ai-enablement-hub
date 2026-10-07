@@ -37,6 +37,11 @@ type ContextNoticeProps = {
   className?: string;
 };
 
+type ExperimentResponsibilityProps = {
+  aiDescription: string;
+  humanDescription: string;
+};
+
 function classes(...values: Array<string | undefined>) {
   return values.filter(Boolean).join(' ');
 }
@@ -67,4 +72,15 @@ export function JourneyContextNotice({ title, description, href, linkLabel, icon
   return <aside className={classes('hub-context-notice', `hub-context-notice-${variant}`, className)}>
     {icon}<div><h2 className="hub-section-heading">{title}</h2><p>{description}</p><Link href={href} className="text-link hub-text-link">{linkLabel}<Icon name="arrow" /></Link></div>
   </aside>;
+}
+
+export function ExperimentResponsibility({ aiDescription, humanDescription }: ExperimentResponsibilityProps) {
+  return <section className="hub-experiment-responsibility" aria-labelledby="experiment-responsibility-title">
+    <p className="eyebrow hub-eyebrow">ARBEITSTEILUNG</p>
+    <h2 className="hub-section-heading" id="experiment-responsibility-title">AI unterstützt. Du entscheidest.</h2>
+    <div className="hub-experiment-responsibility-grid">
+      <div><span className="hub-experiment-responsibility-mark" aria-hidden="true">AI</span><p><strong>AI unterstützt</strong>{aiDescription}</p></div>
+      <div><span className="hub-experiment-responsibility-mark" aria-hidden="true">Du</span><p><strong>Du entscheidest</strong>{humanDescription}</p></div>
+    </div>
+  </section>;
 }

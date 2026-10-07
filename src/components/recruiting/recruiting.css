@@ -37,7 +37,7 @@
 .experiment-progress .step-complete > span { background: #e4ede2; }
 .experiment-heading { margin: 36px 0 28px; }
 .experiment-heading h1 { font-size: clamp(28px, 3.2vw, 39px); max-width: 790px; scroll-margin-top: 24px; }
-.experiment-heading h1:focus { outline: none; }
+.experiment-heading h1:focus:not(:focus-visible) { outline: none; }
 .experiment-heading p { color: var(--muted); font-size: 15px; margin-top: 15px; max-width: 760px; }
 .r-announcement:empty { display: none; }
 .r-announcement:not(:empty) { color: var(--accent); font-size: 13px; background: #eef3eb; border-radius: 5px; padding: 10px 14px; margin-bottom: 20px; }
