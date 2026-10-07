@@ -40,7 +40,7 @@
 .hf-home .hf-benefit { font-size: 14px; line-height: 1.55; color: var(--hub-muted); margin-bottom: 15px; }
 .hf-primary { justify-content: space-between; padding: 10px 15px; white-space: nowrap; }
 .hf-primary svg { width: 17px; height: 17px; }
-.hf-journey-art { position: absolute; width: 40%; height: 96%; right: -3px; bottom: -5px; object-fit: contain; object-position: right bottom; }
+.hf-journey-visual { position: absolute; width: 40%; height: 96%; right: -3px; bottom: -5px; border-radius: var(--hub-radius) 0 0 0; }
 .hf-status-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
 .hf-status { display: flex; gap: 16px; padding: 18px 16px; background: var(--hub-surface); border-radius: var(--hub-radius); box-shadow: var(--hub-shadow); }
 .hf-signal-icon { display: grid; place-items: center; flex: 0 0 var(--hub-touch-target); height: var(--hub-touch-target); border-radius: 50%; color: var(--hub-petrol); }
@@ -75,7 +75,7 @@
   .hf-home .hf-journey { padding: 20px 16px; }
   .hf-home .hf-journey h3 { font-size: 20px; }
   .hf-journey-copy { width: 63%; }
-  .hf-journey-art { width: 36%; opacity: .95; }
+  .hf-journey-visual { width: 36%; opacity: .95; }
   .hf-home .hf-benefit { font-size: 14px; }
   .hf-primary { padding-inline: 12px; gap: 8px; }
 }
@@ -87,7 +87,7 @@
   .hf-home .hf-journey { min-height: 360px; padding-bottom: 100px; }
   .hf-journey-copy { width: 100%; }
   .hf-home .hf-journey h3, .hf-home .hf-benefit { max-width: 170px; }
-  .hf-journey-art { width: 43%; height: 95px; opacity: .75; }
+  .hf-journey-visual { width: 43%; height: 95px; opacity: .75; }
   .hf-primary { position: relative; z-index: 2; }
   .hf-status { padding: 14px; gap: 10px; flex-direction: column; }
   .hf-learning { grid-template-columns: minmax(0, 1fr) 28%; }
@@ -115,7 +115,7 @@
   .hf-journey-copy { width: 60%; }
   .hf-home .hf-journey h3 { font-size: 23px; }
   .hf-home .hf-benefit { font-size: 14px; }
-  .hf-journey-art { width: 45%; height: 94%; opacity: 1; }
+  .hf-journey-visual { width: 45%; height: 94%; opacity: 1; }
   .hf-status { padding: 18px; }
   .hf-status h3 { font-size: 14px; }
   .hf-status p { font-size: 14px; }
@@ -154,7 +154,7 @@
 @media (max-width: 760px) {
   .hf-home .hf-journey { padding-block: 24px; }
   .hf-home .hf-journey h3 { font-size: 23px; }
-  .hf-journey-art { width: 40%; }
+  .hf-journey-visual { width: 40%; }
   .hf-hero-image img { mask-image: none; }
   .hf-learning > img { min-height: 148px; }
   .hf-home .section-header { margin-bottom: 10px; }

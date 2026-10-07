@@ -271,8 +271,8 @@ test('high fidelity workspace keeps all phases usable at the four review widths'
     await page.setViewportSize({ width, height: 1000 });
     await page.goto(workspace);
     async function inspect(phase: string) {
-      await expect(page.locator('.pm-stage-context')).toContainText(phase);
-      await expect(page.locator('.pm-working-area h1')).toBeFocused();
+      await expect(page.locator('.hub-experiment-stage-label')).toContainText(phase);
+      await expect(page.locator('.experiment-heading h1')).toBeFocused();
       await noOverflow(page);
       for (const action of await page.locator('.hf-workspace button:visible, .hf-workspace a:visible, .hf-workspace summary:visible, .pm-source-row label, .pm-choice, .pm-risk-options label').all()) {
         expect((await action.boundingBox())!.height).toBeGreaterThanOrEqual(44);

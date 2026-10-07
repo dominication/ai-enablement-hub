@@ -35,7 +35,7 @@ export default async function UseCasesPage({ searchParams }: { searchParams: Pro
       {curated && <section aria-labelledby="recommended-title"><div className="library-section-heading"><h2 className="hub-section-heading" id="recommended-title">Unsere Empfehlungen für dich</h2><a href="#all-use-cases" className="library-text-link">Alle Use Cases ansehen<Icon name="arrow" /></a></div><div className="library-featured">
         {homepageJourneys.map(({ item, benefit, image, tone }) => <article className={`use-case-card library-featured-card library-${tone}`} key={item.slug}>
           <div className="library-featured-copy"><p className="eyebrow">{item.category}</p><h3><Link href={item.href}>{item.title}</Link></h3><p>{benefit}</p></div>
-          <Image className="library-featured-art" src={`/images/home/${image}`} alt="" width={260} height={280} />
+          <div className="use-case-card-visual use-case-card-visual-featured use-case-card-visual-illustration library-featured-visual"><Image src={`/images/home/${image}`} alt="" width={260} height={280} /></div>
           <div className="card-meta hub-meta"><span><Icon name="clock" />{item.duration}</span><span>{item.context}</span></div><Link href={item.href} className="card-action hub-icon-button" aria-label={`${item.action}: ${item.title}`}><Icon name="arrow" /></Link>
         </article>)}
       </div></section>}

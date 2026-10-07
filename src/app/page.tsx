@@ -24,7 +24,7 @@ export default function Home() {
         <div className="section-header"><h2 className="hub-section-heading" id="featured-title">Beliebte Einstiege in deinen Arbeitsalltag</h2><Link href="/use-cases" className="text-link">Alle Use Cases<Icon name="arrow" /></Link></div>
         <div className="use-case-grid">{homepageJourneys.map(({ item, benefit, image, tone, action }) => <article key={item.slug} className={`use-case-card hf-journey hf-${tone}`}>
           <div className="hf-journey-copy"><p className="eyebrow hub-eyebrow">{item.category}</p><h3><Link href={item.href}>{item.title}</Link></h3><p className="hf-benefit">{benefit}</p><Link href={item.href} className="hf-primary hub-button hub-button-primary">{action}<Icon name="arrow" /></Link></div>
-          <Image className="hf-journey-art" src={`/images/home/${image}`} alt="" width={260} height={280} />
+          <div className="use-case-card-visual use-case-card-visual-featured use-case-card-visual-illustration hf-journey-visual"><Image src={`/images/home/${image}`} alt="" width={260} height={280} /></div>
         </article>)}</div>
       </section>
 
