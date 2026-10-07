@@ -72,6 +72,9 @@ test('header and entry pages fit all requested widths with usable actions', asyn
     for (const entry of entries) {
       await page.goto(entry.route);
       expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
+      const journeyPage = await page.locator('.hub-journey-page').boundingBox();
+      expect(journeyPage?.x).toBe(0);
+      expect(journeyPage?.width).toBe(width);
       const links = page.getByRole('banner').getByRole('link');
       const boxes = await links.evaluateAll((elements) => elements.map((el) => {
         const r = el.getBoundingClientRect();
