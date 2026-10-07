@@ -24,7 +24,9 @@ test('Standortbild gives qualitative fictional orientation with three observatio
   await expect(page.getByRole('heading', { level: 1 })).toHaveText('AI Standortbild');
   await expect(page.getByText('Stand: Oktober 2026 · Fiktive Beispieldaten', { exact: true })).toBeVisible();
   await expect(page.locator('main')).toContainText('Es ist keine vollständige Reifegradmessung, sondern eine qualitative Orientierung.');
-  await expect(page.locator('main h2')).toHaveText(['Was wir aktuell sehen', 'Fünf Perspektiven auf unsere aktuelle Situation', 'Was braucht jetzt Aufmerksamkeit?']);
+  await expect(page.locator('main h2')).toHaveText(['Wo stehen wir gerade?', 'Was wir aktuell sehen', 'Fünf Perspektiven auf unsere aktuelle Situation', 'Was braucht jetzt Aufmerksamkeit?']);
+  await expect(page.locator('.organisation-orientation-grid article')).toHaveCount(3);
+  await expect(page.locator('.organisation-orientation-grid h3')).toHaveText(['Schon sichtbar', 'In Erprobung', 'Nächste Schritte']);
   await expect(page.locator('.organisation-observations article')).toHaveCount(3);
   await expect(page.locator('.organisation-observations h3')).toHaveText(['Konkrete Anfänge', 'Lernen wird sichtbar', 'Noch offene Fragen']);
   await expect(page.locator('.organisation-perspective')).toHaveCount(5);
