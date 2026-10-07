@@ -18,8 +18,8 @@ type ResponsibilityProps = {
 };
 
 type JourneyHeroProps = {
-  backHref: string;
-  backLabel: string;
+  backHref?: string;
+  backLabel?: string;
   category: string;
   title: string;
   description: string;
@@ -48,7 +48,7 @@ function classes(...values: Array<string | undefined>) {
 
 export function JourneyHero({ backHref, backLabel, category, title, description, art, metadata }: JourneyHeroProps) {
   return <header className="hub-journey-hero"><div className="hub-journey-hero-inner">
-    <Link href={backHref} className="back-link">← {backLabel}</Link>
+    {backHref && backLabel && <Link href={backHref} className="back-link">← {backLabel}</Link>}
     <div className="hub-journey-hero-copy"><p className="eyebrow hub-eyebrow">{category}</p><h1>{title}</h1><p className="hub-journey-benefit">{description}</p></div>
     {art}
     {metadata}

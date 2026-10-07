@@ -1,18 +1,13 @@
 import Link from 'next/link';
 import { attentionAreas, organisationalObservations, organisationalPerspectives, resolveEvidence } from '@/data/organisation';
+import { HubPageIntro } from '@/components/hub-ui/HubPage';
 import './organisation.css';
 
 export const metadata = { title: 'AI Standortbild' };
 
 export default function OrganisationPage() {
-  return <div className="page-container detail-page organisation-page">
-    <header className="organisation-intro">
-      <p className="eyebrow">ORGANISATION</p>
-      <h1>AI Standortbild</h1>
-      <p className="page-lead">Was wir aktuell bei der Einführung von AI in der Arbeit beobachten.</p>
-      <p className="organisation-description">Ein gemeinsames Bild aus Use Cases, Experimenten und geteilten Erfahrungen. Es ist keine vollständige Reifegradmessung, sondern eine qualitative Orientierung.</p>
-      <p className="organisation-context">Stand: Oktober 2026 · Fiktive Beispieldaten</p>
-    </header>
+  return <div className="page-container detail-page organisation-page hub-content-page hub-organisation">
+    <HubPageIntro eyebrow="ORGANISATION" title="AI Standortbild" lead="Was wir aktuell bei der Einführung von AI in der Arbeit beobachten." description="Ein gemeinsames Bild aus Use Cases, Experimenten und geteilten Erfahrungen. Es ist keine vollständige Reifegradmessung, sondern eine qualitative Orientierung." meta={<p className="organisation-context">Stand: Oktober 2026 · Fiktive Beispieldaten</p>} />
 
     <section className="organisation-section" aria-labelledby="observations-title">
       <h2 id="observations-title">Was wir aktuell sehen</h2>

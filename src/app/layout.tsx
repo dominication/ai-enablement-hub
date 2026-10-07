@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import Link from 'next/link';
 import { AppHeader } from '@/components/AppHeader';
 import './globals.css';
+import '../components/hub-ui/hub-content.css';
 
 export const metadata: Metadata = {
   title: { default: 'AI Enablement Hub – AI im Arbeitsalltag', template: '%s | AI Enablement Hub' },
