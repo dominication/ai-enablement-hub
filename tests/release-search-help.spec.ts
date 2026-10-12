@@ -25,7 +25,7 @@ test('natural-language task intent wins over generic questions and team context'
       await expect(page.getByRole('heading', { name: 'Noch kein passender Use Case dabei.' })).toBeVisible();
       await expect(page.getByText('Versuche einen anderen Begriff oder beschreibe die Aufgabe, bei der du Unterstützung suchst.')).toBeVisible();
       await page.getByRole('link', { name: 'Alle Use Cases ansehen' }).click();
-      await expect(page.locator('.use-case-card')).toHaveCount(12);
+      await expect(page.locator('.use-case-card')).toHaveCount(13);
     }
     await noOverflow(page);
   }
@@ -64,5 +64,5 @@ test('Help describes the reviewed scope and preserves the prototype limits', asy
     await noOverflow(page);
   }
   await page.getByRole('link', { name: 'Use Cases entdecken' }).click();
-  await expect(page.locator('.use-case-card')).toHaveCount(12);
+  await expect(page.locator('.use-case-card')).toHaveCount(13);
 });

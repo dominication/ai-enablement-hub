@@ -73,7 +73,7 @@ test('featured journeys and library links work and three compact previews refere
   }
   await page.goto('/');
   await page.getByRole('link', { name: 'Alle Use Cases', exact: true }).click();
-  await expect(page.locator('.use-case-card')).toHaveCount(12);
+  await expect(page.locator('.use-case-card')).toHaveCount(13);
   await page.goto('/');
   await expect(page.locator('.hf-learning')).toHaveCount(3);
   await expect(page.locator('.hf-learning h3')).toHaveText(homepageLearnings.map((preview) => preview.title));

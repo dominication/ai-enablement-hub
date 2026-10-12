@@ -1,6 +1,6 @@
 import Image from 'next/image';
 import { Icon } from '@/components/Icon';
-import { JourneyHero, JourneyMeta, JourneyResponsibility, JourneyStartCard, JourneySummary } from '@/components/hub-ui/JourneyPatterns';
+import { JourneyContextNotice, JourneyHero, JourneyMeta, JourneyResponsibility, JourneyStartCard, JourneySummary } from '@/components/hub-ui/JourneyPatterns';
 import { JourneyWorkflow } from '@/components/JourneyWorkflow';
 import './team.css';
 import '../journey-entry.css';
@@ -26,6 +26,7 @@ export function TeamDetail() {
         { title: 'Lernen', detail: 'Ihr entscheidet: weiterführen, anpassen oder stoppen.', icon: 'interview', role: 'human' },
       ]} />
       <section className="tl-principle hub-team-principle"><span className="hub-icon-badge"><Icon name="team" /></span><div><h2>Nicht das Tool steht am Anfang</h2><p>Das Team Lab startet bei eurer Arbeit. Erst danach prüft ihr, ob KI überhaupt sinnvoll helfen kann.</p><p className="tl-small">Ziel: Geeignete KI-Anwendungen gemeinsam identifizieren, kontrolliert erproben und aus den Auswirkungen auf die tatsächliche Arbeit lernen.</p></div></section>
+      <JourneyContextNotice className="hub-team-leadership-link" variant="guideline" icon={<span className="hub-icon-badge"><Icon name="project" /></span>} title="Veränderung als Führungskraft begleiten" description="Wenn du zuerst Auftrag, Beteiligung und Rahmenbedingungen für dein Team klären möchtest, führt dich die Führungskräfte-Journey durch einen fiktiven Veränderungsfall." href="/leadership" linkLabel="Zu «KI im Team begleiten»" />
     </div>
   </div>;
 }

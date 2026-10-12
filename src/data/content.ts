@@ -94,6 +94,13 @@ export const useCases: UseCase[] = [
     keywords: ["entscheidung", "entscheidungen", "entscheidungsoptionen", "optionen vergleichen", "handlungsoptionen", "entscheidungsoptionen strukturieren"],
   },
   {
+    slug: 'ki-im-team-begleiten', category: 'Führung & Change', title: 'KI im Team begleiten',
+    description: 'KI-bedingte Veränderungen im Team systemisch, partizipativ und verantwortungsvoll begleiten.',
+    duration: 'ca. 15–20 min', context: 'Führung', icon: 'team',
+    href: '/leadership', action: 'Journey starten',
+    keywords: ['führung', 'fuehrung', 'leadership', 'change', 'veränderung', 'veraenderung', 'veränderungsbegleitung', 'veraenderungsbegleitung', 'mitgestaltung', 'ki einführung', 'ki einfuehrung', 'ki im team begleiten', 'team begleiten'],
+  },
+  {
     featured: true, slug: 'team-experiment', category: 'Teams', title: 'KI Team Experiment',
     description: 'Eine Aufgabe aus eurem Arbeitsalltag auswählen und gemeinsam erproben, wo KI euch unterstützen kann.',
     duration: 'ca. 45 min', context: 'Team', icon: 'team',
