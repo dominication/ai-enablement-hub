@@ -110,7 +110,10 @@ test('five phases preserve state, reveal systemic context and produce an editabl
   await expect(page.getByLabel('3. Geplantes Vorgehen zur Beteiligung')).toHaveValue(/gemeinsame Bestandsaufnahme[\s\S]*Welche Entscheidung treffen wir/);
   await expect(page.getByLabel('4. Notwendige Rahmenbedingungen und Abhängigkeiten')).toHaveValue(/freigegebenen KI-Systems[\s\S]*Geschützte Zeit[\s\S]*Abstimmung mit anderen Stellen[\s\S]*Qualität und fachliche Verlässlichkeit[\s\S]*zusätzlicher Kontrolle/);
   await expect(page.getByLabel(/6. Reflexion und Entscheidung/)).toHaveValue(/Anpassen:[\s\S]*Wir grenzen den Einsatzbereich ein/);
-  await page.getByLabel('5. Nächster konkreter Schritt').fill('Auftrag und Kapazitätskonflikt mit der Bereichsleitung klären.');
+  const nextStep = page.getByLabel('5. Nächster konkreter Schritt');
+  await nextStep.fill('Auftrag und Kapazitätskonflikt mit der Bereichsleitung klären.');
+  await nextStep.pressSequentially(' Weitere Abstimmung.');
+  await expect(nextStep).toBeFocused();
   await page.getByRole('button', { name: 'Begleitplan kopieren' }).click();
   await expect(page.getByRole('status')).toHaveText('Begleitplan kopiert.');
   expect(await page.evaluate(() => navigator.clipboard.readText())).toContain('Auftrag und Kapazitätskonflikt mit der Bereichsleitung klären.');
@@ -127,6 +130,33 @@ test('five phases preserve state, reveal systemic context and produce an editabl
   expect(errors).toEqual([]); expect(mutations).toEqual([]); expect(external).toEqual([]);
   expect(await page.evaluate(() => Object.keys(localStorage))).toEqual([]);
   expect(await page.evaluate(() => Object.keys(sessionStorage))).toEqual([]);
+});
+
+test('invalid earlier phases block downstream jumps and plan creation', async ({ page }) => {
+  await reachReflection(page);
+  await page.getByRole('radio', { name: /^Anpassen/ }).check();
+  await page.getByLabel(/Was würde ich meinem Team/).fill('Wir prüfen die Voraussetzungen erneut.');
+
+  await page.getByRole('button', { name: /Perspektiven/ }).click();
+  await page.getByRole('checkbox', { name: 'Wo fehlt dem Team Zeit oder Unterstützung?' }).uncheck();
+  await expect(page.getByRole('button', { name: /Beteiligung/ })).toBeDisabled();
+  await expect(page.getByRole('button', { name: /Reflexion/ })).toBeDisabled();
+
+  await page.getByRole('checkbox', { name: 'Wo fehlt dem Team Zeit oder Unterstützung?' }).check();
+  await page.getByRole('button', { name: /Beteiligung/ }).click();
+  await page.getByLabel('Gesprächsfrage 1').fill('');
+  await expect(page.getByRole('button', { name: /Rahmen/ })).toBeDisabled();
+  await expect(page.getByRole('button', { name: /Reflexion/ })).toBeDisabled();
+});
+
+test('desktop stepper and existing experiment topline keep their non-mobile layout', async ({ page }) => {
+  await page.setViewportSize({ width: 1440, height: 1000 });
+  await page.goto('/leadership/experiment');
+  const stepperColumns = await page.locator('.hub-experiment-stepper ol').evaluate((element) => getComputedStyle(element).gridTemplateColumns.split(' ').length);
+  expect(stepperColumns).toBeGreaterThan(1);
+
+  await page.goto('/use-cases/interview-vorbereiten/experiment');
+  await expect(page.locator('.experiment-topline')).toHaveCSS('flex-direction', 'row');
 });
 
 test('all action, participation and reflection variants remain non-judgemental and available', async ({ page }) => {

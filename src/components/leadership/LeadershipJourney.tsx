@@ -59,21 +59,27 @@ export function LeadershipJourney() {
   const selectedAction = leadershipActions.find((item) => item.id === actionId);
   const selectedParticipation = participationOptions.find((item) => item.id === participationId);
   const selectedOutcome = leadershipOutcomes.find((item) => item.id === outcomeId);
-  const canContinue = [
+  const phaseValidity = [
     Boolean(actionId),
     questionIds.length >= 2 && perspectiveRevealed,
     Boolean(participationId) && conversationQuestions.every((question) => question.trim()),
     supportIds.every((id) => responsibilities[id]),
     Boolean(outcomeId) && Boolean(feedback.trim()),
-  ][stage];
+  ];
+  const canContinue = phaseValidity[stage];
+  const isPlanVisible = plan !== null;
 
   useEffect(() => {
     heading.current?.focus({ preventScroll: true });
     window.scrollTo(0, 0);
-  }, [stage, plan]);
+  }, [stage, isPlanVisible]);
+
+  function canVisit(index: number) {
+    return index >= 0 && index <= maxVisited && index <= 4 && phaseValidity.slice(0, index).every(Boolean);
+  }
 
   function goTo(index: number) {
-    if (index < 0 || index > maxVisited || index > 4) return;
+    if (!canVisit(index)) return;
     setPlan(null);
     setCopyStatus('');
     setStage(index);
@@ -122,7 +128,7 @@ export function LeadershipJourney() {
   }
 
   function showPlan() {
-    if (!canContinue) return;
+    if (!phaseValidity.every(Boolean)) return;
     setPlan(buildPlan());
     setCopyStatus('');
   }
@@ -160,7 +166,7 @@ export function LeadershipJourney() {
 
   return <div className="page-container leadership-journey hub-experiment">
     <ExperimentTopline backHref="/leadership" backLabel="Zur Einstiegsseite" category="Führung & Change · KI im Team begleiten" context={<p>Fiktives achtköpfiges Service-Team</p>} />
-    <ExperimentStepper currentIndex={stage} statusLabel={`Phase ${stage + 1} von 5`} ariaLabel="Phasen der Führungskräfte-Journey" steps={leadershipStages.map((item, index) => ({ label: item.label, disabled: index > maxVisited, onSelect: () => goTo(index) }))} />
+    <ExperimentStepper currentIndex={stage} statusLabel={`Phase ${stage + 1} von 5`} ariaLabel="Phasen der Führungskräfte-Journey" steps={leadershipStages.map((item, index) => ({ label: item.label, disabled: !canVisit(index), onSelect: () => goTo(index) }))} />
     <ExperimentStageHeader stageLabel={`Phase ${stage + 1} · ${info.label}`} title={info.title} description={info.description} headingRef={heading} />
     <p className="leadership-demo-note"><strong>Vorbereiteter fiktiver Fall:</strong> Alle Personen, Aussagen und Beobachtungen sind erfunden. Die Journey verarbeitet keine echten Teamdaten.</p>
 

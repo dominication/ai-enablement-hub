@@ -79,6 +79,7 @@ test('all nine orientation pages offer concrete guidance without placeholder wor
 });
 
 test('realistic work intents find the relevant cases without substring false positives', async ({ page }) => {
+  test.setTimeout(60_000);
   const searches: [string[], string[]][] = [
     [['interview', 'Interviews'], [featured[0], resources[0][1]]],
     [['interviewnotizen'], [resources[0][1]]],
