@@ -1,129 +1,169 @@
-export type LeadershipActionId = 'clarify' | 'pilot' | 'postpone';
-export type ParticipationId = 'proposal' | 'inventory' | 'exploration';
-export type SupportId = 'time' | 'peer' | 'quality' | 'priorities';
+export type GuidePathId = 'uncertainty' | 'use-cases' | 'perspectives' | 'capacity' | 'governance' | 'orientation' | 'other';
+export type GuideStage = 'orientation' | 'support' | 'takeaway';
 export type ResponsibilityId = 'self' | 'alignment';
-export type LeadershipOutcomeId = 'continue' | 'adapt' | 'stop';
 
-export const leadershipScenario = {
-  team: 'Ein achtköpfiges internes Service-Team mit hoher Auslastung und einem bestehenden Qualitätsanspruch.',
-  mandate: 'Wir möchten in sechs Wochen erste Erfahrungen mit KI sehen. Mich interessiert, wo sie uns im Alltag tatsächlich unterstützt und was wir daraus lernen.',
-  constraints: [
-    'Das bestehende Qualitätsniveau muss erhalten bleiben.',
-    'Nicht alle Informationen dürfen in KI-Systemen verarbeitet werden.',
-    'Werkzeug- und Freigaberahmen müssen vor echten Experimenten geklärt werden.',
-  ],
+export type GuidePathSummary = {
+  id: GuidePathId;
+  title: string;
+  promise: string;
+  takeaway: string;
 };
 
-export const leadershipActions = [
-  {
-    id: 'clarify',
-    title: 'Auftrag und Gestaltungsspielraum klären',
-    statement: 'Ich kläre zuerst mit der Bereichsleitung, welche Ergebnisse erwartet werden und wo wir Gestaltungsspielraum haben.',
-    chance: 'Erwartungen und Entscheidungsräume werden klarer.',
-    limitLabel: 'Mögliche Grenze',
-    limit: 'Die praktische Erprobung beginnt möglicherweise später.',
-    reflection: 'Was ist verbindlich – und was darf das Team selbst entscheiden?',
-  },
-  {
-    id: 'pilot',
-    title: 'Einen kleinen Pilotversuch vorschlagen',
-    statement: 'Ich schlage dem Team sofort einen kleinen Pilotversuch vor.',
-    chance: 'Das Vorhaben wird konkret und erste Erfahrungen können entstehen.',
-    limitLabel: 'Mögliches Risiko',
-    limit: 'Zeit, Freigaben und Beteiligung sind noch nicht ausreichend geklärt.',
-    reflection: 'Welche Voraussetzungen müssen vor einem echten Versuch erfüllt sein?',
-  },
-  {
-    id: 'postpone',
-    title: 'Die Einführung zunächst verschieben',
-    statement: 'Ich möchte die Einführung angesichts der Belastung zunächst verschieben.',
-    chance: 'Die Arbeitsbelastung wird ernst genommen.',
-    limitLabel: 'Mögliche Grenze',
-    limit: 'Der bestehende Auftrag wird dadurch nicht automatisch geklärt.',
-    reflection: 'Wie kann ich den Kapazitätskonflikt mit der Bereichsleitung besprechen?',
-  },
-] as const;
+export const leadershipFrame = 'Du begleitest die Einführung von KI in einem achtköpfigen Service-Team. Im Alltag gibt es unterschiedliche Erfahrungen, fachliche Anforderungen und begrenzte Ressourcen. Die Organisation möchte erste Erfahrungen sammeln.';
 
-export const teamPerspectives = [
-  { role: 'Fachverantwortung', quote: 'Wenn falsche Angaben in unseren Statusberichten landen, müssen wir das wieder korrigieren. Wer trägt dann die Verantwortung?' },
-  { role: 'Mitarbeitende Person mit KI-Erfahrung', quote: 'Ich habe KI mit fiktiven Beispielen ausprobiert. Bei manchen Aufgaben könnte uns das wirklich helfen.' },
-  { role: 'Teamkoordination', quote: 'Ich sehe das Potenzial. Aber wenn ich mich zusätzlich einarbeiten muss, fehlt mir die Zeit dafür.' },
-  { role: 'Mitarbeitende Person mit Erfahrung aus früheren Veränderungen', quote: 'Beim letzten neuen Tool hatten wir anfangs viel Mitgestaltung versprochen bekommen. Am Schluss war ziemlich viel schon entschieden.' },
+export const guidePaths: GuidePathSummary[] = [
+  {
+    id: 'uncertainty',
+    title: 'Ich bin selbst unsicher wegen KI und meiner Rolle',
+    promise: 'Du musst nicht von KI überzeugt sein, um dein Team verantwortungsvoll zu begleiten.',
+    takeaway: 'Persönliche Orientierung, Teamgespräch oder Fragen an die Bereichsleitung',
+  },
+  {
+    id: 'use-cases',
+    title: 'Ich möchte mit meinem Team Use Cases finden',
+    promise: 'Nicht mit Tools starten, sondern bei der Arbeit, die das Team leichter, verlässlicher oder klarer gestalten möchte.',
+    takeaway: 'Moderationsvorlage oder selbst kuratierte Use-Case-Shortlist',
+  },
+  {
+    id: 'perspectives',
+    title: 'In meinem Team gibt es unterschiedliche Perspektiven oder Bedenken',
+    promise: 'Ein Gespräch vorbereiten, in dem Unterschiedlichkeit Platz hat und trotzdem ein nächster Schritt möglich wird.',
+    takeaway: 'Konkrete Vorlage für dein Teamgespräch',
+  },
+  {
+    id: 'capacity',
+    title: 'Uns fehlen Zeit und Ressourcen',
+    promise: 'KI ausprobieren soll kein zusätzliches Projekt werden, das ohne Raum neben dem Tagesgeschäft laufen muss.',
+    takeaway: 'Gesprächs- und Abstimmungsnotiz zur Kapazität',
+  },
+  {
+    id: 'governance',
+    title: 'Wir haben Fragen zu Qualität, Daten und Verantwortung',
+    promise: 'Fragen früh sichtbar machen, bevor ein reales KI-Experiment beginnt.',
+    takeaway: 'Prüfblatt ohne automatische Freigabe oder Bewertung',
+  },
+  {
+    id: 'orientation',
+    title: 'Ziele, Erwartungen oder Spielräume sind noch nicht ganz klar',
+    promise: 'An bestehende Vereinbarungen anknüpfen und nur jene Punkte klären, die noch offen sind.',
+    takeaway: 'Orientierungsnotiz für den nächsten Schritt',
+  },
+  {
+    id: 'other',
+    title: 'Etwas anderes',
+    promise: 'Halte dein Anliegen als persönliche Notiz fest oder öffne gezielt einen der sechs Guides.',
+    takeaway: 'Kopierbare Notiz – ohne KI-Auswertung oder versteckte Empfehlung',
+  },
 ];
 
-export const deepDiveQuestions = [
-  { id: 'quality', text: 'Welche konkreten Qualitätsprobleme werden befürchtet?' },
-  { id: 'capacity', text: 'Wo fehlt dem Team Zeit oder Unterstützung?' },
-  { id: 'history', text: 'Welche Erfahrungen aus früheren Veränderungen wirken noch nach?' },
-  { id: 'relief', text: 'Welche bestehenden Tätigkeiten könnten tatsächlich entlastet werden?' },
-];
-
-export const participationOptions = [
+export const uncertaintyOffers = [
   {
-    id: 'proposal',
-    title: 'Klarer Auftrag mit konkretem Vorschlag',
-    example: 'Wir haben den Auftrag, KI zu erproben. Ich möchte euch einen begrenzten Vorschlag zeigen und gemeinsam prüfen, was dafür nötig wäre.',
-    chance: 'Schnelle Orientierung und ein konkreter Gesprächsgegenstand.',
-    risk: 'Andere Anliegen können zu wenig Raum erhalten.',
-    questions: ['Was müsste an diesem Vorschlag verändert werden, damit ein begrenzter Versuch für euch verantwortbar ist?', 'Welche Bedingungen und offenen Fragen sollten wir vor einer Entscheidung gemeinsam klären?'],
+    id: 'self',
+    title: 'Eigene Situation einordnen',
+    impulse: 'Was ist zu meiner Rolle bereits entschieden, was wird nur vermutet, und welche Informationen fehlen?',
+    questions: ['Welche Aufgaben meiner Rolle könnten sich ändern?', 'Was ist dazu tatsächlich kommuniziert?', 'Welche Unterstützung oder Entwicklungsmöglichkeiten gibt es?'],
+    outputTitle: 'Meine persönliche Orientierung',
   },
   {
-    id: 'inventory',
-    title: 'Zuerst gemeinsame Bestandsaufnahme',
-    example: 'Bevor wir über konkrete KI-Anwendungen sprechen: Wo erlebt ihr heute Aufwand, Unsicherheit oder Verbesserungspotenzial in unserer Arbeit?',
-    chance: 'Unterschiedliche Erfahrungen werden sichtbar.',
-    risk: 'Ohne klaren Rahmen bleibt offen, wie aus dem Gespräch eine Entscheidung wird.',
-    questions: ['Wo erleben wir heute Aufwand, Unsicherheit oder Verbesserungspotenzial in unserer Arbeit?', 'Nach welchen Kriterien wollen wir gemeinsam entscheiden, ob sich ein begrenzter Versuch lohnt?'],
+    id: 'team',
+    title: 'Mit meinem Team offen sprechen',
+    impulse: 'KI wird voraussichtlich Auswirkungen auf unsere Arbeit haben. Ich sehe Möglichkeiten und offene Fragen. Mir ist wichtig, dass wir beides ansprechen können.',
+    questions: ['Welche Erfahrungen mit KI gibt es im Team bereits?', 'Welche Befürchtungen und offenen Fragen sollten Raum bekommen?', 'Welche Informationen sind gesichert – und was ist noch unklar?', 'Was braucht ihr, damit wir ehrlich über mögliche Veränderungen sprechen können?'],
+    outputTitle: 'Mein nächstes Teamgespräch',
   },
   {
-    id: 'exploration',
-    title: 'Kleine freiwillige Erkundungsgruppe',
-    example: 'Wer möchte, könnte zunächst mit fiktiven Beispielen einen kleinen Arbeitsschritt untersuchen. Die Erfahrungen würden wir anschliessend gemeinsam besprechen.',
-    chance: 'Niederschwelliger Einstieg und begrenzter Aufwand.',
-    risk: 'Weniger sichtbare oder skeptische Stimmen könnten unberücksichtigt bleiben.',
-    questions: ['Wer möchte einen begrenzten Arbeitsschritt mit fiktiven Beispielen erkunden – und welche Unterstützung wäre dafür nötig?', 'Wie stellen wir sicher, dass auch nicht beteiligte und kritische Stimmen in die gemeinsame Auswertung einfliessen?'],
+    id: 'leadership',
+    title: 'Gespräch mit der Bereichsleitung vorbereiten',
+    impulse: 'Bereite verbindliche Fragen vor, ohne selbst Garantien zu versprechen, die du nicht geben kannst.',
+    questions: ['Welche Veränderungen von Aufgaben und Rollen sind absehbar?', 'Was steht schon fest, wo ist Mitgestaltung möglich?', 'Wer kann zu Arbeitsplatzfragen verbindlich Auskunft geben?'],
+    outputTitle: 'Meine Fragen an die Bereichsleitung',
   },
 ] as const;
 
-export const governanceRequirements = [
-  'Verwendung eines dafür freigegebenen KI-Systems.',
-  'Zulässige Informationen und geklärte Datenfreigaben.',
-  'Menschliche Kontrolle und Verantwortung.',
-  'Möglichkeit, Probleme anzusprechen und den Versuch anzupassen oder zu stoppen.',
+export const frictionFields = [
+  { id: 'recurring', label: 'Wiederkehrende Arbeit' },
+  { id: 'information', label: 'Informationen suchen oder ordnen' },
+  { id: 'writing', label: 'Berichte oder Texte vorbereiten' },
+  { id: 'coordination', label: 'Koordination und Zusammenarbeit' },
+  { id: 'unknown', label: 'Wir wissen es noch nicht' },
+] as const;
+
+export const discoverySteps = [
+  'Tätigkeiten sammeln, nicht KI-Ideen.',
+  'Beispiele und Aufwand aus unterschiedlichen Perspektiven besprechen.',
+  'Maximal zwei oder drei Aufgaben für eine vertiefte Betrachtung auswählen.',
+  'Fragen zu Qualität, Daten, Beteiligung und Kontrollaufwand festhalten.',
 ];
 
-export const supportOptions = [
-  { id: 'time', label: 'Geschützte Zeit für Erprobung und Reflexion.' },
-  { id: 'peer', label: 'Kollegiale Unterstützung oder gegenseitiger Erfahrungsaustausch.' },
-  { id: 'quality', label: 'Gemeinsame fachliche Qualitätsprüfung.' },
-  { id: 'priorities', label: 'Abstimmung mit der Bereichsleitung über Prioritäten und Entlastung.' },
+export const exampleIdeas = [
+  'Wiederkehrende Statusnotizen strukturieren',
+  'Freigegebene Informationen zusammenfassen',
+  'Standardantworten als Entwurf formulieren',
 ] as const;
 
-export const observationCriteria = [
-  { id: 'quality', label: 'Qualität und fachliche Verlässlichkeit.', required: true },
-  { id: 'effort', label: 'Zeitaufwand einschliesslich zusätzlicher Kontrolle.', required: true },
-  { id: 'collaboration', label: 'Belastung und Zusammenarbeit.', required: false },
-  { id: 'questions', label: 'Erfahrungen und offene Fragen.', required: false },
-] as const;
-
-export const retrospectiveObservations = [
-  'Das Strukturieren wiederkehrender Informationen hat geholfen.',
-  'Fachlich wichtige Zusammenhänge mussten weiterhin von Menschen eingeordnet werden.',
-  'Die zusätzliche Ergebnisprüfung war aufwendiger als zunächst erwartet.',
-  'Einzelne Teammitglieder sehen Nutzen, andere möchten erst Aufgaben und Erwartungen besser klären.',
-  'Die Bereichsleitung interessiert sich für eine mögliche Ausweitung.',
+export const ideaReviewQuestions = [
+  'Welcher konkrete Arbeitsbedarf steht dahinter?',
+  'Was bleibt fachlich beim Menschen?',
+  'Welche Daten wären beteiligt und welche Freigaben sind offen?',
+  'Welcher zusätzliche Prüfaufwand ist zu erwarten?',
 ];
 
-export const leadershipOutcomes = [
-  { id: 'continue', title: 'Weiterführen', description: 'Den begrenzten Versuch unter geklärten Voraussetzungen fortsetzen und seine Wirkung weiter beobachten.' },
-  { id: 'adapt', title: 'Anpassen', description: 'Den Einsatzbereich oder die Rahmenbedingungen verändern und erneut reflektieren.' },
-  { id: 'stop', title: 'Stoppen', description: 'Den Versuch vorerst beenden, die Gründe dokumentieren und mögliche organisatorische Hindernisse klären.' },
+export const concernTopics = [
+  { id: 'quality', label: 'Qualitätsbedenken', questions: ['Was wäre bei dieser Aufgabe ein verlässliches Ergebnis?', 'Welche Fehler wären besonders folgenreich?', 'Wie müsste die fachliche Prüfung aussehen?'] },
+  { id: 'experience', label: 'Unterschiedliche Erfahrung mit KI', questions: ['Welche Erfahrungen haben wir bereits gemacht?', 'Was können wir voneinander lernen, ohne Erfahrung vorauszusetzen?', 'Welche Unterstützung würde einen fairen Einstieg ermöglichen?'] },
+  { id: 'roles', label: 'Sorge vor Rollenveränderung', questions: ['Welche Veränderungen wären hilfreich und was wäre problematisch?', 'Was wissen wir über mögliche Rollenveränderungen tatsächlich?', 'Welche Fragen brauchen eine verbindliche Antwort ausserhalb des Teams?'] },
+  { id: 'history', label: 'Frühere Veränderungserfahrungen', questions: ['Welche Erfahrungen sollten wir diesmal berücksichtigen?', 'Was wurde damals versprochen und wie wurde es erlebt?', 'Was möchten wir diesmal transparent festhalten und zurückmelden?'] },
+  { id: 'silence', label: 'Bislang wenig Rückmeldung im Team', questions: ['Welche Form erleichtert es, Beobachtungen ohne Rechtfertigungsdruck einzubringen?', 'Welche Stimmen fehlen uns bisher?', 'Wie können Rückmeldungen auch nach dem Gespräch noch einfliessen?'] },
 ] as const;
 
-export const leadershipStages = [
-  { label: 'Auftrag', title: 'Was ist eigentlich unser Auftrag?', description: 'Ordne Erwartung, Belastung und Gestaltungsspielraum ein. Jede Handlungsrichtung hat mögliche Wirkungen und Grenzen.' },
-  { label: 'Perspektiven', title: 'Was steckt hinter den unterschiedlichen Aussagen?', description: 'Höre auf konkrete Erfahrungen und Fragen, ohne Haltungen zu diagnostizieren oder persönliche Motive zu unterstellen.' },
-  { label: 'Beteiligung', title: 'Wie eröffnest du das Gespräch?', description: 'Wähle einen Gesprächseinstieg, der Orientierung und Beteiligung in ein nachvollziehbares Verhältnis bringt.' },
-  { label: 'Rahmen', title: 'Was braucht das Team, um sinnvoll experimentieren zu können?', description: 'Unterscheide verbindliche Voraussetzungen von Unterstützungsangeboten, die du priorisieren kannst.' },
-  { label: 'Reflexion', title: 'Was lernen wir aus dem Versuch?', description: 'Betrachte eine vorbereitete fiktive Rückschau und entscheide, wie du mit den Beobachtungen umgehen würdest.' },
+export const conversationFormats = [
+  { id: 'round', title: 'Offene Runde', note: 'Alle hören dieselben Beiträge. Einzelne Stimmen können das Gespräch stärker prägen.' },
+  { id: 'reflection', title: 'Kurze Einzelreflexion vor der Runde', note: 'Alle können Gedanken zunächst für sich ordnen. Stille Beiträge müssen anschliessend bewusst aufgenommen werden.' },
+  { id: 'groups', title: 'Kleine Arbeitsgruppen mit gemeinsamer Sichtung', note: 'Mehr parallele Beteiligung wird möglich. Zwischen den Gruppen können Informationen verloren gehen.' },
 ] as const;
+
+export const capacityFactors = [
+  { id: 'time', label: 'Keine Zeit für Erprobung' },
+  { id: 'priority', label: 'Laufende Aufgaben haben Vorrang' },
+  { id: 'review', label: 'Zusätzlicher Kontrollaufwand' },
+  { id: 'few', label: 'Wenige Engagierte tragen alles' },
+  { id: 'unclear', label: 'Unklare Priorisierung' },
+] as const;
+
+export const capacityLevers = [
+  { id: 'replace', label: 'Eine bestehende Aufgabe ersetzen oder verschieben', factors: ['time', 'priority'] },
+  { id: 'window', label: 'Ein geschütztes Lernfenster vereinbaren', factors: ['time', 'few'] },
+  { id: 'scope', label: 'Den Versuch kleiner zuschneiden', factors: ['time', 'review', 'few'] },
+  { id: 'review-time', label: 'Zusätzliche Prüfzeit ausdrücklich berücksichtigen', factors: ['review'] },
+  { id: 'align', label: 'Ressourcen- und Prioritätskonflikt mit der Bereichsleitung abstimmen', factors: ['priority', 'unclear', 'few'] },
+  { id: 'pause', label: 'Vorerst keinen Versuch starten', factors: ['time', 'priority', 'review', 'few', 'unclear'] },
+] as const;
+
+export const governanceTopics = [
+  { id: 'quality', label: 'Verlässlichkeit und Korrektheit' },
+  { id: 'data', label: 'Datenklassifizierung und Personendaten' },
+  { id: 'tools', label: 'Freigegebene KI-Werkzeuge' },
+  { id: 'responsibility', label: 'Zuständigkeit für Prüfung und Entscheidung' },
+  { id: 'errors', label: 'Umgang mit Fehlern' },
+] as const;
+
+export const governanceChecks = [
+  { id: 'tool', text: 'Ist für diesen Anwendungsfall ein freigegebenes Werkzeug bekannt?' },
+  { id: 'data', text: 'Ist klar, welche Informationskategorien darin verarbeitet werden dürfen?' },
+  { id: 'review', text: 'Ist geregelt, wer Ergebnisse fachlich prüft und verantwortlich entscheidet?' },
+  { id: 'incident', text: 'Wissen Beteiligte, wie Unsicherheiten, Fehler oder Vorfälle gemeldet werden?' },
+  { id: 'effort', text: 'Ist der zusätzliche Prüfaufwand berücksichtigt?' },
+] as const;
+
+export const orientationTopics = [
+  { id: 'goal', label: 'Ziel des ersten Versuchs', prompt: 'Was möchten wir nach einem begrenzten Versuch besser wissen als heute?' },
+  { id: 'scope', label: 'Was das Team selbst entscheiden kann', prompt: 'Welche Entscheidungen trifft das Team selbst, welche brauchen Abstimmung?' },
+  { id: 'roles', label: 'Rollen und Freigaben', prompt: 'Wer beurteilt Fachqualität, wer kann Werkzeug- und Dateneinsatz freigeben?' },
+  { id: 'capacity', label: 'Verfügbare Kapazitäten', prompt: 'Welche bestehende Arbeit kann zugunsten der Erprobung zurückstehen?' },
+  { id: 'feedback', label: 'Rückmeldung an die Organisation', prompt: 'An wen geben wir Erkenntnisse, Probleme und Verbesserungsvorschläge weiter?' },
+] as const;
+
+export const responsibilityLabels: Record<ResponsibilityId, string> = {
+  self: 'Kann ich im eigenen Rahmen angehen',
+  alignment: 'Dafür brauche ich Abstimmung',
+};

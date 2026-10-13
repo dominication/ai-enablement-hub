@@ -95,10 +95,10 @@ export const useCases: UseCase[] = [
   },
   {
     slug: 'ki-im-team-begleiten', category: 'Führung & Change', title: 'KI im Team begleiten',
-    description: 'KI-bedingte Veränderungen im Team systemisch, partizipativ und verantwortungsvoll begleiten.',
-    duration: 'ca. 15–20 min', context: 'Führung', icon: 'team',
-    href: '/leadership', action: 'Journey starten',
-    keywords: ['führung', 'fuehrung', 'leadership', 'change', 'veränderung', 'veraenderung', 'veränderungsbegleitung', 'veraenderungsbegleitung', 'mitgestaltung', 'ki einführung', 'ki einfuehrung', 'ki im team begleiten', 'team begleiten'],
+    description: 'Je nach Führungssituation Unsicherheit klären, Anwendungsfälle erkunden oder nächste Schritte vorbereiten.',
+    duration: 'flexibel', context: 'Führung', icon: 'team',
+    href: '/leadership', action: 'Guide öffnen',
+    keywords: ['führung', 'fuehrung', 'leadership', 'change', 'veränderung', 'veraenderung', 'veränderungsbegleitung', 'veraenderungsbegleitung', 'mitgestaltung', 'ki einführung', 'ki einfuehrung', 'ki im team begleiten', 'team begleiten', 'governance', 'kapazität', 'kapazitaet', 'unsicherheit'],
   },
   {
     featured: true, slug: 'team-experiment', category: 'Teams', title: 'KI Team Experiment',
