@@ -14,11 +14,11 @@ async function expectBefore(first: Locator, second: Locator) {
 test('navigation reflects available features and retains active routes', async ({ page }) => {
   await page.goto('/');
   const header = page.getByRole('banner');
-  await expect(header.getByRole('navigation').getByRole('link')).toHaveText(['Use Cases', 'KI-Kompass', 'Team Lab', 'Community', 'Guidelines']);
+  await expect(header.getByRole('navigation').getByRole('link')).toHaveText(['Use Cases', 'Guides', 'KI-Kompass', 'Team Lab', 'Community', 'Guidelines']);
   await expect(header.getByRole('navigation').getByRole('link', { name: 'Learnings', exact: true })).toHaveCount(0);
   await expect(header.getByText('ML', { exact: true })).toHaveCount(0);
   await expect(header.getByRole('img', { name: 'Demo-Profil' })).toHaveCount(0);
-  for (const [label, route] of [['Use Cases', '/use-cases'], ['KI-Kompass', '/organisation'], ['Team Lab', '/team-lab'], ['Community', '/community'], ['Guidelines', '/guidelines'], ['Hilfe', '/help']]) {
+  for (const [label, route] of [['Use Cases', '/use-cases'], ['Guides', '/guides'], ['KI-Kompass', '/organisation'], ['Team Lab', '/team-lab'], ['Community', '/community'], ['Guidelines', '/guidelines'], ['Hilfe', '/help']]) {
     const link = header.getByRole('link', { name: label, exact: true });
     await expect(link).toHaveAttribute('href', route);
     await link.focus(); await page.keyboard.press('Enter');

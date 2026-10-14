@@ -3,7 +3,7 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { Icon } from './Icon';
 
-const navigation = [{ href: '/use-cases', label: 'Use Cases' }, { href: '/organisation', label: 'KI-Kompass' }, { href: '/team-lab', label: 'Team Lab' }, { href: '/community', label: 'Community' }, { href: '/guidelines', label: 'Guidelines' }];
+const navigation = [{ href: '/use-cases', label: 'Use Cases' }, { href: '/guides', label: 'Guides' }, { href: '/organisation', label: 'KI-Kompass' }, { href: '/team-lab', label: 'Team Lab' }, { href: '/community', label: 'Community' }, { href: '/guidelines', label: 'Guidelines' }];
 export function AppHeader() {
   const pathname = usePathname();
   return <header className="app-header">
@@ -13,7 +13,10 @@ export function AppHeader() {
         <span>AI Enablement <strong>Hub</strong></span>
       </Link>
       <nav className="main-nav" aria-label="Hauptnavigation">
-        {navigation.map(({ href, label }) => <Link key={href} href={href} aria-current={pathname.startsWith(href) ? 'page' : undefined}>{label}</Link>)}
+        {navigation.map(({ href, label }) => {
+          const active = pathname.startsWith(href) || (href === '/guides' && pathname.startsWith('/leadership'));
+          return <Link key={href} href={href} aria-current={active ? 'page' : undefined}>{label}</Link>;
+        })}
       </nav>
       <div className="header-tools"><Link href="/help" className="help-link" aria-current={pathname === "/help" ? "page" : undefined}><Icon name="help" /><span>Hilfe</span></Link></div>
     </div>

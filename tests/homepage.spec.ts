@@ -36,8 +36,8 @@ test('homepage follows the approved hierarchy and qualitative signals link to KI
   await expect(status.getByRole('heading', { level: 3 })).toHaveText(['Schon nutzbar', 'In Erprobung', 'Nächster Fokus']);
   await expect(status).not.toContainText(/\d|%|Score|Reifegradstufe|Ranking/);
   await expect(status.locator('progress, meter, [role="progressbar"]')).toHaveCount(0);
-  expect(await page.locator('.home-sections > section').evaluateAll((sections) => sections.map((section) => section.getAttribute('aria-labelledby')))).toEqual(['featured-title', 'status-title', 'learning-title', 'guidelines-title']);
-  await expect(page.locator('main h2')).toHaveText(['Beliebte Einstiege in deinen Arbeitsalltag', 'Wo stehen wir mit KI?', 'Was andere gerade lernen', 'Guidelines']);
+  expect(await page.locator('.home-sections > section').evaluateAll((sections) => sections.map((section) => section.getAttribute('aria-labelledby')))).toEqual(['featured-title', 'guide-entry-title', 'status-title', 'learning-title', 'guidelines-title']);
+  await expect(page.locator('main h2')).toHaveText(['Beliebte Einstiege in deinen Arbeitsalltag', 'KI einführen und gemeinsam lernen', 'Wo stehen wir mit KI?', 'Was andere gerade lernen', 'Guidelines']);
   await status.getByRole('link', { name: 'Zum KI-Kompass' }).click();
   await expect(page).toHaveURL('/organisation');
   await expect(page.getByRole('heading', { level: 1 })).toHaveText('KI-Kompass');
@@ -137,7 +137,7 @@ test('homepage orientation and existing elements fit desktop, tablet and narrow 
     for (const link of await page.locator('.hf-primary, .search-examples a, .hf-home .text-link').all()) expect((await link.boundingBox())!.height).toBeGreaterThanOrEqual(44);
     if (width === 1440) {
       expect((await page.locator('.use-case-grid').boundingBox())!.y).toBeLessThan(550);
-      expect(await page.locator('.hf-home').evaluate((element) => element.getBoundingClientRect().height)).toBeLessThan(1400);
+      expect(await page.locator('.hf-home').evaluate((element) => element.getBoundingClientRect().height)).toBeLessThan(1550);
     }
     await expect(page.locator('.use-case-card')).toHaveCount(3);
     await expect(page.locator('.use-case-card > .use-case-card-visual-featured')).toHaveCount(3);

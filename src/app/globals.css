@@ -255,8 +255,8 @@ blockquote { margin: 0; font-size: 19px; line-height: 1.65; letter-spacing: -.02
   .header-inner { padding-inline: 20px; }
   .brand { font-size: 16px; }
   .help-link { padding-left: 12px; }
-  .main-nav { justify-content: space-between; gap: 6px; }
-  .main-nav a { font-size: 11px; white-space: nowrap; }
+  .main-nav { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); height: auto; padding: 5px 0 10px; gap: 0 8px; }
+  .main-nav a { justify-content: center; min-width: 0; min-height: var(--hub-touch-target); font-size: 11px; white-space: nowrap; }
 }
 .brand { min-height: 44px; }
 
