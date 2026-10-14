@@ -41,6 +41,14 @@
 .hf-primary { justify-content: space-between; padding: 10px 15px; white-space: nowrap; }
 .hf-primary svg { width: 17px; height: 17px; }
 .hf-journey-visual { position: absolute; width: 40%; height: 96%; right: -3px; bottom: -5px; border-radius: var(--hub-radius) 0 0 0; }
+.hf-guide-entry { display: grid; grid-template-columns: auto minmax(0, 1fr) auto; align-items: center; gap: 16px; padding: 18px 20px; border-radius: var(--hub-radius); background: linear-gradient(105deg, var(--hub-mint), var(--hub-sky)); }
+.hf-guide-entry-icon { display: grid; place-items: center; width: 52px; height: 52px; border-radius: 50%; background: var(--hub-surface); color: var(--hub-petrol); }
+.hf-guide-entry-icon svg { width: 25px; height: 25px; }
+.hf-guide-entry-copy .eyebrow { margin-bottom: 4px; color: var(--hub-petrol); font-size: 9px; }
+.hf-home .hf-guide-entry h2 { font-size: 18px; }
+.hf-guide-entry-copy > p:last-child { margin-top: 4px; color: var(--hub-muted); font-size: 14px; line-height: 1.5; }
+.hf-guide-entry-actions { display: flex; align-items: center; gap: 10px; }
+.hf-guide-entry-actions .hub-button { white-space: nowrap; }
 .hf-status-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
 .hf-status { display: flex; gap: 16px; padding: 18px 16px; background: var(--hub-surface); border-radius: var(--hub-radius); box-shadow: var(--hub-shadow); }
 .hf-signal-icon { display: grid; place-items: center; flex: 0 0 var(--hub-touch-target); height: var(--hub-touch-target); border-radius: 50%; color: var(--hub-petrol); }
@@ -78,6 +86,8 @@
   .hf-journey-visual { width: 36%; opacity: .95; }
   .hf-home .hf-benefit { font-size: 14px; }
   .hf-primary { padding-inline: 12px; gap: 8px; }
+  .hf-guide-entry { grid-template-columns: auto minmax(0, 1fr); }
+  .hf-guide-entry-actions { grid-column: 2; justify-content: flex-start; }
 }
 @media (min-width: 761px) and (max-width: 900px) {
   .hf-home .hero-content { width: 66%; }
@@ -116,6 +126,10 @@
   .hf-home .hf-journey h3 { font-size: 23px; }
   .hf-home .hf-benefit { font-size: 14px; }
   .hf-journey-visual { width: 45%; height: 94%; opacity: 1; }
+  .hf-guide-entry { grid-template-columns: auto minmax(0, 1fr); padding: 18px; gap: 12px; }
+  .hf-guide-entry-icon { width: 44px; height: 44px; }
+  .hf-guide-entry-actions { grid-column: 1 / -1; align-items: stretch; flex-direction: column; }
+  .hf-guide-entry-actions .hub-button, .hf-guide-entry-actions .text-link { width: 100%; justify-content: center; }
   .hf-status { padding: 18px; }
   .hf-status h3 { font-size: 14px; }
   .hf-status p { font-size: 14px; }

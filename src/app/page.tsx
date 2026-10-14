@@ -28,6 +28,12 @@ export default function Home() {
         </article>)}</div>
       </section>
 
+      <section className="hf-guide-entry" aria-labelledby="guide-entry-title">
+        <span className="hf-guide-entry-icon" aria-hidden="true"><Icon name="team" /></span>
+        <div className="hf-guide-entry-copy"><p className="eyebrow hub-eyebrow">GUIDES</p><h2 id="guide-entry-title">KI einführen und gemeinsam lernen</h2><p>Finde Orientierung für Führung und Veränderungsbegleitung – passend zu deiner aktuellen Situation.</p></div>
+        <div className="hf-guide-entry-actions"><Link className="hub-button hub-button-primary" href="/leadership">Führungskräfte-Guide öffnen<Icon name="arrow" /></Link><Link className="text-link" href="/guides">Alle Guides<Icon name="arrow" /></Link></div>
+      </section>
+
       <section className="hf-status-section" aria-labelledby="status-title">
         <div className="section-header"><h2 className="hub-section-heading" id="status-title">Wo stehen wir mit KI?</h2><Link href="/organisation" className="text-link">Zum KI-Kompass<Icon name="arrow" /></Link></div>
         <div className="hf-status-grid">{homepageSignals.map((signal) => <article className={`hf-status hf-status-${signal.tone}`} key={signal.title}><span className={`hf-signal-icon hf-${signal.tone}`}><Icon name={signal.icon} /></span><div><h3>{signal.title}</h3><p>{signal.description}</p></div></article>)}</div>

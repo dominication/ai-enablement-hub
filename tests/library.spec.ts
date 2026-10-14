@@ -1,6 +1,7 @@
 import { expect, test, type Page } from '@playwright/test';
 
 const featured = ['Interview mit KI vorbereiten', 'Projektstatus mit KI vorbereiten', 'KI Team Experiment'];
+const leadership = 'KI im Team begleiten';
 const resources = [
   ['interviewnotizen-strukturieren', 'Interviewnotizen strukturieren', 'Recruiting', 'Personendaten'],
   ['projektrisiken-strukturieren', 'Projektrisiken strukturieren', 'Projektmanagement', 'Workflow'],
@@ -16,7 +17,7 @@ async function noOverflow(page: Page) {
   expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
 }
 
-test('library contains twelve working destinations and homepage retains only the three showcases', async ({ page }, testInfo) => {
+test('library contains thirteen working destinations and homepage retains only the three showcases', async ({ page }, testInfo) => {
   await page.goto('/');
   await expect(page.locator('.use-case-card h3')).toHaveText(featured);
   await noOverflow(page);
@@ -25,14 +26,14 @@ test('library contains twelve working destinations and homepage retains only the
   await expect(allCases).toBeFocused();
   await page.keyboard.press('Enter');
   await expect(page).toHaveURL(/\/use-cases$/);
-  await expect(page.locator('.use-case-card')).toHaveCount(12);
-  await expect(page.getByRole('status')).toHaveText('12 Use Cases für deinen Arbeitsalltag');
+  await expect(page.locator('.use-case-card')).toHaveCount(13);
+  await expect(page.getByRole('status')).toHaveText('13 Use Cases für deinen Arbeitsalltag');
   await expect(page.locator('main')).not.toContainText(/Demo-Auswahl|Drei Ideen|erst drei Beispiele/);
   const cards = page.locator('.use-case-card');
   const titles = await cards.locator('h3').allTextContents();
-  expect([...titles].sort()).toEqual([...featured, ...resources.map((item) => item[1])].sort());
+  expect([...titles].sort()).toEqual([...featured, leadership, ...resources.map((item) => item[1])].sort());
   const destinations = await cards.locator('h3 a').evaluateAll((links) => links.map((link) => ({ title: link.textContent, href: link.getAttribute('href')! })));
-  expect(new Set(destinations.map((link) => link.href)).size).toBe(12);
+  expect(new Set(destinations.map((link) => link.href)).size).toBe(13);
   for (const card of await cards.all()) {
     await expect(card.locator('.card-action')).toHaveAttribute('href', (await card.locator('h3 a').getAttribute('href'))!);
   }
@@ -78,6 +79,7 @@ test('all nine orientation pages offer concrete guidance without placeholder wor
 });
 
 test('realistic work intents find the relevant cases without substring false positives', async ({ page }) => {
+  test.setTimeout(60_000);
   const searches: [string[], string[]][] = [
     [['interview', 'Interviews'], [featured[0], resources[0][1]]],
     [['interviewnotizen'], [resources[0][1]]],
@@ -90,6 +92,7 @@ test('realistic work intents find the relevant cases without substring false pos
     [['dokumente vergleichen', 'vergleich'], [resources[6][1]]],
     [['recherche', 'informationen recherchieren', 'quellen'], [resources[7][1]]],
     [['entscheidung', 'optionen vergleichen'], [resources[8][1]]],
+    [['führung', 'leadership', 'ki im team begleiten'], [leadership]],
     [['team', 'teams', 'zusammenarbeit', 'experiment', 'arbeitsweise'], [featured[2]]],
   ];
   for (const [terms, expected] of searches) {
@@ -112,7 +115,7 @@ test('empty search stays honest and supports keyboard search and returning to th
   }
   const reset = page.getByRole('link', { name: 'Alle Use Cases ansehen' });
   await reset.focus(); await page.keyboard.press('Enter');
-  await expect(page.locator('.use-case-card')).toHaveCount(12);
+  await expect(page.locator('.use-case-card')).toHaveCount(13);
   await page.getByRole('searchbox').fill('meeting');
   await page.keyboard.press('Enter');
   await expect(page.locator('.use-case-card h3')).toHaveText([resources[2][1]]);
@@ -123,7 +126,7 @@ test('empty search stays honest and supports keyboard search and returning to th
   await guidelines.focus(); await page.keyboard.press('Enter');
   await expect(page).toHaveURL(/\/guidelines$/);
   await page.goto('/use-cases?q=%20%20');
-  await expect(page.locator('.use-case-card')).toHaveCount(12);
+  await expect(page.locator('.use-case-card')).toHaveCount(13);
   const response = await page.goto('/use-cases/not-a-use-case');
   expect(response?.status()).toBe(404);
 });
@@ -157,9 +160,9 @@ test('library metadata and detail pages fit intermediate screen widths', async (
 test('library categories combine with search and preserve keyboard navigation', async ({ page }) => {
   await page.goto('/use-cases');
   const filters = page.getByRole('navigation', { name: 'Use Cases nach Kategorie' });
-  await expect(filters.getByRole('link')).toHaveCount(8);
+  await expect(filters.getByRole('link')).toHaveCount(9);
   await expect(filters.getByRole('link', { name: 'Alle', exact: true })).toHaveAttribute('aria-current', 'page');
-  for (const category of ['Recruiting', 'Projektmanagement', 'Zusammenarbeit', 'Kommunikation', 'Wissensarbeit', 'Entscheidungen', 'Teams']) {
+  for (const category of ['Recruiting', 'Projektmanagement', 'Zusammenarbeit', 'Kommunikation', 'Wissensarbeit', 'Entscheidungen', 'Führung & Change', 'Teams']) {
     const link = filters.getByRole('link', { name: category, exact: true });
     await link.focus();
     expect(await link.evaluate((node) => getComputedStyle(node).outlineStyle)).not.toBe('none');
@@ -177,9 +180,9 @@ test('library categories combine with search and preserve keyboard navigation', 
   await filters.getByRole('link', { name: 'Teams', exact: true }).click();
   await expect(page.getByRole('heading', { name: 'Noch kein passender Use Case dabei.' })).toBeVisible();
   await page.locator('.empty-state').getByRole('link', { name: /Alle Use Cases ansehen/ }).click();
-  await expect(page.locator('.use-case-card')).toHaveCount(12);
+  await expect(page.locator('.use-case-card')).toHaveCount(13);
   await page.goto('/use-cases?category=unknown');
-  await expect(page.locator('.use-case-card')).toHaveCount(12);
+  await expect(page.locator('.use-case-card')).toHaveCount(13);
 });
 
 test('high fidelity library fits four widths with local visuals and accessible actions', async ({ page }, testInfo) => {
@@ -194,10 +197,10 @@ test('high fidelity library fits four widths with local visuals and accessible a
     await noOverflow(page);
     await expect(page.locator('h1')).toHaveCount(1);
     await expect(page.locator('.library-featured .use-case-card')).toHaveCount(3);
-    await expect(page.locator('.library-grid .use-case-card')).toHaveCount(9);
+    await expect(page.locator('.library-grid .use-case-card')).toHaveCount(10);
     await expect(page.locator('.library-featured .use-case-card-visual-featured')).toHaveCount(3);
     await expect(page.locator('.library-featured .use-case-card-visual-illustration img')).toHaveCount(3);
-    await expect(page.locator('.library-grid .use-case-card-visual-compact')).toHaveCount(9);
+    await expect(page.locator('.library-grid .use-case-card-visual-compact')).toHaveCount(10);
     await expect(page.locator('.library-grid .use-case-card-visual-compact img')).toHaveCount(0);
     for (const link of await page.locator('.library-filters a, .uc-library .card-action, .library-text-link').all()) {
       expect((await link.boundingBox())!.height).toBeGreaterThanOrEqual(44);

@@ -56,7 +56,7 @@ test('Community and homepage link to KI-Kompass and primary navigation exposes i
   await expect(link).toHaveAttribute('href', '/organisation');
   await link.focus(); await page.keyboard.press('Enter');
   await expect(page).toHaveURL('/organisation');
-  await expect(page.getByRole('navigation', { name: 'Hauptnavigation' }).getByRole('link')).toHaveText(['Use Cases', 'KI-Kompass', 'Team Lab', 'Community', 'Guidelines']);
+  await expect(page.getByRole('navigation', { name: 'Hauptnavigation' }).getByRole('link')).toHaveText(['Use Cases', 'Guides', 'KI-Kompass', 'Team Lab', 'Community', 'Guidelines']);
   await expect(page.getByRole('banner').getByRole('link', { name: 'Hilfe', exact: true })).toHaveAttribute('href', '/help');
   await expect(page.getByRole('banner').getByRole('link', { name: 'KI-Kompass', exact: true })).toHaveAttribute('aria-current', 'page');
   await page.goto('/');

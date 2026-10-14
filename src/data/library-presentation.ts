@@ -9,4 +9,5 @@ export const librarySummaries: Record<string, string> = {
   'dokumente-vergleichen': 'Unterschiede, Gemeinsamkeiten und offene Fragen zwischen Dokumenten erkennen.',
   'recherche-strukturieren': 'Quellen ordnen, Kernaussagen verdichten und offene Fragen sichtbar machen.',
   'entscheidungsoptionen-strukturieren': 'Argumente und Auswirkungen verschiedener Handlungsoptionen vergleichen.',
+  'ki-im-team-begleiten': 'Veränderung im Team mit Orientierung, Beteiligung und klaren Rahmenbedingungen begleiten.',
 };
