@@ -15,7 +15,7 @@ export default function GuidesPage() {
     </section>
 
     <section className="guides-catalogue" aria-labelledby="guides-catalogue-title">
-      <div className="guides-section-heading"><div><p className="eyebrow hub-eyebrow">VERFÜGBAR UND GEPLANT</p><h2 id="guides-catalogue-title">Welcher Einstieg passt gerade?</h2></div><p>Verfügbare Guides lassen sich direkt öffnen. Geplante Angebote sind klar als Vorschau markiert.</p></div>
+      <div className="guides-section-heading"><div><p className="eyebrow hub-eyebrow">VERFÜGBARE GUIDES</p><h2 id="guides-catalogue-title">Welcher Einstieg passt gerade?</h2></div><p>Wähle zwischen persönlicher Orientierung und der Begleitung von KI im Team.</p></div>
       <div className="guides-grid">
         <article className="guide-card guide-card-available">
           <div className="guide-card-heading"><span className="hub-icon-badge"><Icon name="team" /></span><span className="guide-status">Verfügbar</span></div>
@@ -26,12 +26,13 @@ export default function GuidesPage() {
           <Link className="hub-button hub-button-primary" href="/leadership">Führungskräfte-Guide öffnen<Icon name="arrow" /></Link>
         </article>
 
-        <article className="guide-card guide-card-planned" aria-labelledby="personal-guide-title">
-          <div className="guide-card-heading"><span className="hub-icon-badge"><Icon name="book" /></span><span className="guide-status">Geplant</span></div>
+        <article className="guide-card guide-card-available guide-card-personal" aria-labelledby="personal-guide-title">
+          <div className="guide-card-heading"><span className="hub-icon-badge"><Icon name="book" /></span><span className="guide-status">Verfügbar</span></div>
           <p className="eyebrow hub-eyebrow">PERSÖNLICHER EINSTIEG</p>
           <h3 id="personal-guide-title">Persönlicher KI-Einstieg</h3>
-          <p>Ein künftiger Guide für die persönliche Orientierung beim Einstieg in die Arbeit mit KI.</p>
-          <p className="guide-planned-note">Dieses Angebot ist in Vorbereitung und noch nicht verfügbar.</p>
+          <p>Situationsbezogene Orientierung für den eigenen Arbeitsalltag – vom ersten Verstehen bis zum bewussten Noch-nicht-Beginnen.</p>
+          <ul><li>Sechs persönliche Einstiege ohne Bewertung</li><li>Editierbare und kopierbare Arbeitshilfen</li></ul>
+          <Link className="hub-button hub-button-primary" href="/guides/personal">Persönlichen Guide öffnen<Icon name="arrow" /></Link>
         </article>
       </div>
     </section>

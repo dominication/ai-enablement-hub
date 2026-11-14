@@ -11,6 +11,7 @@
 .guides-grid { display: grid; grid-template-columns: minmax(0, 1.15fr) minmax(0, .85fr); gap: 16px; margin-top: 16px; }
 .guide-card { display: flex; flex-direction: column; min-width: 0; min-height: 330px; padding: 24px; border-radius: var(--hub-radius); }
 .guide-card-available { background: var(--hub-mint); }
+.guide-card-personal { background: var(--hub-sky); }
 .guide-card-planned { background: var(--hub-soft-surface); }
 .guide-card-heading { display: flex; align-items: center; justify-content: space-between; gap: 16px; margin-bottom: 20px; }
 .guide-card .hub-icon-badge { background: var(--hub-surface); color: var(--hub-petrol); }

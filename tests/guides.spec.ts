@@ -6,28 +6,30 @@ async function noOverflow(page: Page) {
   expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
 }
 
-test('Guides overview distinguishes the available leadership guide from the planned personal entry', async ({ page }) => {
+test('Guides overview exposes both working guides as available', async ({ page }) => {
   const response = await page.goto('/guides');
   expect(response?.status()).toBe(200);
   await expect(page).toHaveTitle(/Guides/);
   await expect(page.getByRole('heading', { level: 1, name: 'Orientierung für deinen nächsten Schritt mit KI' })).toBeVisible();
 
   const available = page.locator('.guide-card-available');
-  await expect(available).toContainText('Verfügbar');
-  await expect(available.getByRole('heading', { name: 'KI im Team begleiten' })).toBeVisible();
-  const leadership = available.getByRole('link', { name: 'Führungskräfte-Guide öffnen' });
+  await expect(available).toHaveCount(2);
+  const leadershipCard = available.filter({ has: page.getByRole('heading', { name: 'KI im Team begleiten' }) });
+  await expect(leadershipCard).toContainText('Verfügbar');
+  const leadership = leadershipCard.getByRole('link', { name: 'Führungskräfte-Guide öffnen' });
   await expect(leadership).toHaveAttribute('href', '/leadership');
   await leadership.click();
   await expect(page).toHaveURL('/leadership');
   await expect(page.getByRole('heading', { level: 1, name: 'KI im Team begleiten' })).toBeVisible();
 
   await page.goto('/guides');
-  const planned = page.locator('.guide-card-planned');
-  await expect(planned).toContainText('Geplant');
-  await expect(planned.getByRole('heading', { name: 'Persönlicher KI-Einstieg' })).toBeVisible();
-  await expect(planned).toContainText('in Vorbereitung und noch nicht verfügbar');
-  await expect(planned.getByRole('link')).toHaveCount(0);
-  await expect(planned.getByRole('button')).toHaveCount(0);
+  const personal = page.locator('.guide-card-personal');
+  await expect(personal).toContainText('Verfügbar');
+  await expect(personal.getByRole('heading', { name: 'Persönlicher KI-Einstieg' })).toBeVisible();
+  await expect(personal.getByRole('link', { name: 'Persönlichen Guide öffnen' })).toHaveAttribute('href', '/guides/personal');
+  await personal.getByRole('link', { name: 'Persönlichen Guide öffnen' }).click();
+  await expect(page).toHaveURL('/guides/personal');
+  await expect(page.getByRole('heading', { level: 1, name: 'Persönlicher KI-Einstieg' })).toBeVisible();
 });
 
 test('homepage keeps exactly three featured cases and adds one compact guide entry directly below them', async ({ page }) => {
